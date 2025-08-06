@@ -11,10 +11,20 @@ const data = [
   { time: '8PM', systolic: 160, diastolic: 95, index: 5 },
 ]
 
+interface CustomDotProps {
+  cx?: number
+  cy?: number
+  payload?: {
+    systolic: number
+    diastolic: number
+    highlighted?: boolean
+  }
+}
+
 // Custom dot component to render the range lines
-const CustomDot = (props: any) => {
+const CustomDot = (props: CustomDotProps) => {
   const { cx, cy, payload } = props
-  if (!payload) return null
+  if (!payload || cx === undefined || cy === undefined) return null
   
   const rangeHeight = ((payload.systolic - payload.diastolic) / 300) * 240 // Approximate height scaling
   const lineColor = payload.highlighted ? '#374151' : '#f9a8d4' // gray-700 or pink-300
