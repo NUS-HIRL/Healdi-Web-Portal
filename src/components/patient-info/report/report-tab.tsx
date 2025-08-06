@@ -7,10 +7,10 @@ import { BloodPressureChart } from './charts/blood-pressure-chart'
 import { HeartRateChart } from './charts/heart-rate-chart'
 import { BloodGlucoseChart } from './charts/blood-glucose-chart'
 import { FoodIntakeChart } from './charts/food-intake-chart'
-import { ActivityChart } from './charts/activity-chart'
-import { SleepHoursChart } from './charts/sleep-hours-chart'
-import { StressLevelChart } from './charts/stress-level-chart'
-import { HydrationChart } from './charts/hydration-chart'
+import { StepsChart } from './charts/steps-chart'
+import { ActiveMinutesChart } from './charts/active-minutes-chart'
+import { CaloriesBurnedChart } from './charts/calories-burned-chart'
+import { WeightChart } from './charts/weight-chart'
 
 export function ReportTab() {
   const [selectedPeriod, setSelectedPeriod] = useState('weekly')
@@ -57,18 +57,22 @@ export function ReportTab() {
         <HeartRateChart />
       </div>
 
-      {/* Second row - Blood Glucose, Food Intake, Activity, Sleep Hours */}
-      <div className="grid grid-cols-4 gap-4">
+      {/* Second row - Blood Glucose and Food Intake */}
+      <div className="grid grid-cols-2 gap-4">
         <BloodGlucoseChart />
         <FoodIntakeChart />
-        <ActivityChart />
-        <SleepHoursChart />
       </div>
 
-      {/* Third row - Stress Level, Hydration and tables */}
-      <div className="grid grid-cols-4 gap-4">
-        <StressLevelChart />
-        <HydrationChart />
+      {/* Third row - Activity and Sleep Hours */}
+      <div className="grid grid-cols-2 gap-4">
+        <StepsChart />
+        <ActiveMinutesChart />
+      </div>
+
+      {/* Fourth row - Stress Level and Hydration */}
+      <div className="grid grid-cols-2 gap-4">
+        <CaloriesBurnedChart />
+        <WeightChart />
       </div>
     </div>
   )
