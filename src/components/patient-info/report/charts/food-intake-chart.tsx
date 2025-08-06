@@ -3,24 +3,29 @@
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 
 const data = [
-  { day: 'Mon', value: 1800 },
-  { day: 'Tue', value: 2100 },
-  { day: 'Wed', value: 1950 },
-  { day: 'Thu', value: 2200 },
-  { day: 'Fri', value: 1750 },
-  { day: 'Sat', value: 2000 },
-  { day: 'Sun', value: 1900 },
+  { day: '12AM', value: 2100 },
+  { day: '4AM', value: 1850 },
+  { day: '8AM', value: 2250 },
+  { day: '12PM', value: 1950 },
+  { day: '4PM', value: 2000 },
+  { day: '8PM', value: 2300 },
 ]
 
 export function FoodIntakeChart() {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 h-48">
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-medium text-gray-900">Food Intake</h3>
-        <span className="text-xs text-gray-500">Kcal</span>
+    <div className="bg-white rounded-lg border border-gray-200 p-6 h-[600px]">
+      {/* Header Section */}
+      <div className="flex flex-col gap-1 mb-6">
+        <h2 className="text-xl font-semibold text-gray-800">Food Intake</h2>
+        <div className="flex items-baseline gap-2">
+          <p className="text-4xl font-bold text-[#22c55e]">2050</p>
+          <span className="text-xl text-gray-500">Kcal</span>
+        </div>
+        <p className="text-sm text-gray-500">4:00PM - 5:00PM</p>
       </div>
-      <div className="text-xs text-gray-500 mb-4">1900</div>
-      <div className="h-24">
+
+      {/* Chart Section */}
+      <div className="h-[450px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} barCategoryGap="20%">
             <XAxis 
@@ -29,7 +34,14 @@ export function FoodIntakeChart() {
               tickLine={false}
               tick={{ fontSize: 10, fill: '#9ca3af' }}
             />
-            <YAxis hide />
+            <YAxis 
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 12, fill: '#9ca3af' }}
+              domain={[1500, 2500]}
+              width={40}
+              orientation="right"
+            />
             <Bar 
               dataKey="value" 
               fill="#22c55e" 

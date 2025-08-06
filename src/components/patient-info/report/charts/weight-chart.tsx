@@ -3,41 +3,51 @@
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 
 const data = [
-  { week: 'W1', weight: 167 },
-  { week: 'W2', weight: 166 },
-  { week: 'W3', weight: 165 },
-  { week: 'W4', weight: 164 },
-  { week: 'W5', weight: 165 },
-  { week: 'W6', weight: 165 },
+  { day: '12AM', value: 80 },
+  { day: '4AM', value: 80 },
+  { day: '8AM', value: 81 },
+  { day: '12PM', value: 80 },
+  { day: '4PM', value: 79 },
+  { day: '8PM', value: 80 },
 ]
 
 export function WeightChart() {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">Weight</h3>
-        <div className="text-sm text-gray-500">6 weeks</div>
+    <div className="bg-white rounded-lg border border-gray-200 p-6 h-[600px]">
+      {/* Header Section */}
+      <div className="flex flex-col gap-1 mb-6">
+        <h2 className="text-xl font-semibold text-gray-800">Weight</h2>
+        <div className="flex items-baseline gap-2">
+          <p className="text-4xl font-bold text-[#FF975B]">7</p>
+          <span className="text-xl text-gray-500">kg</span>
+        </div>
+        <p className="text-sm text-gray-500">4:00PM - 5:00PM</p>
       </div>
-      <div className="mb-4">
-        <div className="text-2xl font-bold text-gray-900">165 lbs</div>
-        <div className="text-sm text-green-600">-2 lbs this month</div>
-      </div>
-      <div className="h-48">
+
+      {/* Chart Section */}
+      <div className="h-[450px]">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data}>
+          <BarChart data={data} barCategoryGap="20%">
             <XAxis 
-              dataKey="week" 
+              dataKey="day" 
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#6b7280' }}
+              tick={{ fontSize: 10, fill: '#9ca3af' }}
             />
             <YAxis 
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#6b7280' }}
-              domain={['dataMin - 5', 'dataMax + 5']}
+              tick={{ fontSize: 12, fill: '#9ca3af' }}
+              domain={[0, 100]}
+              width={40}
+              orientation="right"
             />
-            <Bar dataKey="weight" fill="#f97316" radius={[2, 2, 0, 0]} />
+            <Bar 
+              dataKey="value" 
+              fill="#FF975B" 
+              radius={[2, 2, 0, 0]} 
+              maxBarSize={16}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>

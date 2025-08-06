@@ -1,42 +1,54 @@
 'use client'
 
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 
 const data = [
-  { time: '6', value: 65 },
-  { time: '9', value: 72 },
-  { time: '12', value: 78 },
-  { time: '15', value: 75 },
-  { time: '18', value: 70 },
-  { time: '21', value: 68 },
+  { time: '12AM', value: 102 },
+  { time: '4AM', value: 109 },
+  { time: '8AM', value: 80 },
+  { time: '12PM', value: 90 },
+  { time: '4PM', value: 120 },
+  { time: '8PM', value: 115 },
 ]
 
 export function HeartRateChart() {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 h-48">
-      <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-medium text-gray-900">Heart Rate</h3>
-        <span className="text-xs text-gray-500">BPM</span>
+    <div className="bg-white rounded-lg border border-gray-200 p-6 h-[600px]">
+      {/* Header Section */}
+      <div className="flex flex-col gap-1 mb-6">
+        <h2 className="text-xl font-semibold text-gray-800">Heart Rate</h2>
+        <div className="flex items-baseline gap-2">
+          <p className="text-4xl font-bold text-pink-500">105</p>
+          <span className="text-xl text-gray-500">BPM</span>
+        </div>
+        <p className="text-sm text-gray-500">4:00PM - 5:00PM</p>
       </div>
-      <div className="text-xs text-gray-500 mb-4">72</div>
-      <div className="h-24">
+
+      {/* Chart Section */}
+      <div className="h-[450px]">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
+          <BarChart data={data} barCategoryGap="20%">
             <XAxis 
               dataKey="time" 
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 10, fill: '#9ca3af' }}
             />
-            <YAxis hide />
-            <Line 
-              type="monotone" 
-              dataKey="value" 
-              stroke="#ec4899" 
-              strokeWidth={2}
-              dot={false}
+            <YAxis 
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 12, fill: '#9ca3af' }}
+              domain={[0, 300]}
+              width={40}
+              orientation="right"
             />
-          </LineChart>
+            <Bar 
+              dataKey="value" 
+              fill="#ec4899" 
+              radius={[2, 2, 0, 0]} 
+              maxBarSize={16}
+            />
+          </BarChart>
         </ResponsiveContainer>
       </div>
     </div>
