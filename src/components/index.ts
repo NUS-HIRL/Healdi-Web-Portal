@@ -9,3 +9,6 @@ export { BloodPressureChart } from './patient-info/report/charts/blood-pressure-
 export { HeartRateChart } from './patient-info/report/charts/heart-rate-chart'
 export { CaloriesBurnedChart } from './patient-info/report/charts/calories-burned-chart'
 export { WeightChart as HydrationChart } from './patient-info/report/charts/weight-chart'
+
+// Common chart components
+export { CustomBar, CustomDot } from './common/chart'
