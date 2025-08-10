@@ -3,6 +3,7 @@
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
 import { useState } from 'react'
 import { CustomBar } from '@/components/common/chart'
+import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
   { time: '12AM', value: 102 },
@@ -14,10 +15,10 @@ const data = [
 ]
 
 export function HeartRateChart() {
-  const [hoveredData, setHoveredData] = useState<typeof data[0] | null>(null)
+  const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
-  const handleBarMouseEnter = (data: any) => {
-    setHoveredData(data)
+  const handleBarMouseEnter = (data: unknown) => {
+    setHoveredData(data as ChartDataPoint)
   }
 
   const handleBarMouseLeave = () => {
@@ -74,9 +75,9 @@ export function HeartRateChart() {
               fill="#ec4899" 
               radius={[2, 2, 0, 0]} 
               maxBarSize={16}
-              shape={(props: any) => (
+              shape={(props: unknown) => (
                 <CustomBar 
-                  {...props} 
+                  {...(props as ChartProps)} 
                   onMouseEnter={handleBarMouseEnter}
                   onMouseLeave={handleBarMouseLeave}
                 />

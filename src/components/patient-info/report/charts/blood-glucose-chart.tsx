@@ -3,6 +3,7 @@
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
 import { useState } from 'react'
 import { CustomBar } from '@/components/common/chart'
+import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
   { day: '12AM', value: 8, index: 0 },
@@ -14,10 +15,10 @@ const data = [
 ]
 
 export function BloodGlucoseChart() {
-  const [hoveredData, setHoveredData] = useState<typeof data[0] | null>(null)
+  const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
-  const handleBarMouseEnter = (data: any) => {
-    setHoveredData(data)
+  const handleBarMouseEnter = (data: unknown) => {
+    setHoveredData(data as ChartDataPoint)
   }
 
   const handleBarMouseLeave = () => {
@@ -77,9 +78,9 @@ export function BloodGlucoseChart() {
               fill="#f97316" 
               radius={[2, 2, 0, 0]} 
               maxBarSize={16}
-              shape={(props: any) => (
+              shape={(props: unknown) => (
                 <CustomBar 
-                  {...props} 
+                  {...(props as ChartProps)} 
                   onMouseEnter={handleBarMouseEnter}
                   onMouseLeave={handleBarMouseLeave}
                 />

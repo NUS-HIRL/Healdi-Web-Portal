@@ -3,6 +3,7 @@
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
 import { useState } from 'react'
 import { CustomBar } from '@/components/common/chart'
+import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
   { day: '12AM', value: 30, index: 0 },
@@ -14,11 +15,12 @@ const data = [
 ]
 
 export function ActiveMinutesChart() {
-  const [hoveredData, setHoveredData] = useState<typeof data[0] | null>(null)
+  const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
-  const handleBarMouseEnter = (data: any) => {
-    setHoveredData(data)
+  const handleBarMouseEnter = (data: unknown) => {
+    setHoveredData(data as ChartDataPoint)
   }
+
 
   const handleBarMouseLeave = () => {
     setHoveredData(null)
@@ -41,17 +43,17 @@ export function ActiveMinutesChart() {
       {/* Chart Section */}
       <div className="h-[450px]">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart 
-            data={data} 
+          <BarChart
+            data={data}
             barCategoryGap="20%"
           >
-            <XAxis 
-              dataKey="day" 
+            <XAxis
+              dataKey="day"
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 10, fill: '#9ca3af' }}
             />
-            <YAxis 
+            <YAxis
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: '#9ca3af' }}
@@ -59,26 +61,26 @@ export function ActiveMinutesChart() {
               width={40}
               orientation="right"
             />
-            <Tooltip 
+            <Tooltip
               content={() => null}
               cursor={false}
             />
             {hoveredData && (
-              <ReferenceLine 
-                x={hoveredData.day} 
-                stroke="#000000" 
-                strokeWidth={2} 
+              <ReferenceLine
+                x={hoveredData.day}
+                stroke="#000000"
+                strokeWidth={2}
                 strokeDasharray="none"
               />
             )}
-            <Bar 
-              dataKey="value" 
-              fill="#22c55e" 
-              radius={[2, 2, 0, 0]} 
+            <Bar
+              dataKey="value"
+              fill="#22c55e"
+              radius={[2, 2, 0, 0]}
               maxBarSize={16}
-              shape={(props: any) => (
-                <CustomBar 
-                  {...props} 
+              shape={(props: unknown) => (
+                <CustomBar
+                  {...props as ChartProps}
                   onMouseEnter={handleBarMouseEnter}
                   onMouseLeave={handleBarMouseLeave}
                 />

@@ -3,6 +3,7 @@
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
 import { useState } from 'react'
 import { CustomBar } from '@/components/common/chart'
+import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
   { day: '12AM', value: 7850, index: 0 },
@@ -14,11 +15,12 @@ const data = [
 ]
 
 export function StepsChart() {
-  const [hoveredData, setHoveredData] = useState<typeof data[0] | null>(null)
+  const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
-  const handleBarMouseEnter = (data: any) => {
-    setHoveredData(data)
-  }
+  const handleBarMouseEnter = (data: unknown) => {
+      setHoveredData(data as ChartDataPoint)
+    }
+  
 
   const handleBarMouseLeave = () => {
     setHoveredData(null)
@@ -73,9 +75,9 @@ export function StepsChart() {
               fill="#3b82f6" 
               radius={[2, 2, 0, 0]} 
               maxBarSize={16}
-              shape={(props: any) => (
+              shape={(props: unknown) => (
                 <CustomBar 
-                  {...props} 
+                  {...props as ChartProps} 
                   onMouseEnter={handleBarMouseEnter}
                   onMouseLeave={handleBarMouseLeave}
                 />

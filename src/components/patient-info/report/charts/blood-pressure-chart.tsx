@@ -1,8 +1,9 @@
 'use client'
 
-import { ComposedChart, Line, Scatter, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
+import { ComposedChart, Scatter, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
 import { useState } from 'react'
 import { CustomDot } from '@/components/common/chart'
+import { BloodPressureDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
   { time: '12AM', systolic: 150, diastolic: 80, index: 0 },
@@ -14,10 +15,10 @@ const data = [
 ]
 
 export function BloodPressureChart() {
-  const [hoveredData, setHoveredData] = useState<typeof data[0] | null>(null)
+  const [hoveredData, setHoveredData] = useState<BloodPressureDataPoint | null>(null)
 
-  const handleDotMouseEnter = (payload: any) => {
-    setHoveredData(payload)
+  const handleDotMouseEnter = (payload: unknown) => {
+    setHoveredData(payload as BloodPressureDataPoint)
   }
 
   const handleDotMouseLeave = () => {
@@ -76,9 +77,9 @@ export function BloodPressureChart() {
             )}
             <Scatter 
               dataKey="systolic" 
-              shape={(props: any) => (
+              shape={(props: unknown) => (
                 <CustomDot 
-                  {...props} 
+                  {...(props as ChartProps)} 
                   onMouseEnter={handleDotMouseEnter}
                   onMouseLeave={handleDotMouseLeave}
                 />
