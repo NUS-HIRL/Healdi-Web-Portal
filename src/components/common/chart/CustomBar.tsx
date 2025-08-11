@@ -9,7 +9,6 @@ interface CustomBarProps<T = any> {
   onMouseLeave?: () => void
   hoverZoneHeight?: number
   borderRadius?: number
-  [key: string]: unknown
 }
 
 export const CustomBar = <T,>({
@@ -23,33 +22,8 @@ export const CustomBar = <T,>({
   onMouseLeave,
   hoverZoneHeight = 400,
   borderRadius = 2,
-  ...otherProps
 }: CustomBarProps<T>) => {
-  // Filter out non-DOM props that shouldn't be passed to rect elements
-  const {
-    tooltipPosition,
-    tooltipData,
-    tooltipActive,
-    index,
-    animationBegin,
-    animationDuration,
-    animationEasing,
-    isAnimationActive,
-    dataKey,
-    label,
-    labelList,
-    name,
-    legendType,
-    xAxisId,
-    yAxisId,
-    stackId,
-    layout,
-    barSize,
-    maxBarSize,
-    minPointSize,
-    shape,
-    ...rectProps
-  } = otherProps;
+
 
   return (
     <g
@@ -74,7 +48,6 @@ export const CustomBar = <T,>({
         fill={fill}
         rx={borderRadius}
         ry={borderRadius}
-        {...rectProps}
       />
     </g>
   )
