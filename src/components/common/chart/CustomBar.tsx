@@ -1,4 +1,4 @@
-interface CustomBarProps<T = any> {
+interface CustomBarProps<T = Record<string, unknown>> {
   payload?: T
   x?: number
   y?: number
@@ -9,9 +9,10 @@ interface CustomBarProps<T = any> {
   onMouseLeave?: () => void
   hoverZoneHeight?: number
   borderRadius?: number
+  [key: string]: unknown
 }
 
-export const CustomBar = <T,>({
+export const CustomBar = <T = Record<string, unknown>,>({
   payload,
   x = 0,
   y = 0,

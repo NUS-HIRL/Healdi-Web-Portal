@@ -1,4 +1,4 @@
-interface CustomDotProps<T = any> {
+interface CustomDotProps<T = Record<string, unknown>> {
   cx?: number
   cy?: number
   payload?: T
@@ -14,7 +14,7 @@ interface CustomDotProps<T = any> {
   dotRadius?: number
 }
 
-export const CustomDot = <T,>({
+export function CustomDot<T = Record<string, unknown>>({
   cx,
   cy,
   payload,
@@ -28,12 +28,14 @@ export const CustomDot = <T,>({
   lineWidthNormal = 2,
   lineWidthHighlighted = 3,
   dotRadius = 4,
-}: CustomDotProps<T>) => {
+}: CustomDotProps<T>) {
   if (!payload || cx === undefined || cy === undefined) return null
   
   // Type guard to check if payload has blood pressure properties
-  const isBloodPressurePayload = (payload: any): payload is { systolic: number; diastolic: number; highlighted?: boolean } => {
-    return payload && typeof payload.systolic === 'number' && typeof payload.diastolic === 'number'
+  const isBloodPressurePayload = (payload: T): payload is T & { systolic: number; diastolic: number; highlighted?: boolean } => {
+    return payload && 
+           typeof (payload as Record<string, unknown>).systolic === 'number' && 
+           typeof (payload as Record<string, unknown>).diastolic === 'number'
   }
   
   // Calculate range height only for blood pressure data
