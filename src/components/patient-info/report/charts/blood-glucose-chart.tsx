@@ -6,12 +6,12 @@ import { CustomBar } from '@/components/common/chart'
 import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
-  { day: '12AM', value: 8, index: 0 },
-  { day: '4AM', value: 7, index: 1 },
-  { day: '8AM', value: 6, index: 2 },
-  { day: '12PM', value: 3, index: 3 },
-  { day: '4PM', value: 7, index: 4 },
-  { day: '8PM', value: 10, index: 5 },
+  { day: '12AM', value: 8 },
+  { day: '4AM', value: 7 },
+  { day: '8AM', value: 6 },
+  { day: '12PM', value: 3 },
+  { day: '4PM', value: 7 },
+  { day: '8PM', value: 10 },
 ]
 
 export function BloodGlucoseChart() {

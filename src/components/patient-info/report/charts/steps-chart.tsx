@@ -6,12 +6,12 @@ import { CustomBar } from '@/components/common/chart'
 import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
-  { day: '12AM', value: 7850, index: 0 },
-  { day: '4AM', value: 9200, index: 1 },
-  { day: '8AM', value: 8650, index: 2 },
-  { day: '12PM', value: 10200, index: 3 },
-  { day: '4PM', value: 8900, index: 4 },
-  { day: '8PM', value: 12500, index: 5 },
+  { day: '12AM', value: 7850 },
+  { day: '4AM', value: 9200 },
+  { day: '8AM', value: 8650 },
+  { day: '12PM', value: 10200 },
+  { day: '4PM', value: 8900 },
+  { day: '8PM', value: 12500 },
 ]
 
 export function StepsChart() {

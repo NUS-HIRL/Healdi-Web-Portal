@@ -6,12 +6,12 @@ import { CustomBar } from '@/components/common/chart'
 import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
-  { day: '12AM', value: 300, index: 0 },
-  { day: '4AM', value: 400, index: 1 },
-  { day: '8AM', value: 200, index: 2 },
-  { day: '12PM', value: 500, index: 3 },
-  { day: '4PM', value: 300, index: 4 },
-  { day: '8PM', value: 200, index: 5 },
+  { day: '12AM', value: 300 },
+  { day: '4AM', value: 400 },
+  { day: '8AM', value: 200 },
+  { day: '12PM', value: 500 },
+  { day: '4PM', value: 300 },
+  { day: '8PM', value: 200 },
 ]
 
 export function CaloriesBurnedChart() {

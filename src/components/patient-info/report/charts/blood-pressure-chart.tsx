@@ -6,12 +6,12 @@ import { CustomDot } from '@/components/common/chart'
 import { BloodPressureDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
-  { time: '12AM', systolic: 150, diastolic: 80, index: 0 },
-  { time: '4AM', systolic: 190, diastolic: 120, index: 1 },
-  { time: '8AM', systolic: 160, diastolic: 90, index: 2 },
-  { time: '12PM', systolic: 175, diastolic: 110, index: 3 },
-  { time: '4PM', systolic: 155, diastolic: 85, index: 4 },
-  { time: '8PM', systolic: 160, diastolic: 95, index: 5 },
+  { time: '12AM', systolic: 150, diastolic: 80 },
+  { time: '4AM', systolic: 190, diastolic: 120 },
+  { time: '8AM', systolic: 160, diastolic: 90 },
+  { time: '12PM', systolic: 175, diastolic: 110 },
+  { time: '4PM', systolic: 155, diastolic: 85 },
+  { time: '8PM', systolic: 160, diastolic: 95 },
 ]
 
 export function BloodPressureChart() {

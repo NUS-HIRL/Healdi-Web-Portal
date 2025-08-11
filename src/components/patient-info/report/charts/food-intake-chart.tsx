@@ -6,12 +6,12 @@ import { CustomBar } from '@/components/common/chart'
 import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
-  { day: '12AM', value: 2100, index: 0 },
-  { day: '4AM', value: 1850, index: 1 },
-  { day: '8AM', value: 2250, index: 2 },
-  { day: '12PM', value: 1950, index: 3 },
-  { day: '4PM', value: 2000, index: 4 },
-  { day: '8PM', value: 2300, index: 5 },
+  { day: '12AM', value: 2100 },
+  { day: '4AM', value: 1850 },
+  { day: '8AM', value: 2250 },
+  { day: '12PM', value: 1950 },
+  { day: '4PM', value: 2000 },
+  { day: '8PM', value: 2300 },
 ]
 
 export function FoodIntakeChart() {

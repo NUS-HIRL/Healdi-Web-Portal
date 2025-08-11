@@ -6,12 +6,12 @@ import { CustomBar } from '@/components/common/chart'
 import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
-  { day: '12AM', value: 30, index: 0 },
-  { day: '4AM', value: 50, index: 1 },
-  { day: '8AM', value: 60, index: 2 },
-  { day: '12PM', value: 70, index: 3 },
-  { day: '4PM', value: 80, index: 4 },
-  { day: '8PM', value: 90, index: 5 },
+  { day: '12AM', value: 30 },
+  { day: '4AM', value: 50 },
+  { day: '8AM', value: 60 },
+  { day: '12PM', value: 70 },
+  { day: '4PM', value: 80 },
+  { day: '8PM', value: 90 },
 ]
 
 export function ActiveMinutesChart() {
