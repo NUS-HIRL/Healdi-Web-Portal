@@ -1,11 +1,27 @@
 export { PatientDashboard } from './patient-info/patient-dashboard'
 export { Sidebar } from './common/sidebar'
+export { Footer } from './common/footer'
+export { Button } from './auth/Button'
+export { Checkbox } from './auth/Checkbox'
+export { PasswordInput } from './auth/PasswordInput'
+export { TextInput } from './auth/TextInput'
 export { PatientHeader } from './patient-info/patient-header'
+export { PatientList } from './patient-info/patient-list'
 export { ReportTab } from './patient-info/report/report-tab'
 
 // Chart components
+export { ActiveMinutesChart } from './patient-info/report/charts/active-minutes-chart'
 export { BloodGlucoseChart } from './patient-info/report/charts/blood-glucose-chart'
 export { BloodPressureChart } from './patient-info/report/charts/blood-pressure-chart'
 export { HeartRateChart } from './patient-info/report/charts/heart-rate-chart'
 export { CaloriesBurnedChart } from './patient-info/report/charts/calories-burned-chart'
+export { FoodIntakeChart } from './patient-info/report/charts/food-intake-chart'
+export { StepsChart } from './patient-info/report/charts/steps-chart'
 export { WeightChart as HydrationChart } from './patient-info/report/charts/weight-chart'
+
+// Table components
+export { TableHeader } from './patient-info/table'
+export { FitnessLevelBadge } from './patient-info/table'
+export { ActionButton } from './patient-info/table'
+export { Pagination } from './patient-info/table'
+export { PatientTable } from './patient-info/table'
