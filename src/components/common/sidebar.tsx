@@ -9,7 +9,7 @@ export function Sidebar() {
 
   const navigationItems = [
     { id: 'home', icon: Home, href: '#' },
-    { id: 'users', icon: Users, href: '#' },
+    { id: 'users', icon: Users, href: '/patient-info' },
     { id: 'reports', icon: FileText, href: '#' },
     { id: 'calendar', icon: Calendar, href: '#' },
     { id: 'settings', icon: Settings, href: '#' },
