@@ -1,8 +1,7 @@
 export interface ChartDataPoint {
+value: number
   day?: string
   time?: string
-  value: number
-  index?: number
 }
 
 export interface BloodPressureDataPoint {

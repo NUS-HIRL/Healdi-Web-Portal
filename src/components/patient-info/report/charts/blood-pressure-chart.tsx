@@ -2,7 +2,7 @@
 
 import { ComposedChart, Scatter, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
 import { useState } from 'react'
-import { CustomDot } from '@/components/common/chart'
+import { CustomDot } from '@/components/common/chart/CustomDot'
 import { BloodPressureDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
