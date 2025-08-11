@@ -1,12 +1,8 @@
-interface CustomDotProps {
+interface CustomDotProps<T = any> {
   cx?: number
   cy?: number
-  payload?: {
-    systolic: number
-    diastolic: number
-    highlighted?: boolean
-  }
-  onMouseEnter?: (payload: unknown) => void
+  payload?: T
+  onMouseEnter?: (payload: T) => void
   onMouseLeave?: () => void
   hoverZoneWidth?: number
   hoverZoneHeight?: number
@@ -18,7 +14,7 @@ interface CustomDotProps {
   dotRadius?: number
 }
 
-export const CustomDot = ({
+export const CustomDot = <T,>({
   cx,
   cy,
   payload,
@@ -32,12 +28,26 @@ export const CustomDot = ({
   lineWidthNormal = 2,
   lineWidthHighlighted = 3,
   dotRadius = 4,
-}: CustomDotProps) => {
+}: CustomDotProps<T>) => {
   if (!payload || cx === undefined || cy === undefined) return null
   
-  const rangeHeight = ((payload.systolic - payload.diastolic) / 300) * hoverZoneHeight // Approximate height scaling
-  const lineColor = payload.highlighted ? lineColorHighlighted : lineColorNormal
-  const lineWidth = payload.highlighted ? lineWidthHighlighted : lineWidthNormal
+  // Type guard to check if payload has blood pressure properties
+  const isBloodPressurePayload = (payload: any): payload is { systolic: number; diastolic: number; highlighted?: boolean } => {
+    return payload && typeof payload.systolic === 'number' && typeof payload.diastolic === 'number'
+  }
+  
+  // Calculate range height only for blood pressure data
+  const rangeHeight = isBloodPressurePayload(payload) 
+    ? ((payload.systolic - payload.diastolic) / 300) * hoverZoneHeight 
+    : 0
+  
+  const lineColor = isBloodPressurePayload(payload) && payload.highlighted 
+    ? lineColorHighlighted 
+    : lineColorNormal
+  
+  const lineWidth = isBloodPressurePayload(payload) && payload.highlighted 
+    ? lineWidthHighlighted 
+    : lineWidthNormal
   
   return (
     <g>
@@ -48,38 +58,54 @@ export const CustomDot = ({
         width={hoverZoneWidth}
         height={hoverZoneHeight}
         fill="transparent"
-        onMouseEnter={() => onMouseEnter?.(payload)}
+        onMouseEnter={() => payload && onMouseEnter?.(payload)}
         onMouseLeave={onMouseLeave}
         style={{ cursor: 'pointer' }}
       />
-      {/* Vertical range line */}
-      <line
-        x1={cx}
-        y1={cy}
-        x2={cx}
-        y2={cy + rangeHeight}
-        stroke={lineColor}
-        strokeWidth={lineWidth}
-        strokeLinecap="round"
-      />
-      {/* High point (systolic) */}
-      <circle
-        cx={cx}
-        cy={cy}
-        r={dotRadius}
-        fill={dotColor}
-        stroke="white"
-        strokeWidth={1}
-      />
-      {/* Low point (diastolic) */}
-      <circle
-        cx={cx}
-        cy={cy + rangeHeight}
-        r={dotRadius}
-        fill={dotColor}
-        stroke="white"
-        strokeWidth={1}
-      />
+      {/* Conditional rendering for blood pressure data */}
+      {isBloodPressurePayload(payload) && (
+        <>
+          {/* Vertical range line */}
+          <line
+            x1={cx}
+            y1={cy}
+            x2={cx}
+            y2={cy + rangeHeight}
+            stroke={lineColor}
+            strokeWidth={lineWidth}
+            strokeLinecap="round"
+          />
+          {/* High point (systolic) */}
+          <circle
+            cx={cx}
+            cy={cy}
+            r={dotRadius}
+            fill={dotColor}
+            stroke="white"
+            strokeWidth={1}
+          />
+          {/* Low point (diastolic) */}
+          <circle
+            cx={cx}
+            cy={cy + rangeHeight}
+            r={dotRadius}
+            fill={dotColor}
+            stroke="white"
+            strokeWidth={1}
+          />
+        </>
+      )}
+      {/* Default dot for non-blood pressure data */}
+      {!isBloodPressurePayload(payload) && (
+        <circle
+          cx={cx}
+          cy={cy}
+          r={dotRadius}
+          fill={dotColor}
+          stroke="white"
+          strokeWidth={1}
+        />
+      )}
     </g>
   )
 }

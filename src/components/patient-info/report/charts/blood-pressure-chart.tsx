@@ -17,8 +17,8 @@ const data = [
 export function BloodPressureChart() {
   const [hoveredData, setHoveredData] = useState<BloodPressureDataPoint | null>(null)
 
-  const handleDotMouseEnter = (payload: unknown) => {
-    setHoveredData(payload as BloodPressureDataPoint)
+  const handleDotMouseEnter = (payload: BloodPressureDataPoint) => {
+    setHoveredData(payload)
   }
 
   const handleDotMouseLeave = () => {
@@ -78,7 +78,7 @@ export function BloodPressureChart() {
             <Scatter 
               dataKey="systolic" 
               shape={(props: unknown) => (
-                <CustomDot 
+                <CustomDot<BloodPressureDataPoint>
                   {...(props as ChartProps)} 
                   onMouseEnter={handleDotMouseEnter}
                   onMouseLeave={handleDotMouseLeave}

@@ -17,10 +17,9 @@ const data = [
 export function ActiveMinutesChart() {
   const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
-  const handleBarMouseEnter = (data: unknown) => {
-    setHoveredData(data as ChartDataPoint)
+  const handleBarMouseEnter = (data: ChartDataPoint) => {
+    setHoveredData(data)
   }
-
 
   const handleBarMouseLeave = () => {
     setHoveredData(null)
@@ -79,7 +78,7 @@ export function ActiveMinutesChart() {
               radius={[2, 2, 0, 0]}
               maxBarSize={16}
               shape={(props: unknown) => (
-                <CustomBar
+                <CustomBar<ChartDataPoint>
                   {...props as ChartProps}
                   onMouseEnter={handleBarMouseEnter}
                   onMouseLeave={handleBarMouseLeave}

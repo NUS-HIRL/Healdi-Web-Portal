@@ -1,18 +1,18 @@
-interface CustomBarProps {
-  payload?: unknown
+interface CustomBarProps<T = any> {
+  payload?: T
   x?: number
   y?: number
   width?: number
   height?: number
   fill?: string
-  onMouseEnter?: (payload: unknown) => void
+  onMouseEnter?: (payload: T) => void
   onMouseLeave?: () => void
   hoverZoneHeight?: number
   borderRadius?: number
   [key: string]: unknown
 }
 
-export const CustomBar = ({
+export const CustomBar = <T,>({
   payload,
   x = 0,
   y = 0,
@@ -24,7 +24,7 @@ export const CustomBar = ({
   hoverZoneHeight = 400,
   borderRadius = 2,
   ...otherProps
-}: CustomBarProps) => {
+}: CustomBarProps<T>) => {
   // Filter out non-DOM props that shouldn't be passed to rect elements
   const {
     tooltipPosition,
@@ -53,7 +53,7 @@ export const CustomBar = ({
 
   return (
     <g
-      onMouseEnter={() => onMouseEnter?.(payload)}
+      onMouseEnter={() => payload && onMouseEnter?.(payload)}
       onMouseLeave={onMouseLeave}
       style={{ cursor: 'pointer' }}
     >

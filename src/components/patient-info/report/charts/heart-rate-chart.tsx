@@ -17,8 +17,8 @@ const data = [
 export function HeartRateChart() {
   const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
-  const handleBarMouseEnter = (data: unknown) => {
-    setHoveredData(data as ChartDataPoint)
+  const handleBarMouseEnter = (data: ChartDataPoint) => {
+    setHoveredData(data)
   }
 
   const handleBarMouseLeave = () => {
@@ -76,7 +76,7 @@ export function HeartRateChart() {
               radius={[2, 2, 0, 0]} 
               maxBarSize={16}
               shape={(props: unknown) => (
-                <CustomBar 
+                <CustomBar<ChartDataPoint>
                   {...(props as ChartProps)} 
                   onMouseEnter={handleBarMouseEnter}
                   onMouseLeave={handleBarMouseLeave}
