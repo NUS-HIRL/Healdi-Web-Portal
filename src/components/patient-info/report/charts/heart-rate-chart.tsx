@@ -1,6 +1,9 @@
 'use client'
 
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
+import { useState } from 'react'
+import { CustomBar } from '@/components/common/chart/CustomBar'
+import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [
   { time: '12AM', value: 102 },
@@ -12,16 +15,29 @@ const data = [
 ]
 
 export function HeartRateChart() {
+  const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
+
+  const handleBarMouseEnter = (data: ChartDataPoint) => {
+    setHoveredData(data)
+  }
+
+  const handleBarMouseLeave = () => {
+    setHoveredData(null)
+  }
+
+  const displayValue = hoveredData ? hoveredData.value.toString() : null
+  const displayTime = hoveredData ? hoveredData.time : null
+
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6 h-[600px]">
       {/* Header Section */}
-      <div className="flex flex-col gap-1 mb-6">
+      <div className="flex flex-col gap-1 mb-6 h-[90px]">
         <h2 className="text-xl font-semibold text-gray-800">Heart Rate</h2>
         <div className="flex items-baseline gap-2">
-          <p className="text-4xl font-bold text-pink-500">105</p>
-          <span className="text-xl text-gray-500">BPM</span>
+          <p className="text-4xl font-bold text-pink-500">{displayValue || ""}</p>
+          <span className="text-xl text-gray-500">{displayValue ? "BPM" : ""}</span>
         </div>
-        <p className="text-sm text-gray-500">4:00PM - 5:00PM</p>
+        <p className="text-sm text-gray-500">{displayTime || ""}</p>
       </div>
 
       {/* Chart Section */}
@@ -42,11 +58,30 @@ export function HeartRateChart() {
               width={40}
               orientation="right"
             />
+            <Tooltip 
+              content={() => null}
+              cursor={false}
+            />
+            {hoveredData && (
+              <ReferenceLine 
+                x={hoveredData.time} 
+                stroke="#000000" 
+                strokeWidth={2} 
+                strokeDasharray="none"
+              />
+            )}
             <Bar 
               dataKey="value" 
               fill="#ec4899" 
               radius={[2, 2, 0, 0]} 
               maxBarSize={16}
+              shape={(props: unknown) => (
+                <CustomBar<ChartDataPoint>
+                  {...(props as ChartProps)} 
+                  onMouseEnter={handleBarMouseEnter}
+                  onMouseLeave={handleBarMouseLeave}
+                />
+              )}
             />
           </BarChart>
         </ResponsiveContainer>

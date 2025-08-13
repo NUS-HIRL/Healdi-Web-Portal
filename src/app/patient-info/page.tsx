@@ -1,6 +1,7 @@
 'use client'
 
-import { Sidebar, Footer } from '@/components'
+import { Footer } from "@/components/common/footer";
+import { Sidebar } from "@/components/common/sidebar";
 import { PatientList } from "@/components/patient-info/patient-list";
 import { Patient } from '@/types/patient'
 import { Bell, Search, User } from 'lucide-react'
