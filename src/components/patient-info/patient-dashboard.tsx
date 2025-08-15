@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Sidebar } from '../common/sidebar'
 import { PatientHeader } from './patient-header'
 import { ReportTab } from './report/report-tab'
+import Medications from './medications/medications'
 
 interface PatientDashboardProps {
   patientId: string
@@ -40,7 +41,7 @@ export function PatientDashboard({ patientId }: PatientDashboardProps) {
             </div>
             
             {activeTab === 'Reports' && <ReportTab />}
-            {activeTab === 'Medications' && <div className="text-gray-500">Medications content coming soon...</div>}
+            {activeTab === 'Medications' && <Medications/>}
             {activeTab === 'Appointments' && <div className="text-gray-500">Appointments content coming soon...</div>}
             {activeTab === 'Notes' && <div className="text-gray-500">Notes content coming soon...</div>}
           </div>
