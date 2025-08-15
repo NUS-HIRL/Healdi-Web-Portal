@@ -1,4 +1,3 @@
-// components/patient/medications/medications.tsx
 "use client";
 
 import { useMemo, useState } from "react";
