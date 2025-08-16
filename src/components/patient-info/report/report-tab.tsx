@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Calendar, Clock, BarChart3 } from 'lucide-react'
 import { DropdownButton } from '../../common/dropdown-button'
 import { BloodPressureChart } from './charts/blood-pressure-chart'
 import { HeartRateChart } from './charts/heart-rate-chart'
