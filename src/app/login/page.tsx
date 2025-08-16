@@ -66,7 +66,7 @@ export default function SignUpPage() {
 
           <div className="flex justify-center">
             <Button
-              type="submit"
+              type="button"
               className="w-full h-14 rounded-full  text-lg font-semibold"
             >
               Sign Up
