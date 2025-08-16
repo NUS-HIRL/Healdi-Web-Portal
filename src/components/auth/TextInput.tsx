@@ -1,9 +1,13 @@
-import React from "react";
+"use client";
+
+import * as React from "react";
 import {
+  Control,
+  FieldValues,
+  Path,
+  RegisterOptions,
   useController,
   useFormContext,
-  type Control,
-  type RegisterOptions,
 } from "react-hook-form";
 
 type BaseInputProps = Omit<
@@ -11,15 +15,16 @@ type BaseInputProps = Omit<
   "name" | "value" | "onChange" | "onBlur" | "defaultValue" | "ref"
 >;
 
-export interface TextInputProps extends BaseInputProps {
+export interface TextInputProps<TValues extends FieldValues = FieldValues>
+  extends BaseInputProps {
   label?: string;
-  name: string;               
-  rules?: RegisterOptions;     
-  control?: Control<any>;      
+  name: Path<TValues>;
+  rules?: RegisterOptions<TValues, Path<TValues>>;
+  control?: Control<TValues>;
   className?: string;
 }
 
-export function TextInput({
+export function TextInput<TValues extends FieldValues = FieldValues>({
   label,
   name,
   rules,
@@ -29,8 +34,8 @@ export function TextInput({
   disabled,
   type = "text",
   ...rest
-}: TextInputProps) {
-  const form = useFormContext<any>();
+}: TextInputProps<TValues>) {
+  const form = useFormContext<TValues>();
   const control = controlProp ?? form?.control;
 
   if (!control) {
@@ -39,14 +44,14 @@ export function TextInput({
     );
   }
 
-  const { field, fieldState } = useController({
+  const { field, fieldState } = useController<TValues, Path<TValues>>({
     name,
     control,
     rules,
   });
 
-  const error = fieldState.error?.message as string | undefined;
-  const inputId = id ?? name;
+  const error = fieldState.error?.message;
+  const inputId = id ?? (name as string);
 
   return (
     <div className="flex flex-col">
@@ -59,8 +64,8 @@ export function TextInput({
       <input
         id={inputId}
         name={field.name}
-        value={field.value ?? ""}
-        onChange={field.onChange}
+        value={String(field.value ?? "")}
+        onChange={(e) => field.onChange(e.target.value)}
         onBlur={field.onBlur}
         ref={field.ref}
         type={type}

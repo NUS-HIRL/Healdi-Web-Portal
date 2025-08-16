@@ -1,26 +1,31 @@
-import React, { useEffect, useRef } from "react";
+"use client";
+
+import * as React from "react";
 import {
+  Control,
+  FieldValues,
+  Path,
+  RegisterOptions,
   useController,
   useFormContext,
-  type Control,
-  type RegisterOptions,
 } from "react-hook-form";
 
 type BaseCheckboxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "type" | "name" | "checked" | "onChange" | "onBlur" | "value" | "defaultChecked" | "ref"
+  "type" | "name" | "checked" | "onChange" | "onBlur" | "value" | "defaultChecked"
 >;
 
-export interface CheckboxProps extends BaseCheckboxProps {
+export interface CheckboxProps<TValues extends FieldValues = FieldValues>
+  extends BaseCheckboxProps {
   label: string;
-  name: string;                
-  rules?: RegisterOptions;    
-  control?: Control<any>;      
-  indeterminate?: boolean;    
+  name: Path<TValues>;
+  rules?: RegisterOptions<TValues, Path<TValues>>;
+  control?: Control<TValues>;
+  indeterminate?: boolean;
   className?: string;
 }
 
-export function Checkbox({
+export function Checkbox<TValues extends FieldValues = FieldValues>({
   label,
   name,
   rules,
@@ -30,40 +35,28 @@ export function Checkbox({
   id,
   disabled,
   ...rest
-}: CheckboxProps) {
-  const form = useFormContext<any>();
-  const control = controlProp ?? form?.control;
+}: CheckboxProps<TValues>) {
+  const form = useFormContext<TValues>();
+  const control = controlProp ?? form.control;
 
-  if (!control) {
-    throw new Error(
-      "Checkbox must be used within a FormProvider or be given a `control` prop."
-    );
-  }
-
-  const { field, fieldState } = useController({
+  const { field, fieldState } = useController<TValues, Path<TValues>>({
     name,
     control,
     rules,
-    defaultValue: false,
   });
 
-  const error = fieldState.error?.message as string | undefined;
-  const inputId = id ?? name;
+  const error = fieldState.error?.message;
+  const inputId = id ?? (name as string);
 
-  // Support the visual 'indeterminate' state
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.indeterminate = !!indeterminate;
-    }
+  // Support visual "indeterminate"
+  const inputRef = React.useRef<HTMLInputElement | null>(null);
+  React.useEffect(() => {
+    if (inputRef.current) inputRef.current.indeterminate = !!indeterminate;
   }, [indeterminate]);
 
   return (
     <div className="flex flex-col">
-      <label
-        htmlFor={inputId}
-        className="flex items-center space-x-2 text-sm text-gray-600"
-      >
+      <label htmlFor={inputId} className="flex items-center space-x-2 text-sm text-gray-600">
         <input
           id={inputId}
           name={field.name}

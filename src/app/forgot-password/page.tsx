@@ -16,7 +16,6 @@ export default function SignUpPage() {
   });
 
   const onSubmit = async (data: FormValues) => {
-    console.log("forgot-password:", data);
   };
 
   return (

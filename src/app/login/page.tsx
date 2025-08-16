@@ -20,7 +20,6 @@ export default function SignUpPage() {
   });
 
   const onSubmit = (data: FormValues) => {
-    console.log("form submit:", data);
   };
 
   return (
