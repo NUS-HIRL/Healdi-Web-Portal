@@ -7,15 +7,14 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
-  Apple,
-  Play,
-  HeartPulse,
 } from "lucide-react";
 
 import TableHeaderCell from "./TableHeaderCell";
 import Modal from "./Modal";
 import KeyValueRow from "./KeyValueRow";
 import LabeledInput from "./LabeledInput";
+import { Footer } from "@/components/common/footer";
+import { Button } from "@/components/ui/button";
 
 type Med = {
   id: string;
@@ -108,14 +107,16 @@ export default function Medications() {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h2 className="text-gray-800 font-semibold">Medication Plan</h2>
-          <button
+          <Button
             type="button"
             onClick={() => setShowAdd(true)}
-            className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100"
+            variant="outline"
+            size="sm"
+            className="gap-2"
           >
             <Plus className="h-4 w-4" />
             Add
-          </button>
+          </Button>
         </div>
 
         {/* Table */}
@@ -160,15 +161,17 @@ export default function Medications() {
                     <td className="px-4 py-4">{m.type}</td>
                     <td className="px-4 py-4">{m.creator}</td>
                     <td className="px-4 py-4">
-                      <button
+                      <Button
                         type="button"
                         onClick={() => setViewing(m)}
-                        className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100"
+                        variant="outline"
+                        size="icon"
+                        className="border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100"
                         aria-label={`View ${m.name}`}
                         title="View"
                       >
                         <Eye className="h-4 w-4" />
-                      </button>
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -178,67 +181,79 @@ export default function Medications() {
 
           {/* Pagination */}
           <div className="mt-4 flex items-center justify-end gap-2 relative">
-            <button
+            <Button
               type="button"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 text-gray-500 hover:bg-gray-50 disabled:opacity-40"
+              variant="outline"
+              size="icon"
+              className="text-gray-500"
               disabled={page <= 1}
               aria-label="Previous page"
             >
               <ChevronLeft className="h-4 w-4" />
-            </button>
+            </Button>
 
-            <button
+            <Button
               type="button"
-              className="inline-flex h-8 min-w-[2rem] items-center justify-center rounded-md border border-gray-300 bg-gray-100 px-2 text-sm font-medium text-gray-700"
+              variant="outline"
+              size="icon"
+              className="min-w-[2rem] bg-gray-100 text-gray-700"
               aria-current="page"
+              disabled
             >
               {page}
-            </button>
+            </Button>
 
-            <button
+            <Button
               type="button"
               onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-40"
+              variant="outline"
+              size="icon"
+              className="text-gray-600"
               aria-label="Next page"
               disabled={page >= pageCount}
             >
               <ChevronRight className="h-4 w-4" />
-            </button>
+            </Button>
 
             <div className="ml-2 relative">
-              <button
+              <Button
                 type="button"
                 onClick={() => setOpenPageSize((o) => !o)}
-                className="inline-flex items-center gap-1 rounded-md border border-gray-300 px-2.5 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+                variant="outline"
+                size="sm"
+                className="gap-1 text-gray-700"
                 aria-haspopup="listbox"
                 aria-expanded={openPageSize}
               >
                 {pageSize} / page
                 <ChevronDown className="h-4 w-4" />
-              </button>
+              </Button>
+
               {openPageSize && (
                 <div
                   className="absolute right-0 z-10 mt-1 w-28 overflow-hidden rounded-md border border-gray-200 bg-white shadow"
                   role="listbox"
                 >
                   {[5, 10, 20].map((s) => (
-                    <button
+                    <Button
                       key={s}
                       type="button"
+                      variant="ghost"
+                      size="sm"
                       onClick={() => {
                         setPageSize(s);
                         setOpenPageSize(false);
                         setPage(1);
                       }}
-                      className={`block w-full px-3 py-2 text-left text-sm hover:bg-gray-50 ${
+                      className={`w-full justify-start px-3 ${
                         s === pageSize ? "bg-gray-100" : ""
                       }`}
                       role="option"
                       aria-selected={s === pageSize}
                     >
                       {s} / page
-                    </button>
+                    </Button>
                   ))}
                 </div>
               )}
@@ -247,47 +262,8 @@ export default function Medications() {
         </div>
       </section>
 
-      {/* Download app card */}
-      <section className="mt-6 rounded-xl border border-gray-200 bg-white">
-        <div className="flex flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h3 className="text-gray-800 font-medium">Download Healdi App</h3>
-            <p className="text-sm text-gray-500">
-              Harness the power of the Healdi app to enhance your health tracking journey.
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <a
-              href="#"
-              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-800 hover:bg-gray-50"
-            >
-              <Apple className="h-4 w-4" />
-              App Store
-            </a>
-            <a
-              href="#"
-              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-800 hover:bg-gray-50"
-            >
-              <Play className="h-4 w-4" />
-              Google Play
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="mt-6">
-        <div className="h-px w-full bg-gray-200" />
-        <div className="flex flex-col items-center justify-between gap-3 py-5 text-sm text-gray-500 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-pink-50">
-              <HeartPulse className="h-4 w-4 text-pink-500" />
-            </div>
-            <span className="font-medium text-gray-700">Healdi</span>
-          </div>
-          <span>© Healdi. All Rights Reserved.</span>
-        </div>
-      </footer>
+      <Footer />
 
       {/* View Modal (dummy) */}
       {viewing && (
@@ -330,20 +306,16 @@ export default function Medications() {
               placeholder="e.g. Patient"
             />
             <div className="pt-2 flex justify-end gap-2">
-              <button
+              <Button
                 type="button"
+                variant="outline"
                 onClick={() => setShowAdd(false)}
-                className="rounded-md border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
               >
                 Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleAdd}
-                className="rounded-md bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700"
-              >
+              </Button>
+              <Button type="button" onClick={handleAdd}>
                 Save
-              </button>
+              </Button>
             </div>
           </div>
         </Modal>

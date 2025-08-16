@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export type SortDir = "asc" | "desc";
 
@@ -30,19 +31,24 @@ export default function TableHeaderCell({
   );
 
   return (
-    <th className="px-4 py-3 font-medium">
+    <th
+      className="px-4 py-3 font-medium"
+      aria-sort={
+        active ? (dir === "asc" ? "ascending" : "descending") : ("none" as const)
+      }
+    >
       {noSort ? (
         content
       ) : (
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="sm"
           onClick={onClick}
-          className="inline-flex items-center gap-1 text-left hover:text-gray-900"
-          aria-pressed={!!active}
-          aria-label={`Sort by ${label}${active ? ` (${dir})` : ""}`}
+          className="h-auto px-0 py-0 text-left hover:text-gray-900"
         >
           {content}
-        </button>
+        </Button>
       )}
     </th>
   );

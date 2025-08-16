@@ -1,7 +1,8 @@
 "use client";
 
 import { X } from "lucide-react";
-import type React from "react";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 
 export default function Modal({
   title,
@@ -13,7 +14,12 @@ export default function Modal({
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+    >
       <div
         className="absolute inset-0 bg-black/30"
         onClick={onClose}
@@ -22,14 +28,16 @@ export default function Modal({
       <div className="relative z-10 w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
             onClick={onClose}
-            className="rounded-md p-1 text-gray-500 hover:bg-gray-100"
+            className="h-8 w-8 rounded-md text-gray-500 hover:bg-gray-100"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
-          </button>
+          </Button>
         </div>
         {children}
       </div>
