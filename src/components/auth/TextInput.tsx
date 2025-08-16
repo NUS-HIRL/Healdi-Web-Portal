@@ -9,6 +9,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
+import { Input } from "@/components/ui/input";
 
 type BaseInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -61,18 +62,21 @@ export function TextInput<TValues extends FieldValues = FieldValues>({
         </label>
       )}
 
-      <input
+      <Input
         id={inputId}
         name={field.name}
-        value={String(field.value ?? "")}
-        onChange={(e) => field.onChange(e.target.value)}
-        onBlur={field.onBlur}
-        ref={field.ref}
         type={type}
+        value={String(field.value ?? "")}
+        onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
+        onBlur={field.onBlur}
         disabled={disabled}
-        className={`w-full px-4 py-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 ${
-          error ? "border-red-500" : "border-gray-300"
-        } ${className}`}
+        className={[
+          "rounded-full h-11 px-4",
+          error ? "border-red-500" : "",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
         aria-invalid={!!error}
         aria-describedby={error ? `${inputId}-error` : undefined}
         {...rest}

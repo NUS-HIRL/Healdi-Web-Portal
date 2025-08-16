@@ -5,7 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { TextInput } from "@/components/auth/TextInput";
 import PasswordInput from "@/components/auth/PasswordInput";
 import { Checkbox } from "@/components/auth/Checkbox";
-import { Button } from "@/components/auth/Button";
+import { Button } from "@/components/ui/button"; 
 
 type FormValues = {
   username: string;
@@ -20,6 +20,7 @@ export default function SignUpPage() {
   });
 
   const onSubmit = (data: FormValues) => {
+    // handle submit
   };
 
   return (
@@ -63,9 +64,14 @@ export default function SignUpPage() {
               </a>
             </div>
 
-            <Button type="submit" disabled={methods.formState.isSubmitting || !methods.formState.isValid}>
-              Sign In
+          <div className="flex justify-center">
+            <Button
+              type="submit"
+              className="w-full h-14 rounded-full  text-lg font-semibold"
+            >
+              Sign Up
             </Button>
+          </div>
           </form>
         </FormProvider>
 

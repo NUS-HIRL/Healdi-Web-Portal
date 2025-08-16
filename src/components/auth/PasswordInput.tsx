@@ -10,6 +10,8 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 type BaseInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -66,35 +68,40 @@ export default function PasswordInput<
       )}
 
       <div className="relative">
-        <input
+        <Input
           id={inputId}
           name={field.name}
           value={String(field.value ?? "")}
-          onChange={(e) => field.onChange(e.target.value)}
+          onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
           onBlur={field.onBlur}
-          ref={field.ref}
           type={visible ? "text" : "password"}
           disabled={disabled}
-          className={`w-full px-4 py-3 pr-10 border rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400 ${
-            error ? "border-red-500" : "border-gray-300"
-          } ${className}`}
+          className={[
+            "pr-10 rounded-full", // extra padding for the toggle button + pill shape
+            error ? "border-red-500" : "",
+            className,
+          ]
+            .filter(Boolean)
+            .join(" ")}
           aria-invalid={!!error}
           aria-describedby={error ? `${inputId}-error` : undefined}
           {...rest}
         />
 
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
           onClick={() => setVisible((v) => !v)}
           aria-pressed={visible}
           aria-label={visible ? "Hide password" : "Show password"}
-          className={`absolute right-4 top-1/2 -translate-y-1/2 transform text-gray-500 ${
+          disabled={disabled}
+          className={`absolute right-2.5 top-1/2 -translate-y-1/2 ${
             disabled ? "opacity-50 pointer-events-none" : ""
           }`}
-          disabled={disabled}
         >
-          {visible ? <EyeOff size={20} /> : <Eye size={20} />}
-        </button>
+          {visible ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+        </Button>
       </div>
 
       {error && (

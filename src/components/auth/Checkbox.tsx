@@ -9,6 +9,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
+import { Input } from "@/components/ui/input";
 
 type BaseCheckboxProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -48,32 +49,32 @@ export function Checkbox<TValues extends FieldValues = FieldValues>({
   const error = fieldState.error?.message;
   const inputId = id ?? (name as string);
 
-  // Support visual "indeterminate"
-  const inputRef = React.useRef<HTMLInputElement | null>(null);
+  // Set visual "indeterminate" by DOM property (no ref needed, keeps your Input unchanged)
   React.useEffect(() => {
-    if (inputRef.current) inputRef.current.indeterminate = !!indeterminate;
-  }, [indeterminate]);
+    const el = document.getElementById(inputId) as HTMLInputElement | null;
+    if (el) el.indeterminate = !!indeterminate;
+  }, [indeterminate, inputId]);
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={inputId} className="flex items-center space-x-2 text-sm text-gray-600">
-        <input
+      <label htmlFor={inputId} className="flex items-center gap-2 text-sm text-gray-600">
+        <Input
           id={inputId}
           name={field.name}
           type="checkbox"
           checked={!!field.value}
-          onChange={(e) => field.onChange(e.target.checked)}
+          onChange={(e) => field.onChange((e.target as HTMLInputElement).checked)}
           onBlur={field.onBlur}
-          ref={(el) => {
-            field.ref(el);
-            inputRef.current = el;
-          }}
           disabled={disabled}
-          className={`w-4 h-4 text-pink-500 border-gray-300 rounded focus:ring-pink-400 ${
-            className ?? ""
-          } ${error ? "ring-1 ring-red-500" : ""}`}
+          className={[
+            // Override shadcn Input’s text-field sizing to a checkbox
+            "h-4 w-4 w-auto min-w-0 px-0 py-0 rounded border",
+            error ? "border-red-500" : "",
+            className ?? "",
+          ].join(" ")}
           aria-invalid={!!error}
           aria-describedby={error ? `${inputId}-error` : undefined}
+          aria-checked={indeterminate ? "mixed" : undefined}
           {...rest}
         />
         <span>{label}</span>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useForm, FormProvider } from "react-hook-form";
 import { TextInput } from "@/components/auth/TextInput";
-import { Button } from "@/components/auth/Button";
+import { Button } from "@/components/ui/button";
 
 type FormValues = {
   username: string;
@@ -65,9 +65,14 @@ export default function SignUpPage() {
               rules={{ required: "Username is required" }}
             />
 
-            <Button disableWhileSubmitting disableWhenInvalid>
+          <div className="flex justify-center">
+            <Button
+              type="submit"
+              className="w-full h-14 rounded-full  text-lg font-semibold"
+            >
               Continue
             </Button>
+          </div>
           </form>
         </FormProvider>
 
