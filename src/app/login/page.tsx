@@ -46,8 +46,7 @@ export default function SignUpPage() {
             />
 
             <PasswordInput
-              name="password"
-              placeholder="Password"
+              name = "password"
               autoComplete="new-password"
               rules={{
                 required: "Password is required",

@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 
 type BaseInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "type" | "name" | "value" | "onChange" | "onBlur" | "defaultValue"
+  "type" | "name" | "value" | "onChange" | "onBlur" | "defaultValue" | "id"
 >;
 
 export interface PasswordInputProps<TValues extends FieldValues = FieldValues>
@@ -33,7 +33,6 @@ export function PasswordInput<TValues extends FieldValues = FieldValues>({
   rules,
   control: controlProp,
   className = "",
-  id,
   disabled,
   ...rest
 }: PasswordInputProps<TValues>) {
@@ -41,7 +40,6 @@ export function PasswordInput<TValues extends FieldValues = FieldValues>({
 
   const form = useFormContext<TValues>();
   const control = controlProp ?? form?.control;
-
   if (!control) {
     throw new Error(
       "PasswordInput must be used within a FormProvider or be given a `control` prop."
@@ -55,23 +53,18 @@ export function PasswordInput<TValues extends FieldValues = FieldValues>({
   });
 
   const error = fieldState.error?.message;
-  const inputId = id ?? (name as string);
 
   return (
     <div className="flex flex-col">
-      {label && (
-        <label htmlFor={inputId} className="mb-1 text-sm text-gray-600">
-          {label}
-        </label>
-      )}
+      {label && <span className="mb-1 text-sm text-gray-600">{label}</span>}
 
       <div className="relative">
         <Input
-          id={inputId}
           name={field.name}
           value={String(field.value ?? "")}
           onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
           onBlur={field.onBlur}
+          ref={field.ref}
           type={visible ? "text" : "password"}
           disabled={disabled}
           className={[
@@ -82,8 +75,8 @@ export function PasswordInput<TValues extends FieldValues = FieldValues>({
             .filter(Boolean)
             .join(" ")}
           aria-invalid={!!error}
-          aria-describedby={error ? `${inputId}-error` : undefined}
           {...rest}
+          placeholder="Password"
         />
 
         <Button
@@ -102,11 +95,7 @@ export function PasswordInput<TValues extends FieldValues = FieldValues>({
         </Button>
       </div>
 
-      {error && (
-        <p id={`${inputId}-error`} className="mt-1 text-xs text-red-600">
-          {error}
-        </p>
-      )}
+      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
     </div>
   );
 }
