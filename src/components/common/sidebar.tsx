@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Home, Users, FileText, Calendar, Settings, LogOut } from 'lucide-react'
+import Image from 'next/image'
 
 // TODO: Replace with actual paths to your icons
 export function Sidebar() {
@@ -17,12 +18,13 @@ export function Sidebar() {
   return (
     <div className="w-20 bg-[#FFD792] border-r border-gray-200 flex flex-col shadow-sm">
       {/* Logo */}
-      <div className="p-6">
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-lg">L</span>
-          </div>
-        </div>
+      <div className="p-4">
+          <Image
+            src="/common/logo-healdi.svg"
+            alt="Healdi logo"
+            width={50}
+            height={50}
+          />
       </div>
 
       {/* Navigation */}
