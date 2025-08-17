@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { useForm, FormProvider } from "react-hook-form";
 import { TextInput } from "@/components/auth/TextInput";
-import PasswordInput from "@/components/auth/PasswordInput";
-import { Checkbox } from "@/components/auth/Checkbox";
+import { PasswordInput} from "@/components/auth/PasswordInput";
 import { Button } from "@/components/ui/button"; 
 
 type FormValues = {
@@ -15,7 +14,6 @@ type FormValues = {
 
 export default function SignUpPage() {
   const methods = useForm<FormValues>({
-    mode: "onTouched",
     defaultValues: { username: "", password: "", terms: false },
   });
 
@@ -58,7 +56,6 @@ export default function SignUpPage() {
             />
 
             <div className="flex items-center justify-between">
-              <Checkbox name="terms" label="Remember Me" />
               <a href="/forgot-password" className="text-xs text-gray-500 hover:opacity-75">
                 Forgot your password?
               </a>
@@ -66,7 +63,6 @@ export default function SignUpPage() {
 
           <div className="flex justify-center">
             <Button
-              type="button"
               className="w-full h-14 rounded-full  text-lg font-semibold"
             >
               Sign Up

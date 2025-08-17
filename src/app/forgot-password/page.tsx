@@ -4,15 +4,17 @@ import Image from "next/image";
 import { useForm, FormProvider } from "react-hook-form";
 import { TextInput } from "@/components/auth/TextInput";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
+type Username = string;
 
 type FormValues = {
-  username: string;
+  username: Username;
 };
 
 export default function SignUpPage() {
   const methods = useForm<FormValues>({
-    mode: "onChange", 
-    defaultValues: { username: "" },
+    defaultValues: { username: "" as Username },
   });
 
   const onSubmit = async (data: FormValues) => {
@@ -76,7 +78,9 @@ export default function SignUpPage() {
         </FormProvider>
 
         <p className="text-center text-sm text-gray-600">
-          <a href="/login">Back to login</a>
+          <Link href="/login" className="hover:opacity-75">
+            Back to login
+          </Link>
         </p>
 
         <p className="text-center text-xs text-gray-400">

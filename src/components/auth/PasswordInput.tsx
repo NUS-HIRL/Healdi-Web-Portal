@@ -27,9 +27,7 @@ export interface PasswordInputProps<TValues extends FieldValues = FieldValues>
   className?: string;
 }
 
-export default function PasswordInput<
-  TValues extends FieldValues = FieldValues
->({
+export function PasswordInput<TValues extends FieldValues = FieldValues>({
   label,
   name,
   rules,
@@ -77,7 +75,7 @@ export default function PasswordInput<
           type={visible ? "text" : "password"}
           disabled={disabled}
           className={[
-            "pr-10 rounded-full", // extra padding for the toggle button + pill shape
+            "pr-10 rounded-full",
             error ? "border-red-500" : "",
             className,
           ]
