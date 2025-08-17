@@ -1,6 +1,6 @@
 import type React from "react";
 
-export default function KeyValueRow({
+export function KeyValueRow({
   label,
   value,
 }: {
@@ -14,3 +14,5 @@ export default function KeyValueRow({
     </div>
   );
 }
+
+

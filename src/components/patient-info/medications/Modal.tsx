@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 
-export default function Modal({
+export function Modal({
   title,
   children,
   onClose,
@@ -44,3 +44,4 @@ export default function Modal({
     </div>
   );
 }
+

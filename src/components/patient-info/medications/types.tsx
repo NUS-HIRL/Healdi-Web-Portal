@@ -6,4 +6,4 @@ type Med = {
   creator: string;
 };
 
-export type {Med}
+export type { Med }

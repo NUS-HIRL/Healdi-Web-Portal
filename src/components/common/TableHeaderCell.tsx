@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export type SortDir = "asc" | "desc";
 
-export default function TableHeaderCell({
+export function TableHeaderCell({
   label,
   active,
   dir,

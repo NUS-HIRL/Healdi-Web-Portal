@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 
-export default function LabeledInput({
+export function LabeledInput({
   label,
   id,
   ...props
