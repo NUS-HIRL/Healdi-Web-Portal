@@ -15,14 +15,8 @@ import KeyValueRow from "./KeyValueRow";
 import LabeledInput from "./LabeledInput";
 import { Footer } from "@/components/common/footer";
 import { Button } from "@/components/ui/button";
+import { Med } from "./types";
 
-type Med = {
-  id: string;
-  name: string;
-  dosage: string;
-  type: string;
-  creator: string;
-};
 
 const INITIAL_DATA: Med[] = [
   { id: "1", name: "Propranolol Hydrochloride", dosage: "500 mg", type: "Tablet", creator: "Patient" },
