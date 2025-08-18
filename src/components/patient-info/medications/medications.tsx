@@ -7,13 +7,13 @@ import {
 } from "lucide-react";
 
 import { TableHeaderCell } from "../../common/TableHeaderCell";
-import { Modal } from "./Modal";
-import { KeyValueRow } from "./KeyValueRow";
-import { LabeledInput } from "./LabeledInput";
+import { Modal } from "./modal";
+import { KeyValueRow } from "./key-value-row";
+import { LabeledInput } from "./labeled-input";
 import { Footer } from "@/components/common/footer";
 import { Button } from "@/components/ui/button";
 import { Pagination } from "@/components/common/pagination";
-import { Med } from "./types";
+import { Med } from "../../../types/medications-types";
 
 
 const INITIAL_DATA: Med[] = [
