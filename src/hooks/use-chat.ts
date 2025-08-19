@@ -1,11 +1,11 @@
-import { useParams } from 'next/navigation';
-import { useMemo } from 'react';
+import { useParams } from "next/navigation";
+import { useMemo } from "react";
 
 const useChat = () => {
   const params = useParams();
   const chatId = useMemo(() => {
     if (!params?.chatId) {
-      return '';
+      return "";
     }
 
     return params.chatId as string;
@@ -13,7 +13,8 @@ const useChat = () => {
 
   const isOpen = useMemo(() => !!chatId, [chatId]);
 
-  return useMemo(() => ({
+  return useMemo(
+    () => ({
       isOpen,
       chatId,
     }),

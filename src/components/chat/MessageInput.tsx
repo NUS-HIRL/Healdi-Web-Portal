@@ -77,8 +77,6 @@ const MessageInput = forwardRef<MessageInputRef, MessageInputProps>(
 
     return (
       <div className="relative flex items-center w-full">
-        {" "}
-        {/* relative 👈 */}
         <textarea
           id={id}
           autoComplete={id}
