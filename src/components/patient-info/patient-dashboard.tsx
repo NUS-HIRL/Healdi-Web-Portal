@@ -6,6 +6,7 @@ import { PatientHeader } from './patient-header'
 import { ReportTab } from './report/report-tab'
 import { GoalsTab } from './goals/goals-tab'
 import { Footer } from '../common/footer'
+import Medications from './medications/medications'
 
 interface PatientDashboardProps {
   patientId: string
@@ -42,12 +43,9 @@ export function PatientDashboard({ patientId }: PatientDashboardProps) {
             </div>
             
             {activeTab === 'Reports' && <ReportTab />}
-            {activeTab === 'Medications' && <div className="text-gray-500">Medications content coming soon...</div>}
-            {activeTab === 'Lab Results' && <div className="text-gray-500">Lab results content coming soon...</div>}
-            {activeTab === 'Goals' && <GoalsTab />}
-            {activeTab === 'AI Exercise Recommendations' && <div className="text-gray-500">AI recommendations coming soon...</div>}
-            {activeTab === 'Resources' && <div className="text-gray-500">Resources content coming soon...</div>}
-
+            {activeTab === 'Medications' && <Medications/>}
+            {activeTab === 'Appointments' && <div className="text-gray-500">Appointments content coming soon...</div>}
+            {activeTab === 'Notes' && <div className="text-gray-500">Notes content coming soon...</div>}
           </div>
         </main>
         
