@@ -18,7 +18,6 @@ export interface Message {
   seen: { userId: string; seenAt: Date }[];
 }
 
-
 export interface Chat {
   id: string;
   createdAt: Date;
