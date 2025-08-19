@@ -4,7 +4,7 @@ import EmptyState from "@/components/chat/EmptyState";
 
 const Home = () => {
   return (
-    <div className={"h-full block"}>
+    <div className="h-full block">
       <EmptyState />
     </div>
   );

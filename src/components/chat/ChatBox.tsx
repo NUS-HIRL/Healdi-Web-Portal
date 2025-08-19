@@ -56,17 +56,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }) => {
     <div
       onClick={handleClick}
       className={cn(
-        `
-        w-full
-        max-w-full 
-        flex
-        items-center
-        space-x-3
-        p-3
-        hover:bg-neutral-100
-        rounded-lg
-        transition
-        cursor-pointer
+        `w-full max-w-full flex items-center space-x-3 p-3 hover:bg-neutral-100 rounded-lg transition cursor-pointer
       `,
         selected ? "bg-amber-50" : "bg-white"
       )}

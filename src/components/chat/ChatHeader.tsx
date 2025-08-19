@@ -34,7 +34,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ chat }) => {
           <div className="flex flex-col">
             <div>{otherUser.name}</div>
             <div
-              className="
+              className=" 
                 text-sm
                 font-light
                 text-neutral-500

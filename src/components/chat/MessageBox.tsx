@@ -10,7 +10,6 @@ interface MessageBoxProps {
 }
 
 const MessageBox: React.FC<MessageBoxProps> = ({ data }) => {
-  // Frontend-only ownership check (no session/db)
   const currentUserEmail = "johndoe@example.com";
   const isOwn =
     (currentUserEmail &&
@@ -31,10 +30,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data }) => {
     data.image && "rounded p-0"
   );
 
-  const date = cn(
-    `text-sm`,
-    isOwn ? "text-white" : "text-gray-400"
-  )
+  const date = cn(`text-sm`, isOwn ? "text-white" : "text-gray-400");
 
   return (
     <div className={container}>
@@ -62,9 +58,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data }) => {
         </div>
 
         {data?.createdAt && (
-          <div className={date}>
-            {format(new Date(data.createdAt), "p")}
-          </div>
+          <div className={date}>{format(new Date(data.createdAt), "p")}</div>
         )}
       </div>
     </div>

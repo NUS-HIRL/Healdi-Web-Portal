@@ -22,8 +22,7 @@ const EmptyState = () => {
           flex-col
           gap-3
         "
-      >
-      </div>
+      ></div>
     </div>
   );
 };

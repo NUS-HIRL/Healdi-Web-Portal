@@ -98,7 +98,7 @@ Once your emergency situation is resolved, you can enter /emergencyoff in the in
         seen: [{ userId: "u0", seenAt: new Date("2025-02-17T20:05:00Z") }],
       },
     ],
-  }
+  },
 ];
 
 const ChatsLayout = ({ children }: { children: React.ReactNode }) => {
@@ -112,9 +112,7 @@ const ChatsLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="hidden lg:block w-fit shrink-0 border-r border-gray-200 overflow-y-auto">
             <ChatList users={users} initialItems={conversations} />
           </div>
-          <div className="flex-1 min-w-0 overflow-y-auto">
-            {children}
-          </div>
+          <div className="flex-1 min-w-0 overflow-y-auto">{children}</div>
         </div>
         <Footer />
       </div>

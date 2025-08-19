@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   ChangeEvent,
@@ -7,8 +7,8 @@ import {
   useEffect,
   useImperativeHandle,
   forwardRef,
-} from 'react';
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+} from "react";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 export interface MessageInputRef {
   resetTextareaHeight: () => void;
@@ -36,13 +36,13 @@ const MessageInput = forwardRef<MessageInputRef, MessageInputProps>(
       watchedMessage,
     } = props;
 
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState("");
     const MIN_HEIGHT_REM = 2.5;
     const MAX_HEIGHT_REM = 8;
     const BASE_FONT_SIZE = 16;
 
     const resizeTextarea = (ta: HTMLTextAreaElement) => {
-      ta.style.height = '0';
+      ta.style.height = "0";
       const newHeight = Math.min(
         Math.max(ta.scrollHeight / BASE_FONT_SIZE, MIN_HEIGHT_REM),
         MAX_HEIGHT_REM
@@ -56,10 +56,10 @@ const MessageInput = forwardRef<MessageInputRef, MessageInputProps>(
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
+      if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
         onEnterPress();
-        setContent('');
+        setContent("");
         resetTextareaHeight();
       }
     };
@@ -76,7 +76,9 @@ const MessageInput = forwardRef<MessageInputRef, MessageInputProps>(
     useImperativeHandle(ref, () => ({ resetTextareaHeight }));
 
     return (
-      <div className="relative flex items-center w-full"> {/* relative 👈 */}
+      <div className="relative flex items-center w-full">
+        {" "}
+        {/* relative 👈 */}
         <textarea
           id={id}
           autoComplete={id}
@@ -103,5 +105,5 @@ const MessageInput = forwardRef<MessageInputRef, MessageInputProps>(
   }
 );
 
-MessageInput.displayName = 'MessageInput';
+MessageInput.displayName = "MessageInput";
 export default MessageInput;

@@ -9,18 +9,7 @@ interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = ({ user }) => {
   return (
-    <div
-      className="
-          relative
-          inline-block
-          rounded-full
-          overflow-hidden
-          h-9
-          w-9
-          md:h-11
-          md:w-11
-        "
-    >
+    <div className="inline-block rounded-full overflow-hidden h-11 w-11">
       <Image
         alt="Avatar"
         src={user?.image || "/chat/placeholder-avatar.svg"}
