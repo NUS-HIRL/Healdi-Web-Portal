@@ -41,11 +41,21 @@ export function PatientDashboard({ patientId }: PatientDashboardProps) {
                 ))}
               </div>
             </div>
-            
-            {activeTab === 'Reports' && <ReportTab />}
-            {activeTab === 'Medications' && <Medications/>}
-            {activeTab === 'Appointments' && <div className="text-gray-500">Appointments content coming soon...</div>}
-            {activeTab === 'Notes' && <div className="text-gray-500">Notes content coming soon...</div>}
+
+            {activeTab === "Reports" && <ReportTab />}
+            {activeTab === "Medications" && <Medications />}
+            {activeTab === "Lab Results" && (
+              <div className="text-gray-500">
+                Lab Results content coming soon...
+              </div>
+            )}
+            {activeTab === "Goals" && <GoalsTab />}
+            {activeTab === "AI Exercise Recommendations" && (
+              <div className="text-gray-500">AI Exercise Recommendations content coming soon...</div>
+            )}
+            {activeTab === "Resources" && (
+              <div className="text-gray-500">Resources content coming soon...</div>
+            )}
           </div>
         </main>
         
@@ -53,5 +63,5 @@ export function PatientDashboard({ patientId }: PatientDashboardProps) {
         <Footer />
       </div>
     </div>
-  )
+  );
 }

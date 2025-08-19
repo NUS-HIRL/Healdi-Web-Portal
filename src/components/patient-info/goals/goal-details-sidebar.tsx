@@ -23,7 +23,7 @@ export function GoalDetailsSidebar({ goal, isOpen, onClose }: GoalDetailsSidebar
         </SheetHeader>
 
         {goal && (
-          <div className="space-y-6 ml-4 mr-4">
+          <div className="space-y-4 ml-4 mr-4">
             <Separator className="mt-0" />
 
             {/* Category */}
@@ -105,7 +105,7 @@ export function GoalDetailsSidebar({ goal, isOpen, onClose }: GoalDetailsSidebar
             <div className="flex space-x-3 pt-2">
               <Button
                 variant="outline"
-                className="flex-1 bg-gray-700 text-white border-gray-700 hover:bg-gray-800 hover:border-gray-800"
+                className="flex-1 bg-black text-white border-gray-700 hover:bg-gray-800 hover:border-gray-800"
                 onClick={() => {
                   // Navigate to edit page
                   window.location.href = `/patient-info/goals/${goal.id}/edit`

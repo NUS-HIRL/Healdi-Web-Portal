@@ -6,7 +6,9 @@ interface EditGoalPageProps {
   }>
 }
 
-export default async function EditGoalPageRoute({ params }: EditGoalPageProps) {
+const EditGoalPageRoute = async ({ params }: EditGoalPageProps) => {
   const { goalId } = await params
   return <EditGoalPage goalId={goalId} />
 }
+
+export default EditGoalPageRoute

@@ -6,8 +6,9 @@ interface PatientInfoPageProps {
   }>
 }
 
-export default async function PatientInfoPage({ params }: PatientInfoPageProps) {
+const PatientInfoPage = async ({ params }: PatientInfoPageProps) => {
   const { 'patient-id': patientId } = await params
-  
   return <PatientDashboard patientId={patientId} />
 }
+
+export default PatientInfoPage

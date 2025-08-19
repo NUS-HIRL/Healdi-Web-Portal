@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -11,26 +11,28 @@ import { Sidebar } from '../../common/sidebar'
 import { Search, Bell, User } from 'lucide-react'
 
 export function AddGoalPage() {
-  const [formData, setFormData] = useState({
-    category: '',
-    completionType: '',
-    title: '',
-    description: '',
-    coins: 0,
-    bonus: 0
-  })
-
-  const handleInputChange = (field: string, value: string | number) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }))
+  type AddGoalForm = {
+    category: string
+    completionType: string
+    title: string
+    description: string
+    coins: number
+    bonus: number
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission - in a real app, this would create a new goal
-    console.log('New goal data:', formData)
+  const { register, control, handleSubmit } = useForm<AddGoalForm>({
+    defaultValues: {
+      category: '',
+      completionType: '',
+      title: '',
+      description: '',
+      coins: 0,
+      bonus: 0
+    }
+  })
+
+  const onSubmit = (data: AddGoalForm) => {
+    // TODO: Handle form submission
   }
 
   return (
@@ -86,7 +88,7 @@ export function AddGoalPage() {
                 <h2 className="text-blue-600 text-xl font-semibold">New Goal</h2>
               </div>
               
-              <form onSubmit={handleSubmit} className="space-y-8">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                 {/* Category */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
@@ -94,17 +96,23 @@ export function AddGoalPage() {
                     <p className="text-sm text-gray-500 mt-1">Select the category type</p>
                   </div>
                   <div className="md:col-span-2">
-                    <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select Category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Physical Activity">Physical Activity</SelectItem>
-                        <SelectItem value="Nutrition">Nutrition</SelectItem>
-                        <SelectItem value="Mental Health">Mental Health</SelectItem>
-                        <SelectItem value="Sleep">Sleep</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Controller
+                      control={control}
+                      name="category"
+                      render={({ field }) => (
+                        <Select value={field.value || undefined} onValueChange={field.onChange}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select Category" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Physical Activity">Physical Activity</SelectItem>
+                            <SelectItem value="Nutrition">Nutrition</SelectItem>
+                            <SelectItem value="Mental Health">Mental Health</SelectItem>
+                            <SelectItem value="Sleep">Sleep</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
                   </div>
                 </div>
 
@@ -115,16 +123,22 @@ export function AddGoalPage() {
                     <p className="text-sm text-gray-500 mt-1">Select Short Term, Long Term or One-Off</p>
                   </div>
                   <div className="md:col-span-2">
-                    <Select value={formData.completionType} onValueChange={(value) => handleInputChange('completionType', value)}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select Completion Type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Short Term">Short Term</SelectItem>
-                        <SelectItem value="Long Term">Long Term</SelectItem>
-                        <SelectItem value="One-Off">One-Off</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Controller
+                      control={control}
+                      name="completionType"
+                      render={({ field }) => (
+                        <Select value={field.value || undefined} onValueChange={field.onChange}>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select Completion Type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Short Term">Short Term</SelectItem>
+                            <SelectItem value="Long Term">Long Term</SelectItem>
+                            <SelectItem value="One-Off">One-Off</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
                   </div>
                 </div>
 
@@ -136,10 +150,9 @@ export function AddGoalPage() {
                   </div>
                   <div className="md:col-span-2">
                     <Input
-                      value={formData.title}
-                      onChange={(e) => handleInputChange('title', e.target.value)}
                       placeholder="Goal Title"
                       className="w-full"
+                      {...register('title')}
                     />
                   </div>
                 </div>
@@ -152,10 +165,9 @@ export function AddGoalPage() {
                   </div>
                   <div className="md:col-span-2">
                     <Textarea
-                      value={formData.description}
-                      onChange={(e) => handleInputChange('description', e.target.value)}
                       placeholder="Description of the activity"
                       className="w-full min-h-[120px]"
+                      {...register('description')}
                     />
                   </div>
                 </div>
@@ -169,10 +181,9 @@ export function AddGoalPage() {
                   <div className="md:col-span-2">
                     <Input
                       type="number"
-                      value={formData.coins}
-                      onChange={(e) => handleInputChange('coins', parseInt(e.target.value) || 0)}
                       placeholder="0"
                       className="w-full"
+                      {...register('coins', { valueAsNumber: true })}
                     />
                   </div>
                 </div>
@@ -186,10 +197,9 @@ export function AddGoalPage() {
                   <div className="md:col-span-2">
                     <Input
                       type="number"
-                      value={formData.bonus}
-                      onChange={(e) => handleInputChange('bonus', parseInt(e.target.value) || 0)}
                       placeholder="0"
                       className="w-full"
+                      {...register('bonus', { valueAsNumber: true })}
                     />
                   </div>
                 </div>
@@ -201,7 +211,7 @@ export function AddGoalPage() {
                     Review your filled form details and make sure everything is accurate. Once you are ready, click the Submit button to add the new goal.
                   </p>
                   <div className="flex justify-end">
-                    <Button type="submit" className="bg-gray-700 text-white hover:bg-gray-800">
+                    <Button type="submit" className="bg-black text-white hover:bg-gray-800">
                       Submit
                     </Button>
                   </div>
