@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 import { TableHeaderCell } from "../../common/TableHeaderCell";
-import { Modal } from "./modal";
+import { Modal } from "./Modal";
 import { KeyValueRow } from "./key-value-row";
 import { LabeledInput } from "./labeled-input";
 import { Footer } from "@/components/common/footer";
