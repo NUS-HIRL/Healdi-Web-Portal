@@ -49,7 +49,7 @@ export const conversations: Chat[] = [
     messages: [
       {
         id: "m1",
-        body: `Welcome to Empower+ Chat! 
+        body: `Welcome to Healdi Chat! 
 We're here to help you with any queries you may have. Our intelligent Chatbot is ready to assist you.
 In case of an emergency and you need immediate assistance from our healthcare team, simply enter /emergencyon in the input field to activate the emergency message function.
 Once your emergency situation is resolved, you can enter /emergencyoff in the input field to deactivate the emergency message function. Alternatively, the emergency message function will automatically deactivate if no messages are received within 1 hour of activating it.`,
@@ -78,7 +78,7 @@ Once your emergency situation is resolved, you can enter /emergencyoff in the in
     messages: [
       {
         id: "m3",
-        body: `Welcome to Empower+ Chat! 
+        body: `Welcome to Healdi Chat! 
 We're here to help you with any queries you may have. Our intelligent Chatbot is ready to assist you.
 In case of an emergency and you need immediate assistance from our healthcare team, simply enter /emergencyon in the input field to activate the emergency message function.
 Once your emergency situation is resolved, you can enter /emergencyoff in the input field to deactivate the emergency message function. Alternatively, the emergency message function will automatically deactivate if no messages are received within 1 hour of activating it.`,

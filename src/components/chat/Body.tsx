@@ -36,7 +36,7 @@ const Body: React.FC<BodyProps> = ({ messages }) => {
           </div>
         ))}
 
-      <SystemNotice text="Welcome to Empower+ chat!" />
+      <SystemNotice text="Welcome to Healdi chat!" />
     </div>
   );
 };
