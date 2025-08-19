@@ -1,13 +1,8 @@
-// components/SystemNotice.tsx
 "use client";
 
 import clsx from "clsx";
 
-export default function SystemNotice({
-  text
-}: {
-  text: string;
-}) {
+const SystemNotice = ({ text }: { text: string }) => {
   return (
     <div className="px-4 h-fit">
       <div
@@ -21,4 +16,6 @@ export default function SystemNotice({
       </div>
     </div>
   );
-}
+};
+
+export default SystemNotice;

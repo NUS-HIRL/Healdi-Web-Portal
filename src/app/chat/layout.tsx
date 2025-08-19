@@ -101,7 +101,7 @@ Once your emergency situation is resolved, you can enter /emergencyoff in the in
   }
 ];
 
-export default function ChatsLayout({ children }: { children: React.ReactNode }) {
+const ChatsLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
@@ -120,4 +120,6 @@ export default function ChatsLayout({ children }: { children: React.ReactNode })
       </div>
     </div>
   );
-}
+};
+
+export default ChatsLayout;
