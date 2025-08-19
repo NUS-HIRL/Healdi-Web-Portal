@@ -4,7 +4,6 @@ export function Footer() {
   return (
           <>
         {/* Download App Section */}
-        <div className="bg-white">
           <div className="flex mt-3 mb-3 bg-gray-100 rounded-lg p-6 border border-gray-200 mx-6">
             <div className="flex-1 items-center justify-center">
               <h2 className="text-xl font-bold text-gray-900">
@@ -36,7 +35,6 @@ export function Footer() {
               </button>
             </div>
           </div>
-        </div>
 
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 px-6 py-4">
