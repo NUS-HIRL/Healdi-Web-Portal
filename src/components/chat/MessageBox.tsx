@@ -1,7 +1,7 @@
 "use client";
 
 import { Message } from "@/types/chat";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import Image from "next/image";
 
@@ -18,12 +18,12 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data }) => {
       currentUserEmail === data.sender.email) ||
     false;
 
-  const container = clsx("flex gap-3 p-4", isOwn && "justify-end");
-  const body = clsx(
+  const container = cn("flex gap-3 p-4", isOwn && "justify-end");
+  const body = cn(
     "flex flex-col gap-2 rounded-lg p-2",
     isOwn ? "items-end bg-sky-500 text-white" : "bg-sky-100"
   );
-  const message = clsx(
+  const message = cn(
     `text-sm 
      max-w-2xl
      break-words
@@ -31,7 +31,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data }) => {
     data.image && "rounded p-0"
   );
 
-  const date = clsx(
+  const date = cn(
     `text-sm`,
     isOwn ? "text-white" : "text-gray-400"
   )

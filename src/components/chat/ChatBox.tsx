@@ -3,7 +3,7 @@
 import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import { Chat } from "@/types/chat";
 import Avatar from "@/components/chat/Avatar";
 import useOtherUser from "@/hooks/use-other-user";
@@ -55,7 +55,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }) => {
   return (
     <div
       onClick={handleClick}
-      className={clsx(
+      className={cn(
         `
         w-full
         max-w-full 
@@ -87,7 +87,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }) => {
           </div>
           <div className="flex justify-between items-center">
             <p
-              className={clsx(
+              className={cn(
                 `
                 truncate
                 text-sm

@@ -2,7 +2,7 @@
 
 import Avatar from "./Avatar";
 import { IoSearchOutline } from "react-icons/io5";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import useOtherUser from "@/hooks/use-other-user";
 import { Chat } from "@/types/chat";
 
@@ -45,7 +45,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ chat }) => {
           </div>
         </div>
         <div
-          className={clsx(
+          className={cn(
             `
             flex
             w-full

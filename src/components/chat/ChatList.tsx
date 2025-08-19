@@ -1,7 +1,7 @@
 "use client";
 
 import { Chat, UserType } from "@/types/chat";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import ChatBox from "@/components/chat/ChatBox";
 import { Switch } from "@/components/ui/switch";
@@ -21,7 +21,7 @@ const ChatList: React.FC<ChatListProps> = ({ initialItems }) => {
   return (
     <>
       <aside
-        className={clsx(
+        className={cn(
           `
           h-full
           pb-20
