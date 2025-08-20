@@ -3,6 +3,7 @@
 import { Sidebar } from '../../common/sidebar'
 import { Footer } from '@/components/common/footer'
 import { MainHeader } from '@/components/common/main-header'
+import Image from 'next/image'
 
 interface EditExerciseFormProps {
   exerciseId: string
@@ -33,7 +34,7 @@ export function EditExerciseForm({ exerciseId }: EditExerciseFormProps) {
               <div className="grid grid-cols-2 gap-6 mb-8 items-start">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded flex items-center justify-center p-1">
-                    <img src="/common/ai-vector.png" alt="AI" className="w-full h-full object-contain" />
+                    <Image src="/common/ai-vector.png" alt="AI" width={24} height={24} className="w-full h-full object-contain" />
                   </div>
                   <h3 className="text-md font-bold text-black-700">AI Recommended Summary</h3>
                 </div>
@@ -56,10 +57,10 @@ export function EditExerciseForm({ exerciseId }: EditExerciseFormProps) {
                     <span className="text-sm text-gray-700">Do you like this recommendation?</span>
                     <div className="flex gap-2">
                       <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                        <img src="/common/thumbsup-icon.png" alt="Thumbs up" className="w-6 h-6" />
+                        <Image src="/common/thumbsup-icon.png" alt="Thumbs up" width={24} height={24} className="w-6 h-6" />
                       </button>
                       <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                        <img src="/common/thumbsdown-icon.png" alt="Thumbs down" className="w-6 h-6" />
+                        <Image src="/common/thumbsdown-icon.png" alt="Thumbs down" width={24} height={24} className="w-6 h-6" />
                       </button>
                     </div>
                   </div>
@@ -143,7 +144,7 @@ export function EditExerciseForm({ exerciseId }: EditExerciseFormProps) {
                   <div className="mb-4">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Ready to Submit?</h3>
                     <p className="text-gray-600 text-sm">
-                      Review your filled form details and make sure everything is accurate. Once you're ready, click the 'Submit' button to add the new exercise recommendation.
+                      Review your filled form details and make sure everything is accurate. Once you&apos;re ready, click the &apos;Submit&apos; button to add the new exercise recommendation.
                     </p>
                   </div>
                   <div className="flex justify-end border-t border-gray-200 pt-4">
