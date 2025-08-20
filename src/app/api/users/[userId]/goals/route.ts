@@ -2,8 +2,8 @@ import { UPSTREAM_BASE_URL } from '@/config/api'
 import { NextResponse } from 'next/server'
 
 export const GET = async (request: Request, context: unknown) => {
-  const { params } = context as { params: { userId: string } }
-  const { userId } = params
+  const { params } = context as { params: Promise<{ userId: string }> }
+  const { userId } = await params
   const authHeader = request.headers.get('authorization')
   if (!authHeader) {
     return NextResponse.json({ message: 'Unauthorized: missing Authorization header' }, { status: 401 })
