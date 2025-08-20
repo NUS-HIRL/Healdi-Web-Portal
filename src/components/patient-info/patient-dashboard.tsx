@@ -43,7 +43,7 @@ export function PatientDashboard({ patientId }: PatientDashboardProps) {
             
             {activeTab === 'Reports' && <ReportTab />}
             {activeTab === 'Medications' && <Medications/>}
-            {activeTab === 'AI Exercise Recommendations' && <AiExerciseRecommendations />}
+            {activeTab === 'AI Exercise Recommendations' && <AiExerciseRecommendations patientId={patientId} />}
             {activeTab === 'Notes' && <div className="text-gray-500">Notes content coming soon...</div>}
           </div>
         </div>
