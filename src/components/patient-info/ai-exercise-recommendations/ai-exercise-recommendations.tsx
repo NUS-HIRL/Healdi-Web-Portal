@@ -13,21 +13,21 @@ import { LabeledInput } from "../../common/labeled-input";
 import { Footer } from "@/components/common/footer";
 import { Button } from "@/components/ui/button";
 import { Pagination } from "@/components/common/pagination";
-import { Med } from "../../../types/medications-types";
+import { Exercise } from "@/types/exercise";
 
 
-const INITIAL_DATA: Med[] = [
-  { id: "1", name: "Propranolol Hydrochloride", dosage: "500 mg", type: "Tablet", creator: "Patient" },
-  { id: "2", name: "Amiloride Hydrochloride / Hydrochlorothiazide", dosage: "5 / 50 mg", type: "Tablet", creator: "Patient" },
-  { id: "3", name: "Metformin", dosage: "500 mg", type: "Tablet", creator: "Patient" },
-  { id: "4", name: "Paracetamol", dosage: "N/A", type: "Tablet", creator: "Patient" },
+const INITIAL_DATA: Exercise[] = [
+  { id: "1", activityType: "Brisk Walking", duration: 30, frequency: 1, intensity: "Moderate", assignedOrSaved: "Assigned" },
+  { id: "2", activityType: "Swimming", duration: 45, frequency: 3, intensity: "High", assignedOrSaved: "Saved" },
+  { id: "3", activityType: "Strength Training", duration: 20, frequency: 2, intensity: "High", assignedOrSaved: "Assigned" },
+  { id: "4", activityType: "Yoga", duration: 60, frequency: 1, intensity: "Low", assignedOrSaved: "Saved" },
 ];
 
-export default function Medications() {
-  const [rows, setRows] = useState<Med[]>(INITIAL_DATA);
+export default function AiExerciseRecommendations() {
+  const [rows, setRows] = useState<Exercise[]>(INITIAL_DATA);
 
   // sorting
-  const [sortKey, setSortKey] = useState<keyof Med>("name");
+  const [sortKey, setSortKey] = useState<keyof Exercise>("activityType");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
   // pagination
@@ -36,15 +36,16 @@ export default function Medications() {
   const [openPageSize, setOpenPageSize] = useState(false);
 
   // modals
-  const [viewing, setViewing] = useState<Med | null>(null);
+  const [viewing, setViewing] = useState<Exercise | null>(null);
   const [showAdd, setShowAdd] = useState(false);
 
   // add form (dummy)
-  const [form, setForm] = useState<Pick<Med, "name" | "dosage" | "type" | "creator">>({
-    name: "",
-    dosage: "",
-    type: "Tablet",
-    creator: "Patient",
+  const [form, setForm] = useState<Pick<Exercise, "activityType" | "duration" | "frequency" | "intensity" | "assignedOrSaved">>({
+    activityType: "",
+    duration: "",
+    frequency: "",
+    intensity: "",
+    assignedOrSaved: "",
   });
 
   const sorted = useMemo(() => {
@@ -63,7 +64,7 @@ export default function Medications() {
     return sorted.slice(start, start + pageSize);
   }, [sorted, page, pageSize]);
 
-  function toggleSort(key: keyof Med) {
+  function toggleSort(key: keyof Exercise) {
     if (sortKey === key) {
       setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     } else {
@@ -73,32 +74,33 @@ export default function Medications() {
   }
 
   function handleAdd() {
-    if (!form.name.trim()) {
-      alert("Enter a medication name (dummy validation).");
+    if (!form.activityType.trim()) {
+      alert("Enter an activity type (dummy validation).");
       return;
     }
-    const newRow: Med = {
+    const newRow: Exercise = {
       id: String(Date.now()),
-      name: form.name.trim(),
-      dosage: form.dosage.trim() || "N/A",
-      type: form.type,
-      creator: form.creator,
+      activityType: form.activityType.trim(),
+      duration: form.duration.trim() || "N/A",
+      frequency: form.frequency.trim() || "N/A",
+      intensity: form.intensity || "Low",
+      assignedOrSaved: form.assignedOrSaved || "Saved",
     };
     setRows((r) => [newRow, ...r]);
     setShowAdd(false);
-    setForm({ name: "", dosage: "", type: "Tablet", creator: "Patient" });
+    setForm({ activityType: "", duration: "", frequency: "", intensity: "", assignedOrSaved: "" });
   }
 
   return (
     <div className="w-full px-4 py-6">
       {/* Title */}
-      <h1 className="text-2xl font-semibold text-gray-800 mb-4">Medications</h1>
+      <h1 className="text-2xl font-semibold text-gray-800 mb-4">Exercise Recommendations</h1>
 
       {/* Card */}
       <section className="rounded-xl border border-gray-200 bg-gray-50">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-gray-800 font-semibold">Medication Plan</h2>
+          <h2 className="text-gray-800 font-semibold">Exercise Recommendation List</h2>
           <Button
             type="button"
             onClick={() => setShowAdd(true)}
@@ -118,28 +120,34 @@ export default function Medications() {
               <thead className="bg-gray-50 text-left">
                 <tr className="text-sm text-gray-700">
                   <TableHeaderCell
-                    label="Medication Name"
-                    active={sortKey === "name"}
+                    label="Activity Type"
+                    active={sortKey === "activityType"}
                     dir={sortDir}
-                    onClick={() => toggleSort("name")}
+                    onClick={() => toggleSort("activityType")}
                   />
                   <TableHeaderCell
-                    label="Dosage"
-                    active={sortKey === "dosage"}
+                    label="Duration"
+                    active={sortKey === "duration"}
                     dir={sortDir}
-                    onClick={() => toggleSort("dosage")}
+                    onClick={() => toggleSort("duration")}
                   />
                   <TableHeaderCell
-                    label="Type"
-                    active={sortKey === "type"}
+                    label="Frequency"
+                    active={sortKey === "frequency"}
                     dir={sortDir}
-                    onClick={() => toggleSort("type")}
+                    onClick={() => toggleSort("frequency")}
                   />
                   <TableHeaderCell
-                    label="Creator"
-                    active={sortKey === "creator"}
+                    label="Intensity"
+                    active={sortKey === "intensity"}
                     dir={sortDir}
-                    onClick={() => toggleSort("creator")}
+                    onClick={() => toggleSort("intensity")}
+                  />
+                  <TableHeaderCell
+                    label="Assigned/Saved"
+                    active={sortKey === "assignedOrSaved"}
+                    dir={sortDir}
+                    onClick={() => toggleSort("assignedOrSaved")}
                   />
                   <TableHeaderCell label="Action" noSort />
                 </tr>
@@ -148,10 +156,11 @@ export default function Medications() {
               <tbody className="divide-y divide-gray-100">
                 {pageItems.map((m) => (
                   <tr key={m.id} className="text-gray-700">
-                    <td className="px-4 py-4 truncate">{m.name}</td>
-                    <td className="px-4 py-4">{m.dosage}</td>
-                    <td className="px-4 py-4">{m.type}</td>
-                    <td className="px-4 py-4">{m.creator}</td>
+                    <td className="px-4 py-4 truncate">{m.activityType}</td>
+                    <td className="px-4 py-4">{m.duration}</td>
+                    <td className="px-4 py-4">{m.frequency}</td>
+                    <td className="px-4 py-4">{m.intensity}</td>
+                    <td className="px-4 py-4">{m.assignedOrSaved}</td>
                     <td className="px-4 py-4">
                       <Button
                         type="button"
@@ -159,7 +168,7 @@ export default function Medications() {
                         variant="outline"
                         size="icon"
                         className="border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100"
-                        aria-label={`View ${m.name}`}
+                        aria-label={`View ${m.activityType}`}
                         title="View"
                       >
                         <Eye className="h-4 w-4" />
@@ -190,43 +199,50 @@ export default function Medications() {
 
       {/* View Modal (dummy) */}
       {viewing && (
-        <Modal onClose={() => setViewing(null)} title="Medication Details">
+        <Modal onClose={() => setViewing(null)} title="Exercise Details">
           <div className="space-y-2 text-sm">
-            <KeyValueRow label="Medication Name" value={viewing.name} />
-            <KeyValueRow label="Dosage" value={viewing.dosage} />
-            <KeyValueRow label="Type" value={viewing.type} />
-            <KeyValueRow label="Creator" value={viewing.creator} />
+            <KeyValueRow label="Activity Type" value={viewing.activityType} />
+            <KeyValueRow label="Duration" value={viewing.duration} />
+            <KeyValueRow label="Frequency" value={viewing.frequency} />
+            <KeyValueRow label="Intensity" value={viewing.intensity} />
+            <KeyValueRow label="Assigned/Saved" value={viewing.assignedOrSaved} />
           </div>
         </Modal>
       )}
 
       {/* Add Modal (dummy) */}
       {showAdd && (
-        <Modal onClose={() => setShowAdd(false)} title="Add Medication">
+        <Modal onClose={() => setShowAdd(false)} title="Add Exercise">
           <div className="space-y-3">
             <LabeledInput
-              label="Medication Name"
-              value={form.name}
-              onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              placeholder="e.g. Atorvastatin"
+              label="Activity Type"
+              value={form.activityType}
+              onChange={(e) => setForm((f) => ({ ...f, activityType: e.target.value }))}
+              placeholder="e.g. Brisk Walking"
             />
             <LabeledInput
-              label="Dosage"
-              value={form.dosage}
-              onChange={(e) => setForm((f) => ({ ...f, dosage: e.target.value }))}
-              placeholder="e.g. 20 mg"
+              label="Duration"
+              value={form.duration}
+              onChange={(e) => setForm((f) => ({ ...f, duration: e.target.value }))}
+              placeholder="e.g. 30 minutes"
             />
             <LabeledInput
-              label="Type"
-              value={form.type}
-              onChange={(e) => setForm((f) => ({ ...f, type: e.target.value }))}
-              placeholder="e.g. Tablet"
+              label="Frequency"
+              value={form.frequency}
+              onChange={(e) => setForm((f) => ({ ...f, frequency: e.target.value }))}
+              placeholder="e.g. Daily"
             />
             <LabeledInput
-              label="Creator"
-              value={form.creator}
-              onChange={(e) => setForm((f) => ({ ...f, creator: e.target.value }))}
-              placeholder="e.g. Patient"
+              label="Intensity"
+              value={form.intensity}
+              onChange={(e) => setForm((f) => ({ ...f, intensity: e.target.value }))}
+              placeholder="e.g. Moderate"
+            />
+            <LabeledInput
+              label="Assigned/Saved"
+              value={form.assignedOrSaved}
+              onChange={(e) => setForm((f) => ({ ...f, assignedOrSaved: e.target.value }))}
+              placeholder="e.g. Assigned"
             />
             <div className="pt-2 flex justify-end gap-2">
               <Button
