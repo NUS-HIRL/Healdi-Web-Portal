@@ -2,59 +2,20 @@
 
 import { useState, useMemo, useEffect } from 'react'
 import { Plus, Eye, ArrowUpDown } from 'lucide-react'
-import { Goal } from '@/types/goal'
+import { Goal, ApiGoal } from '@/types/goal'
 import { Button } from '@/components/ui/button'
 import { GoalsTable } from './goals-table'
 import { Pagination as CommonPagination } from '@/components/common/pagination'
 import { GoalDetailsSidebar } from './goal-details-sidebar'
 import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
+import { getAccessToken } from '@/lib/auth'
 
-// Mock data for demonstration
-const mockGoals: Goal[] = [
-  {
-    id: '1',
-    category: 'Physical Activity',
-    completionType: 'Short Term',
-    title: 'I will jog for 15 minutes three times a week.',
-    description: 'Jog for at least 15 minutes three times a week.',
-    coins: 20,
-    bonus: 50,
-    progress: '1/3'
-  },
-  {
-    id: '2',
-    category: 'Physical Activity',
-    completionType: 'Short Term',
-    title: 'I will cycle for 30 minutes two times a week.',
-    description: 'Cycle for at least 30 minutes two times a week.',
-    coins: 30,
-    bonus: 50,
-    progress: '2/2'
-  },
-  {
-    id: '3',
-    category: 'Physical Activity',
-    completionType: 'Short Term',
-    title: 'I will cycle for 30 minutes two times a week.',
-    description: 'Cycle for at least 30 minutes two times a week.',
-    coins: 40,
-    bonus: 50,
-    progress: '2/2'
-  },
-  {
-    id: '4',
-    category: 'Physical Activity',
-    completionType: 'Short Term',
-    title: 'I will cycle for 30 minutes two times a week.',
-    description: 'Cycle for at least 30 minutes two times a week.',
-    coins: 10,
-    bonus: 50,
-    progress: '2/2'
-  },
-]
+interface GoalsTabProps {
+  patientId: string
+}
 
-export function GoalsTab() {
+export function GoalsTab({ patientId }: GoalsTabProps) {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
@@ -71,11 +32,63 @@ export function GoalsTab() {
 
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isViewOpen, setIsViewOpen] = useState(false)
+  const [goals, setGoals] = useState<Goal[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
 
   // Reset to first page when goals data changes
   useEffect(() => {
     setPagination(prev => ({ ...prev, pageIndex: 0 }))
   }, [])
+
+  // Fetch from API when patient changes
+  useEffect(() => {
+    const controller = new AbortController()
+    async function fetchGoals() {
+      setIsLoading(true)
+      setError(null)
+      try {
+        const token = getAccessToken()
+        if (!token) {
+          throw new Error('Not authenticated. Please sign in again.')
+        }
+        const response = await fetch(
+          `/api/users/${encodeURIComponent(patientId)}/goals`,
+          {
+            signal: controller.signal,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        if (!response.ok) {
+          throw new Error(`Failed to fetch goals: ${response.status}`)
+        }
+        const json = (await response.json()) as ApiGoal[]
+        const mapped: Goal[] = json.map((g) => ({
+          id: g.id,
+          category: g.goal_category,
+          completionType: g.completion_type === 'short' ? 'Short Term' : 'Long Term',
+          title: g.title,
+          description: g.description,
+          coins: g.coin_reward_per_completion,
+          bonus: g.completion_bonus,
+          progress: `${g.completed_count}/${g.target_count}`,
+        }))
+        setGoals(mapped)
+      } catch (err: unknown) {
+        const isAbortError = err instanceof DOMException && err.name === 'AbortError'
+        if (!isAbortError) {
+          const message = err instanceof Error ? err.message : String(err)
+          setError(message)
+        }
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchGoals()
+    return () => controller.abort()
+  }, [patientId])
 
   // Page changes handled via CommonPagination adapter below
 
@@ -114,7 +127,7 @@ export function GoalsTab() {
         </button>
       ),
       cell: ({ row }) => (
-        <Badge variant="secondary" className="bg-orange-100 text-red-500 border-pink-200">
+        <Badge variant="secondary" className="bg-orange-100 text-red-500 border-pink-200 whitespace-nowrap">
           {row.original.category}
         </Badge>
       ),
@@ -142,6 +155,9 @@ export function GoalsTab() {
           <ArrowUpDown className={`h-4 w-4 ${sorting.column === 'title' ? 'text-gray-700' : 'text-gray-400'}`} />
         </button>
       ),
+      cell: ({ row }) => (
+        <span className="block max-w-[20rem] whitespace-normal break-words">{row.original.title}</span>
+      ),
     },
     {
       accessorKey: 'description',
@@ -153,6 +169,11 @@ export function GoalsTab() {
           <span>Description</span>
           <ArrowUpDown className={`h-4 w-4 ${sorting.column === 'description' ? 'text-gray-700' : 'text-gray-400'}`} />
         </button>
+      ),
+      cell: ({ row }) => (
+        <span className="block max-w-[28rem] whitespace-normal break-words leading-relaxed">
+          {row.original.description}
+        </span>
       ),
     },
     {
@@ -211,10 +232,10 @@ export function GoalsTab() {
   // Sort goals based on current sorting state
   const sortedGoals = useMemo(() => {
     if (!sorting.column || !sorting.direction) {
-      return [...mockGoals]
+      return [...goals]
     }
 
-    return [...mockGoals].sort((a, b) => {
+    return [...goals].sort((a, b) => {
       const aValue = a[sorting.column as keyof Goal]
       const bValue = b[sorting.column as keyof Goal]
 
@@ -232,7 +253,7 @@ export function GoalsTab() {
 
       return 0
     })
-  }, [sorting])
+  }, [sorting, goals])
 
   // Mock results shaped as PaginatedResponse to satisfy the hook
   const results = useMemo(() => {
@@ -291,12 +312,19 @@ export function GoalsTab() {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Assigned Goals
             </h3>
+            {isLoading && (
+              <div className="text-sm text-gray-500 mb-2">Loading goals…</div>
+            )}
+            {error && (
+              <div className="text-sm text-red-600 mb-2">{error}</div>
+            )}
             
             <GoalsTable
               results={results}
               columns={columns}
               pagination={pagination}
               setPagination={setPagination}
+              error={error ?? undefined}
             />
 
             {/* Pagination */}

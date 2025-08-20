@@ -25,7 +25,7 @@ export function GoalsTable({ results, columns, pagination, setPagination, error 
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap"
+                    className="text-foreground h-10 px-2 text-left align-middle font-medium whitespace-normal"
                   >
                     {header.isPlaceholder
                       ? null

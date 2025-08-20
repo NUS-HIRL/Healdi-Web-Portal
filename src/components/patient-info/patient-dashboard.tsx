@@ -49,7 +49,7 @@ export function PatientDashboard({ patientId }: PatientDashboardProps) {
                 Lab Results content coming soon...
               </div>
             )}
-            {activeTab === "Goals" && <GoalsTab />}
+            {activeTab === "Goals" && <GoalsTab patientId={patientId} />}
             {activeTab === "AI Exercise Recommendations" && (
               <div className="text-gray-500">AI Exercise Recommendations content coming soon...</div>
             )}
