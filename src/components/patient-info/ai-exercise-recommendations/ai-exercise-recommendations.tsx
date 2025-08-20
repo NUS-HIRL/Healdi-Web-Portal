@@ -105,107 +105,109 @@ export default function AiExerciseRecommendations({ patientId }: { patientId: st
     }
 
     return (
-        <div className="w-full px-4 py-6">
-            {/* Title */}
-            <h1 className="text-2xl font-semibold text-gray-800 mb-4">Exercise Recommendations</h1>
+        <div className="w-full">
+            <div className="px-4 py-6">
+                {/* Title */}
+                <h1 className="text-2xl font-semibold text-gray-800 mb-4">Exercise Recommendations</h1>
 
-            {/* Card */}
-            <section className="rounded-xl border border-gray-200 bg-gray-50">
-                {/* Header */}
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-                    <h2 className="text-gray-800 font-semibold">Exercise Recommendation List</h2>
-                    <Button
-                        type="button"
-                        onClick={() => setShowAdd(true)}
-                        variant="outline"
-                        size="sm"
-                        className="gap-2"
-                    >
-                        <Plus className="h-4 w-4" />
-                        Add
-                    </Button>
-                </div>
-
-                {/* Table */}
-                <div className="px-4 py-4">
-                    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
-                        <table className="w-full table-fixed border-collapse">
-                            <thead className="bg-gray-50 text-left">
-                                <tr className="text-sm text-gray-700">
-                                    <TableHeaderCell
-                                        label="Activity Type"
-                                        active={sortKey === "activityType"}
-                                        dir={sortDir}
-                                        onClick={() => toggleSort("activityType")}
-                                    />
-                                    <TableHeaderCell
-                                        label="Duration"
-                                        active={sortKey === "duration"}
-                                        dir={sortDir}
-                                        onClick={() => toggleSort("duration")}
-                                    />
-                                    <TableHeaderCell
-                                        label="Frequency"
-                                        active={sortKey === "frequency"}
-                                        dir={sortDir}
-                                        onClick={() => toggleSort("frequency")}
-                                    />
-                                    <TableHeaderCell
-                                        label="Intensity"
-                                        active={sortKey === "intensity"}
-                                        dir={sortDir}
-                                        onClick={() => toggleSort("intensity")}
-                                    />
-                                    <TableHeaderCell
-                                        label="Assigned/Saved"
-                                        active={sortKey === "assignedOrSaved"}
-                                        dir={sortDir}
-                                        onClick={() => toggleSort("assignedOrSaved")}
-                                    />
-                                    <TableHeaderCell label="Action" noSort />
-                                </tr>
-                            </thead>
-
-                            <tbody className="divide-y divide-gray-100">
-                                {pageItems.map((m) => (
-                                    <tr key={m.id} className="text-gray-700">
-                                        <td className="px-4 py-4 truncate">{m.activityType}</td>
-                                        <td className="px-4 py-4">{m.duration}</td>
-                                        <td className="px-4 py-4">{m.frequency}</td>
-                                        <td className="px-4 py-4">{m.intensity}</td>
-                                        <td className="px-4 py-4">{m.assignedOrSaved}</td>
-                                        <td className="px-4 py-4">
-                                            <Button
-                                                type="button"
-                                                onClick={() => setViewing(m)}
-                                                variant="outline"
-                                                size="icon"
-                                                className="border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100"
-                                                aria-label={`View ${m.activityType}`}
-                                                title="View"
-                                            >
-                                                <Eye className="h-4 w-4" />
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                {/* Card */}
+                <section className="rounded-xl border border-gray-200 bg-gray-50">
+                    {/* Header */}
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                        <h2 className="text-gray-800 font-semibold">Exercise Recommendation List</h2>
+                        <Button
+                            type="button"
+                            onClick={() => setShowAdd(true)}
+                            variant="outline"
+                            size="sm"
+                            className="gap-2"
+                        >
+                            <Plus className="h-4 w-4" />
+                            Add
+                        </Button>
                     </div>
 
-                    {/* Pagination */}
-                    <Pagination
-                        page={page}
-                        pageCount={pageCount}
-                        pageSize={pageSize}
-                        openPageSize={openPageSize}
-                        setPage={setPage}
-                        setPageSize={setPageSize}
-                        setOpenPageSize={setOpenPageSize}
-                    />
+                    {/* Table */}
+                    <div className="px-4 py-4">
+                        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+                            <table className="w-full table-fixed border-collapse">
+                                <thead className="bg-gray-50 text-left">
+                                    <tr className="text-sm text-gray-700">
+                                        <TableHeaderCell
+                                            label="Activity Type"
+                                            active={sortKey === "activityType"}
+                                            dir={sortDir}
+                                            onClick={() => toggleSort("activityType")}
+                                        />
+                                        <TableHeaderCell
+                                            label="Duration"
+                                            active={sortKey === "duration"}
+                                            dir={sortDir}
+                                            onClick={() => toggleSort("duration")}
+                                        />
+                                        <TableHeaderCell
+                                            label="Frequency"
+                                            active={sortKey === "frequency"}
+                                            dir={sortDir}
+                                            onClick={() => toggleSort("frequency")}
+                                        />
+                                        <TableHeaderCell
+                                            label="Intensity"
+                                            active={sortKey === "intensity"}
+                                            dir={sortDir}
+                                            onClick={() => toggleSort("intensity")}
+                                        />
+                                        <TableHeaderCell
+                                            label="Assigned/Saved"
+                                            active={sortKey === "assignedOrSaved"}
+                                            dir={sortDir}
+                                            onClick={() => toggleSort("assignedOrSaved")}
+                                        />
+                                        <TableHeaderCell label="Action" noSort />
+                                    </tr>
+                                </thead>
 
-                </div>
-            </section>
+                                <tbody className="divide-y divide-gray-100">
+                                    {pageItems.map((m) => (
+                                        <tr key={m.id} className="text-gray-700">
+                                            <td className="px-4 py-4 truncate">{m.activityType}</td>
+                                            <td className="px-4 py-4">{m.duration}</td>
+                                            <td className="px-4 py-4">{m.frequency}</td>
+                                            <td className="px-4 py-4">{m.intensity}</td>
+                                            <td className="px-4 py-4">{m.assignedOrSaved}</td>
+                                            <td className="px-4 py-4">
+                                                <Button
+                                                    type="button"
+                                                    onClick={() => setViewing(m)}
+                                                    variant="outline"
+                                                    size="icon"
+                                                    className="border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100"
+                                                    aria-label={`View ${m.activityType}`}
+                                                    title="View"
+                                                >
+                                                    <Eye className="h-4 w-4" />
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* Pagination */}
+                        <Pagination
+                            page={page}
+                            pageCount={pageCount}
+                            pageSize={pageSize}
+                            openPageSize={openPageSize}
+                            setPage={setPage}
+                            setPageSize={setPageSize}
+                            setOpenPageSize={setOpenPageSize}
+                        />
+
+                    </div>
+                </section>
+            </div>
 
             {/* Footer */}
             <Footer />
@@ -216,7 +218,7 @@ export default function AiExerciseRecommendations({ patientId }: { patientId: st
                     onClose={() => setViewing(null)}
                     title="Exercise Details"
                 >
-                    <div className="flex flex-col gap-4">  
+                    <div className="flex flex-col gap-4">
                         <div className="space-y-2 text-sm">
                             <KeyValueRow label="Activity Type" value={viewing.activityType} />
                             <KeyValueRow label="Duration" value={viewing.duration} />
