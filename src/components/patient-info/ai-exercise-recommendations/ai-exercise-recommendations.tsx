@@ -42,8 +42,8 @@ export default function AiExerciseRecommendations() {
   // add form (dummy)
   const [form, setForm] = useState<Pick<Exercise, "activityType" | "duration" | "frequency" | "intensity" | "assignedOrSaved">>({
     activityType: "",
-    duration: "",
-    frequency: "",
+    duration: 0,
+    frequency: 0,
     intensity: "",
     assignedOrSaved: "",
   });
@@ -81,14 +81,14 @@ export default function AiExerciseRecommendations() {
     const newRow: Exercise = {
       id: String(Date.now()),
       activityType: form.activityType.trim(),
-      duration: form.duration.trim() || "N/A",
-      frequency: form.frequency.trim() || "N/A",
+      duration: form.duration || 0,
+      frequency: form.frequency || 0,
       intensity: form.intensity || "Low",
       assignedOrSaved: form.assignedOrSaved || "Saved",
     };
     setRows((r) => [newRow, ...r]);
     setShowAdd(false);
-    setForm({ activityType: "", duration: "", frequency: "", intensity: "", assignedOrSaved: "" });
+    setForm({ activityType: "", duration: 0, frequency: 0, intensity: "", assignedOrSaved: "" });
   }
 
   return (
@@ -222,15 +222,17 @@ export default function AiExerciseRecommendations() {
             />
             <LabeledInput
               label="Duration"
-              value={form.duration}
-              onChange={(e) => setForm((f) => ({ ...f, duration: e.target.value }))}
-              placeholder="e.g. 30 minutes"
+              type="number"
+              value={String(form.duration)}
+              onChange={(e) => setForm((f) => ({ ...f, duration: parseInt(e.target.value) || 0 }))}
+              placeholder="e.g. 30"
             />
             <LabeledInput
               label="Frequency"
-              value={form.frequency}
-              onChange={(e) => setForm((f) => ({ ...f, frequency: e.target.value }))}
-              placeholder="e.g. Daily"
+              type="number"
+              value={String(form.frequency)}
+              onChange={(e) => setForm((f) => ({ ...f, frequency: parseInt(e.target.value) || 0 }))}
+              placeholder="e.g. 3"
             />
             <LabeledInput
               label="Intensity"
