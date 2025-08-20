@@ -60,6 +60,8 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ chat }) => {
             className="
               text-gray-400
               cursor-pointer
+              h-7
+              w-7
             "
           />
         </div>

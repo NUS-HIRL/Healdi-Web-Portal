@@ -25,10 +25,9 @@ const ChatList: React.FC<ChatListProps> = ({ initialItems }) => {
           `
           h-full
           pb-20
-          lg:pb-0
-          lg:left-20
-          lg:w-80
-          lg:block
+          left-20
+          w-80
+          block
           overflow-y-auto
           overflow-x-hidden
           border-r
@@ -51,10 +50,10 @@ const ChatList: React.FC<ChatListProps> = ({ initialItems }) => {
               <Switch
                 id="airplane-mode"
                 className="
-                w-14 h-9
+                w-12 h-7
                 data-[state=checked]:bg-green-500 
                 data-[state=unchecked]:bg-gray-300
-                [&>span]:h-7 [&>span]:w-7
+                [&>span]:h-6 [&>span]:w-6
               "
               />
             </div>
