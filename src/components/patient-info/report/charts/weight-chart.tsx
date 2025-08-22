@@ -2,7 +2,7 @@
 
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
 import { useState } from 'react'
-import { CustomBar } from '@/components/common/chart/CustomBar'
+import { CustomBar } from '@/components/common/chart/custom-bar'
 import { ChartDataPoint, ChartProps } from '@/types/chart'
 
 const data = [

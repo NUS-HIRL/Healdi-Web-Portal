@@ -1,17 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import { Sidebar } from '../common/sidebar'
-import { PatientHeader } from './patient-header'
-import { ReportTab } from './report/report-tab'
-import Medications from './medications/medications'
-import AiExerciseRecommendations from './ai-exercise-recommendations/ai-exercise-recommendations'
+import { Sidebar } from '../../common/sidebar'
+import { PatientHeader } from '../patient-header'
+import { ReportTab } from '../report/report-tab'
+import Medications from '../medications/medications'
+import AiExerciseRecommendations from './ai-exercise-recommendations'
 
 interface PatientDashboardProps {
   patientId: string
 }
 
-export function PatientDashboard({ patientId }: PatientDashboardProps) {
+export function EditExerciseForm({ patientId }: PatientDashboardProps) {
   const [activeTab, setActiveTab] = useState('Reports')
 
   return (
