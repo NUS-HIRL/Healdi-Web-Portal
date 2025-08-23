@@ -21,7 +21,7 @@ interface DropdownButtonProps {
   size?: 'xs' | 'sm' | 'md' | 'lg'
 }
 
-export function DropdownButton({
+export const DropdownButton = ({
   options,
   value,
   placeholder = 'Select option',
@@ -30,7 +30,7 @@ export function DropdownButton({
   className = '',
   variant = 'default',
   size = 'md'
-}: DropdownButtonProps) {
+}: DropdownButtonProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
