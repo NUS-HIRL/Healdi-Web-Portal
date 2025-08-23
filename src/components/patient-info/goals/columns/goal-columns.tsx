@@ -5,7 +5,7 @@ import { Goal } from '@/types/goal'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Eye } from 'lucide-react'
-import { TableHeaderCell, SortDir } from '@/components/common/TableHeaderCell'
+import { TableHeaderCell, SortDir } from '@/components/common/table-header-cell'
 
 interface GoalColumnsProps {
   onSortingChange: (columnKey: string) => void
@@ -29,14 +29,13 @@ export const createGoalColumns = ({
         active={sorting.column === 'category'}
         dir={sorting.direction || undefined}
         onClick={() => onSortingChange('category')}
+        inline={true}
       />
     ),
     cell: ({ row }) => (
-      <div className="ml-4">
-        <Badge variant="secondary" className="bg-orange-100 text-red-500 border-pink-200 whitespace-nowrap">
-          {row.original.category}
-        </Badge>
-      </div>
+      <Badge variant="secondary" className="bg-orange-100 text-red-500 border-pink-200 whitespace-nowrap">
+        {row.original.category}
+      </Badge>
     ),
   },
   {
@@ -47,13 +46,10 @@ export const createGoalColumns = ({
         active={sorting.column === 'completionType'}
         dir={sorting.direction || undefined}
         onClick={() => onSortingChange('completionType')}
+        inline={true}
       />
     ),
-    cell: ({ row }) => (
-      <div className="ml-4">
-        {row.original.completionType}
-      </div>
-    ),
+    cell: ({ row }) => row.original.completionType,
   },
   {
     accessorKey: 'title',
@@ -63,12 +59,11 @@ export const createGoalColumns = ({
         active={sorting.column === 'title'}
         dir={sorting.direction || undefined}
         onClick={() => onSortingChange('title')}
+        inline={true}
       />
     ),
     cell: ({ row }) => (
-      <div className="ml-4">
-        <span className="block max-w-[20rem] whitespace-normal break-words">{row.original.title}</span>
-      </div>
+      <span className="block max-w-[20rem] whitespace-normal break-words">{row.original.title}</span>
     ),
   },
   {
@@ -79,14 +74,13 @@ export const createGoalColumns = ({
         active={sorting.column === 'description'}
         dir={sorting.direction || undefined}
         onClick={() => onSortingChange('description')}
+        inline={true}
       />
     ),
     cell: ({ row }) => (
-      <div className="ml-4">
-        <span className="block max-w-[28rem] whitespace-normal break-words leading-relaxed">
-          {row.original.description}
-        </span>
-      </div>
+      <span className="block max-w-[28rem] whitespace-normal break-words leading-relaxed">
+        {row.original.description}
+      </span>
     ),
   },
   {
@@ -97,13 +91,10 @@ export const createGoalColumns = ({
         active={sorting.column === 'coins'}
         dir={sorting.direction || undefined}
         onClick={() => onSortingChange('coins')}
+        inline={true}
       />
     ),
-    cell: ({ row }) => (
-      <div className="ml-4">
-        {row.original.coins}
-      </div>
-    ),
+    cell: ({ row }) => row.original.coins,
   },
   {
     accessorKey: 'bonus',
@@ -113,13 +104,10 @@ export const createGoalColumns = ({
         active={sorting.column === 'bonus'}
         dir={sorting.direction || undefined}
         onClick={() => onSortingChange('bonus')}
+        inline={true}
       />
     ),
-    cell: ({ row }) => (
-      <div className="ml-4">
-        {row.original.bonus}
-      </div>
-    ),
+    cell: ({ row }) => row.original.bonus,
   },
   {
     accessorKey: 'progress',
@@ -129,28 +117,23 @@ export const createGoalColumns = ({
         active={sorting.column === 'progress'}
         dir={sorting.direction || undefined}
         onClick={() => onSortingChange('progress')}
+        inline={true}
       />
     ),
-    cell: ({ row }) => (
-      <div className="ml-4">
-        {row.original.progress}
-      </div>
-    ),
+    cell: ({ row }) => row.original.progress,
   },
   {
     id: 'actions',
-    header: () => <TableHeaderCell label="Action" noSort />,
+    header: () => <TableHeaderCell label="Action" noSort inline={true} />,
     cell: ({ row }) => (
-      <div className="ml-4">
-        <Button
-          variant="outline"
-          size="icon"
-          className="w-8 h-8 border-blue-300 hover:bg-blue-200"
-          onClick={() => onViewGoal(row.original)}
-        >
-          <Eye size={16} className="text-blue-600" />
-        </Button>
-      </div>
+      <Button
+        variant="outline"
+        size="icon"
+        className="w-8 h-8 border-blue-300 hover:bg-blue-200"
+        onClick={() => onViewGoal(row.original)}
+      >
+        <Eye size={16} className="text-blue-600" />
+      </Button>
     ),
   },
 ]
