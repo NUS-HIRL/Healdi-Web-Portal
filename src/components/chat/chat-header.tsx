@@ -1,6 +1,6 @@
 "use client";
 
-import Avatar from "./Avatar";
+import Avatar from "./avatar";
 import { IoSearchOutline } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 import useOtherUser from "@/hooks/use-other-user";

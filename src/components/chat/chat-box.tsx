@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Chat } from "@/types/chat";
-import Avatar from "@/components/chat/Avatar";
+import Avatar from "@/components/chat/avatar";
 import useOtherUser from "@/hooks/use-other-user";
 
 interface ChatBoxProps {

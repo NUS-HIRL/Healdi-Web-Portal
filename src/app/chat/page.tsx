@@ -1,6 +1,6 @@
 "use client";
 
-import EmptyState from "@/components/chat/EmptyState";
+import EmptyState from "@/components/chat/empty-state";
 
 const Home = () => {
   return (

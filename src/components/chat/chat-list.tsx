@@ -3,7 +3,7 @@
 import { Chat, UserType } from "@/types/chat";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import ChatBox from "@/components/chat/ChatBox";
+import ChatBox from "@/components/chat/chat-box";
 import { Switch } from "@/components/ui/switch";
 import useChat from "@/hooks/use-chat";
 import Image from "next/image";

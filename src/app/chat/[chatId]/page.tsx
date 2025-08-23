@@ -1,10 +1,10 @@
 "use client";
 
 import { use } from "react";
-import EmptyState from "@/components/chat/EmptyState";
-import Header from "@/components/chat/ChatHeader";
-import Body from "@/components/chat/Body";
-import Form from "@/components/chat/Form";
+import EmptyState from "@/components/chat/empty-state";
+import Header from "@/components/chat/chat-header";
+import Body from "@/components/chat/body";
+import Form from "@/components/chat/form";
 import { useEffect, useState } from "react";
 import { Message, Chat, UserType } from "@/types/chat";
 import { conversations } from "@/app/chat/layout";

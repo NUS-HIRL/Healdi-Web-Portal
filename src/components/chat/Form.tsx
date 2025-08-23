@@ -1,7 +1,7 @@
 "use client";
 
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import MessageInput, { MessageInputRef } from "./MessageInput";
+import MessageInput, { MessageInputRef } from "./message-input";
 import { useRef } from "react";
 import useChat from "@/hooks/use-chat";
 

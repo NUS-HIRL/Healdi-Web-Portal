@@ -2,8 +2,8 @@
 
 import { Message } from "@/types/chat";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
-import MessageBox from "@/components/chat/MessageBox";
-import SystemNotice from "@/components/chat/SystemNotice";
+import MessageBox from "@/components/chat/message-box";
+import SystemNotice from "@/components/chat/system-notice";
 
 interface BodyProps {
   messages: Message[];

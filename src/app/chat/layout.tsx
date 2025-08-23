@@ -1,5 +1,5 @@
 import { Sidebar } from "@/components/common/sidebar";
-import ChatList from "@/components/chat/ChatList";
+import ChatList from "@/components/chat/chat-list";
 import { Chat, UserType } from "@/types/chat";
 import { Footer } from "@/components/common/footer";
 
