@@ -14,7 +14,7 @@ const data = [
   { day: '8PM', value: 12500 },
 ]
 
-export function StepsChart() {
+export const StepsChart = () => {
   const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
   const handleBarMouseEnter = (data: ChartDataPoint) => {

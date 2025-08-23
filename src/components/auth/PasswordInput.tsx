@@ -18,7 +18,7 @@ type BaseInputProps = Omit<
   "type" | "name" | "value" | "onChange" | "onBlur" | "defaultValue" | "id"
 >;
 
-export interface PasswordInputProps<TValues extends FieldValues = FieldValues>
+export interface PasswordInputProps<TValues extends FieldValues>
   extends BaseInputProps {
   label?: string;
   name: Path<TValues>;
@@ -27,7 +27,7 @@ export interface PasswordInputProps<TValues extends FieldValues = FieldValues>
   className?: string;
 }
 
-export function PasswordInput<TValues extends FieldValues = FieldValues>({
+export const PasswordInput = <TValues extends FieldValues>({
   label,
   name,
   rules,
@@ -35,7 +35,7 @@ export function PasswordInput<TValues extends FieldValues = FieldValues>({
   className = "",
   disabled,
   ...rest
-}: PasswordInputProps<TValues>) {
+}: PasswordInputProps<TValues>) => {
   const [visible, setVisible] = React.useState(false);
 
   const form = useFormContext<TValues>();

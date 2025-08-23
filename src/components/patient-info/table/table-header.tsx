@@ -6,7 +6,7 @@ interface TableHeaderProps {
   sortable?: boolean
 }
 
-export function TableHeader({ title, onSort, sortable = true }: TableHeaderProps) {
+export const TableHeader = ({ title, onSort, sortable = true }: TableHeaderProps) => {
   if (!sortable) {
     return (
       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

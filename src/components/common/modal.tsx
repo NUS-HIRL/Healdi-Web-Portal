@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 
-export function Modal({
+export const Modal = ({
   title,
   children,
   onClose,
@@ -12,7 +12,7 @@ export function Modal({
   title: string;
   children: React.ReactNode;
   onClose: () => void;
-}) {
+}) => {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"

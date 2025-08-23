@@ -5,7 +5,7 @@ interface ActionButtonProps {
   patientUid: string
 }
 
-export function ActionButton({ patientUid }: ActionButtonProps) {
+export const ActionButton = ({ patientUid }: ActionButtonProps) => {
   return (
     <Link
       href={`/patient-info/${patientUid}`}

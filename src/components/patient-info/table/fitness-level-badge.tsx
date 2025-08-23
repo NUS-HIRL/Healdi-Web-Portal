@@ -15,7 +15,7 @@ const getFitnessLevelColor = (level: string) => {
   }
 }
 
-export function FitnessLevelBadge({ level }: FitnessLevelBadgeProps) {
+export const FitnessLevelBadge = ({ level }: FitnessLevelBadgeProps) => {
   return (
     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getFitnessLevelColor(level)}`}>
       {level}

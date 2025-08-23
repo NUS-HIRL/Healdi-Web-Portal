@@ -4,7 +4,7 @@ interface PaginationProps {
   onPageChange: (pageIndex: number) => void
 }
 
-export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
   return (
     <div className="px-6 py-3 border-t border-gray-200">
       <div className="flex items-center justify-center">

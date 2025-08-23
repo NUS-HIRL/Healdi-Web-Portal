@@ -16,7 +16,7 @@ type BaseInputProps = Omit<
   "name" | "value" | "onChange" | "onBlur" | "defaultValue" | "ref"
 >;
 
-export interface TextInputProps<TValues extends FieldValues = FieldValues>
+export interface TextInputProps<TValues extends FieldValues>
   extends BaseInputProps {
   label?: string;
   name: Path<TValues>;
@@ -25,7 +25,7 @@ export interface TextInputProps<TValues extends FieldValues = FieldValues>
   className?: string;
 }
 
-export function TextInput<TValues extends FieldValues = FieldValues>({
+export const TextInput = <TValues extends FieldValues>({
   label,
   name,
   rules,
@@ -35,7 +35,7 @@ export function TextInput<TValues extends FieldValues = FieldValues>({
   disabled,
   type = "text",
   ...rest
-}: TextInputProps<TValues>) {
+}: TextInputProps<TValues>) => {
   const form = useFormContext<TValues>();
   const control = controlProp ?? form?.control;
 

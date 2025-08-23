@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 
-export function LabeledInput({
+export const LabeledInput = ({
   label,
   id,
   ...props
-}: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) {
+}: React.InputHTMLAttributes<HTMLInputElement> & { label: string }) => {
   const inputId = id ?? (typeof props.name === "string" ? props.name : undefined);
 
   return (

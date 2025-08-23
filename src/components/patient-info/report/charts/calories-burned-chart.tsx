@@ -14,7 +14,7 @@ const data = [
   { day: '8PM', value: 200 },
 ]
 
-export function CaloriesBurnedChart() {
+export const CaloriesBurnedChart = () => {
   const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
   const handleBarMouseEnter = (data: ChartDataPoint) => {

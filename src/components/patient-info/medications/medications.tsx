@@ -185,9 +185,6 @@ export default function Medications() {
         </div>
       </section>
 
-      {/* Footer */}
-      <Footer />
-
       {/* View Modal (dummy) */}
       {viewing && (
         <Modal onClose={() => setViewing(null)} title="Medication Details">

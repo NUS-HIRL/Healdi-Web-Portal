@@ -1,11 +1,20 @@
+import { apiAxios } from "./axios"
+import { AxiosError } from 'axios'
+
 const fetcher = async (path: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-    //   Authorization: localStorage.getItem("accessToken") as string
+  try {
+    const response = await apiAxios.get(path)
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error('Fetcher - Axios Error:', error.message)
+      console.error('Fetcher - Error response:', error.response?.data)
+      console.error('Fetcher - Error status:', error.response?.status)
+    } else {
+      console.error('Fetcher - Unknown Error:', error)
     }
-  })
-  return res.json()
+    throw error
+  }
 }
 
 export default fetcher

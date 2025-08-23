@@ -11,7 +11,7 @@ import { ActiveMinutesChart } from './charts/active-minutes-chart'
 import { CaloriesBurnedChart } from './charts/calories-burned-chart'
 import { WeightChart } from './charts/weight-chart'
 
-export function ReportTab() {
+export const ReportTab = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('weekly')
 
   const periodOptions = [

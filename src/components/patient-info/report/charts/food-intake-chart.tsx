@@ -14,7 +14,7 @@ const data = [
   { day: '8PM', value: 2300 },
 ]
 
-export function FoodIntakeChart() {
+export const FoodIntakeChart = () => {
   const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
   const handleBarMouseEnter = (data: ChartDataPoint) => {

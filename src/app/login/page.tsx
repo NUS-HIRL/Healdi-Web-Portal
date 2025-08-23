@@ -5,6 +5,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { TextInput } from "@/components/auth/TextInput";
 import { PasswordInput} from "@/components/auth/PasswordInput";
 import { Button } from "@/components/ui/button"; 
+import { login } from "@/lib/auth";
 
 type FormValues = {
   username: string;
@@ -17,8 +18,13 @@ export default function SignUpPage() {
     defaultValues: { username: "", password: "", terms: false },
   });
 
-  const onSubmit = (data: FormValues) => {
-    // handle submit
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await login(data.username, data.password)
+      window.location.href = "/patient-info"
+    } catch (e) {
+      alert((e as Error).message)
+    }
   };
 
   return (
@@ -64,7 +70,7 @@ export default function SignUpPage() {
             <Button
               className="w-full h-14 rounded-full  text-lg font-semibold"
             >
-              Sign Up
+              Sign In
             </Button>
           </div>
           </form>

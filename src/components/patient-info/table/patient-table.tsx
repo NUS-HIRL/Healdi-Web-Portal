@@ -9,7 +9,7 @@ interface PatientTableProps {
   onSort: (columnKey: string) => void
 }
 
-export function PatientTable({ patients, onSort }: PatientTableProps) {
+export const PatientTable = ({ patients, onSort }: PatientTableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="w-full">
