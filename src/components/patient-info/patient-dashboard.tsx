@@ -7,6 +7,7 @@ import { ReportTab } from './report/report-tab'
 import { GoalsTab } from './goals/goals-tab'
 import { Footer } from '../common/footer'
 import Medications from './medications/medications'
+import AiExerciseRecommendations from './ai-exercise-recommendations/ai-exercise-recommendations'
 
 interface PatientDashboardProps {
   patientId: string

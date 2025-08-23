@@ -6,10 +6,10 @@ import {
   Eye,
 } from "lucide-react";
 
-import { TableHeaderCell } from "../../common/TableHeaderCell";
-import { Modal } from "./Modal";
-import { KeyValueRow } from "./key-value-row";
-import { LabeledInput } from "./labeled-input";
+import { TableHeaderCell } from "../../common/table-header-cell";
+import { Modal } from "../../common/modal";
+import { KeyValueRow } from "../../common/key-value-row";
+import { LabeledInput } from "../../common/labeled-input";
 import { Footer } from "@/components/common/footer";
 import { Button } from "@/components/ui/button";
 import { Pagination } from "@/components/common/pagination";
