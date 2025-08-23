@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Home, Users, FileText, Calendar, Settings, LogOut } from 'lucide-react'
+import { Home, Users, FileText, Calendar, Settings, MessageCircleMore, LogOut } from 'lucide-react'
 import Image from 'next/image'
 
 // TODO: Replace with actual paths to your icons
@@ -11,6 +11,7 @@ export const Sidebar = () => {
   const navigationItems = [
     { id: 'home', icon: Home, href: '#' },
     { id: 'users', icon: Users, href: '/patient-info' },
+    { id: 'chats', icon: MessageCircleMore, href: '/chat'},
     { id: 'reports', icon: FileText, href: '#' },
     { id: 'calendar', icon: Calendar, href: '#' },
     { id: 'settings', icon: Settings, href: '#' },
