@@ -1,17 +1,20 @@
+import { apiAxios } from "./axios"
+import { AxiosError } from 'axios'
+
 const fetcher = async (path: string) => {
-  const isLocalApi = path.startsWith('/api/')
-  const url = isLocalApi && typeof window !== 'undefined' ? `${window.location.origin}${path}` : path
-  const res = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    cache: 'no-store',
-  })
-  if (!res.ok) {
-    const text = await res.text().catch(() => '')
-    throw new Error(text || `Request failed: ${res.status}`)
+  try {
+    const response = await apiAxios.get(path)
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error('Fetcher - Axios Error:', error.message)
+      console.error('Fetcher - Error response:', error.response?.data)
+      console.error('Fetcher - Error status:', error.response?.status)
+    } else {
+      console.error('Fetcher - Unknown Error:', error)
+    }
+    throw error
   }
-  return res.json()
 }
 
 export default fetcher

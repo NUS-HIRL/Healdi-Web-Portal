@@ -14,7 +14,7 @@ const data = [
   { day: '8PM', value: 80, index: 5 },
 ]
 
-export function WeightChart() {
+export const WeightChart = () => {
   const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
   const handleBarMouseEnter = (data: ChartDataPoint) => {

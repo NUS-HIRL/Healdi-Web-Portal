@@ -1,281 +1,123 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
-import { Plus, Eye, ArrowUpDown } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { Plus } from 'lucide-react'
 import { Goal, ApiGoal } from '@/types/goal'
 import { Button } from '@/components/ui/button'
 import { GoalsTable } from './goals-table'
-import { Pagination as CommonPagination } from '@/components/common/pagination'
 import { GoalDetailsSidebar } from './goal-details-sidebar'
-import { ColumnDef } from '@tanstack/react-table'
-import { Badge } from '@/components/ui/badge'
-import { getAccessToken } from '@/lib/auth'
+import { createGoalColumns } from './columns'
+import { Pagination } from '@/components/common/pagination'
+import React from 'react'
+import useSWR from 'swr'
+import fetcher from '@/lib/fetcher'
 
 interface GoalsTabProps {
   patientId: string
 }
 
-export function GoalsTab({ patientId }: GoalsTabProps) {
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
-  })
+export const GoalsTab = ({ patientId }: GoalsTabProps) => {
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
   const [openPageSize, setOpenPageSize] = useState(false)
-
-  const [sorting, setSorting] = useState<{
-    column: string | null;
-    direction: 'asc' | 'desc' | null;
-  }>({
-    column: 'title',
-    direction: 'asc'
-  })
 
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isViewOpen, setIsViewOpen] = useState(false)
-  const [goals, setGoals] = useState<Goal[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
 
-  // Reset to first page when goals data changes
-  useEffect(() => {
-    setPagination(prev => ({ ...prev, pageIndex: 0 }))
-  }, [])
+  const { data: response, error, isLoading, mutate } = useSWR<ApiGoal[]>(
+    `v1/users/${encodeURIComponent(patientId)}/goals`,
+    fetcher
+  )
 
-  // Fetch from API when patient changes
-  useEffect(() => {
-    const controller = new AbortController()
-    async function fetchGoals() {
-      setIsLoading(true)
-      setError(null)
-      try {
-        const token = getAccessToken()
-        if (!token) {
-          throw new Error('Not authenticated. Please sign in again.')
-        }
-        const response = await fetch(
-          `/api/users/${encodeURIComponent(patientId)}/goals`,
-          {
-            signal: controller.signal,
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        if (!response.ok) {
-          throw new Error(`Failed to fetch goals: ${response.status}`)
-        }
-        const json = (await response.json()) as ApiGoal[]
-        const mapped: Goal[] = json.map((g) => ({
-          id: g.id,
-          category: g.goal_category,
-          completionType: g.completion_type === 'short' ? 'Short Term' : 'Long Term',
-          title: g.title,
-          description: g.description,
-          coins: g.coin_reward_per_completion,
-          bonus: g.completion_bonus,
-          progress: `${g.completed_count}/${g.target_count}`,
-        }))
-        setGoals(mapped)
-      } catch (err: unknown) {
-        const isAbortError = err instanceof DOMException && err.name === 'AbortError'
-        if (!isAbortError) {
-          const message = err instanceof Error ? err.message : String(err)
-          setError(message)
-        }
-      } finally {
-        setIsLoading(false)
+  const [sorting, setSorting] = useState<{
+    column: string | null
+    direction: 'asc' | 'desc' | null
+  }>({
+    column: null,
+    direction: null
+  })
+
+  // Transform API data to component data
+  const goals: Goal[] = useMemo(() => {
+    let goalsData: ApiGoal[] = []
+    
+    if (response) {
+      // The API returns an array directly
+      if (Array.isArray(response)) {
+        goalsData = response
       }
     }
-    fetchGoals()
-    return () => controller.abort()
-  }, [patientId])
+    
+    if (goalsData.length === 0) {
+      return []
+    }
+    
+    return goalsData.map((g: ApiGoal) => ({
+      id: g.id,
+      category: g.goal_category,
+      completionType: g.completion_type === 'short' ? 'Short Term' : 'Long Term',
+      title: g.title,
+      description: g.description,
+      coins: g.coin_reward_per_completion,
+      bonus: g.completion_bonus,
+      progress: `${g.completed_count}/${g.target_count}`,
+    }))
+  }, [response])
 
-  // Page changes handled via CommonPagination adapter below
-
-  // Handle sorting
-  const handleSortingChange = (columnKey: string) => {
-    setSorting(prev => {
-      if (prev.column === columnKey) {
-        // If same column, cycle through: asc -> desc -> null -> asc
-        if (prev.direction === 'asc') {
-          return { column: columnKey, direction: 'desc' }
-        } else if (prev.direction === 'desc') {
-          return { column: columnKey, direction: null }
-        } else {
-          // prev.direction is null, start with asc
-          return { column: columnKey, direction: 'asc' }
-        }
-      }
-      // If different column, start with asc
-      return { column: columnKey, direction: 'asc' }
-    })
-    // Reset to first page when sorting changes
-    setPagination(prev => ({ ...prev, pageIndex: 0 }))
-  }
-
-  // Build TanStack columns with manual header click sorting
-  const columns: ColumnDef<Goal>[] = [
-    {
-      accessorKey: 'category',
-      header: () => (
-        <button
-          className="flex items-center gap-1 font-medium text-gray-900 hover:text-gray-700"
-          onClick={() => handleSortingChange('category')}
-        >
-          <span>Category</span>
-          <ArrowUpDown className={`h-4 w-4 ${sorting.column === 'category' ? 'text-gray-700' : 'text-gray-400'}`} />
-        </button>
-      ),
-      cell: ({ row }) => (
-        <Badge variant="secondary" className="bg-orange-100 text-red-500 border-pink-200 whitespace-nowrap">
-          {row.original.category}
-        </Badge>
-      ),
-    },
-    {
-      accessorKey: 'completionType',
-      header: () => (
-        <button
-          className="flex items-center gap-1 font-medium text-gray-900 hover:text-gray-700"
-          onClick={() => handleSortingChange('completionType')}
-        >
-          <span>Completion Type</span>
-          <ArrowUpDown className={`h-4 w-4 ${sorting.column === 'completionType' ? 'text-gray-700' : 'text-gray-400'}`} />
-        </button>
-      ),
-    },
-    {
-      accessorKey: 'title',
-      header: () => (
-        <button
-          className="flex items-center gap-1 font-medium text-gray-900 hover:text-gray-700"
-          onClick={() => handleSortingChange('title')}
-        >
-          <span>Title</span>
-          <ArrowUpDown className={`h-4 w-4 ${sorting.column === 'title' ? 'text-gray-700' : 'text-gray-400'}`} />
-        </button>
-      ),
-      cell: ({ row }) => (
-        <span className="block max-w-[20rem] whitespace-normal break-words">{row.original.title}</span>
-      ),
-    },
-    {
-      accessorKey: 'description',
-      header: () => (
-        <button
-          className="flex items-center gap-1 font-medium text-gray-900 hover:text-gray-700"
-          onClick={() => handleSortingChange('description')}
-        >
-          <span>Description</span>
-          <ArrowUpDown className={`h-4 w-4 ${sorting.column === 'description' ? 'text-gray-700' : 'text-gray-400'}`} />
-        </button>
-      ),
-      cell: ({ row }) => (
-        <span className="block max-w-[28rem] whitespace-normal break-words leading-relaxed">
-          {row.original.description}
-        </span>
-      ),
-    },
-    {
-      accessorKey: 'coins',
-      header: () => (
-        <button
-          className="flex items-center gap-1 font-medium text-gray-900 hover:text-gray-700"
-          onClick={() => handleSortingChange('coins')}
-        >
-          <span>Coins</span>
-          <ArrowUpDown className={`h-4 w-4 ${sorting.column === 'coins' ? 'text-gray-700' : 'text-gray-400'}`} />
-        </button>
-      ),
-    },
-    {
-      accessorKey: 'bonus',
-      header: () => (
-        <button
-          className="flex items-center gap-1 font-medium text-gray-900 hover:text-gray-700"
-          onClick={() => handleSortingChange('bonus')}
-        >
-          <span>Bonus</span>
-          <ArrowUpDown className={`h-4 w-4 ${sorting.column === 'bonus' ? 'text-gray-700' : 'text-gray-400'}`} />
-        </button>
-      ),
-    },
-    {
-      accessorKey: 'progress',
-      header: () => (
-        <button
-          className="flex items-center gap-1 font-medium text-gray-900 hover:text-gray-700"
-          onClick={() => handleSortingChange('progress')}
-        >
-          <span>Progress</span>
-          <ArrowUpDown className={`h-4 w-4 ${sorting.column === 'progress' ? 'text-gray-700' : 'text-gray-400'}`} />
-        </button>
-      ),
-    },
-    {
-      id: 'actions',
-      header: 'Action',
-      cell: ({ row }) => (
-        <Button
-          variant="outline"
-          size="icon"
-          className="w-8 h-8 border-blue-300 hover:bg-blue-200"
-          onClick={() => handleViewGoal(row.original)}
-        >
-          <Eye size={16} className="text-blue-600" />
-        </Button>
-      ),
-      enableSorting: false,
-    },
-  ]
-
-  // Sort goals based on current sorting state
+  // Apply sorting to goals
   const sortedGoals = useMemo(() => {
-    if (!sorting.column || !sorting.direction) {
-      return [...goals]
+    const sortedGoals = [...goals]
+    
+    if (sorting.column && sorting.direction) {
+      sortedGoals.sort((a, b) => {
+        let aValue: string | number = a[sorting.column as keyof Goal] as string | number
+        let bValue: string | number = b[sorting.column as keyof Goal] as string | number
+        
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          aValue = aValue.toLowerCase()
+          bValue = bValue.toLowerCase()
+        }
+        
+        if (sorting.direction === 'asc') {
+          return aValue > bValue ? 1 : -1
+        } else {
+          return aValue < bValue ? 1 : -1
+        }
+      })
     }
+    return sortedGoals
+  }, [goals, sorting])
 
-    return [...goals].sort((a, b) => {
-      const aValue = a[sorting.column as keyof Goal]
-      const bValue = b[sorting.column as keyof Goal]
-
-      if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return sorting.direction === 'asc' 
-          ? aValue.localeCompare(bValue)
-          : bValue.localeCompare(aValue)
+  // Handle sorting change
+  const handleSortingChange = (column: string) => {
+    setSorting(prev => {
+      if (prev.column === column) {
+        // Toggle direction if same column
+        if (prev.direction === 'asc') return { column, direction: 'desc' }
+        if (prev.direction === 'desc') return { column, direction: null }
+        return { column, direction: 'asc' }
+      } else {
+        // New column, start with ascending
+        return { column, direction: 'asc' }
       }
-
-      if (typeof aValue === 'number' && typeof bValue === 'number') {
-        return sorting.direction === 'asc' 
-          ? aValue - bValue
-          : bValue - aValue
-      }
-
-      return 0
     })
-  }, [sorting, goals])
-
-  // Mock results shaped as PaginatedResponse to satisfy the hook
-  const results = useMemo(() => {
-    const totalCount = sortedGoals.length
-    const totalPages = Math.ceil(totalCount / pagination.pageSize)
-    const startIndex = pagination.pageIndex * pagination.pageSize
-    const endIndex = startIndex + pagination.pageSize
-    const data = sortedGoals.slice(startIndex, endIndex)
-    return { data, totalCount, page: pagination.pageIndex + 1, totalPages }
-  }, [sortedGoals, pagination])
-
-
-  // Reset to first page when page size changes
-  useEffect(() => {
-    setPagination(prev => ({ ...prev, pageIndex: 0 }))
-  }, [pagination.pageSize])
+    
+    // Reset to first page when sorting changes
+    setPage(1)
+  }
 
   // Handle view button click
   const handleViewGoal = (goal: Goal) => {
     setSelectedGoal(goal)
     setIsViewOpen(true)
   }
+
+  // Create columns using the imported column factory
+  const columns = createGoalColumns({
+    onSortingChange: handleSortingChange,
+    onViewGoal: handleViewGoal,
+    sorting: sorting
+  });
 
   // Handle close view
   const handleCloseView = () => {
@@ -292,18 +134,17 @@ export function GoalsTab({ patientId }: GoalsTabProps) {
           <div className="px-2 py-3 border-b border-gray-200">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-900">Goals</h2>
-                                   <Button
-                       variant="outline"
-                       size="sm"
-                       className="border-blue-300 text-blue-600 hover:bg-blue-50"
-                       onClick={() => {
-                         // Navigate to add goal page
-                         window.location.href = '/patient-info/goals/add'
-                       }}
-                     >
-                       <Plus size={16} />
-                       Add
-                     </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-blue-300 text-blue-600 hover:bg-blue-50"
+                    onClick={() => {
+                      window.location.href = '/patient-info/goals/add'
+                    }}
+                  >
+                    <Plus size={16} />
+                    Add
+                  </Button>
             </div>
           </div>
 
@@ -316,32 +157,30 @@ export function GoalsTab({ patientId }: GoalsTabProps) {
               <div className="text-sm text-gray-500 mb-2">Loading goals…</div>
             )}
             {error && (
-              <div className="text-sm text-red-600 mb-2">{error}</div>
+              <div className="text-sm text-red-600 mb-2">{error.message}</div>
             )}
             
             <GoalsTable
-              results={results}
+              results={{
+                data: sortedGoals,
+                totalCount: goals.length,
+                page: 1, 
+                totalPages: Math.ceil(goals.length / pageSize)
+              }}
               columns={columns}
-              pagination={pagination}
-              setPagination={setPagination}
-              error={error ?? undefined}
+              pagination={{ pageIndex: 0, pageSize: pageSize }}
+              setPagination={() => {}}
+              error={error?.message ?? undefined}
             />
 
             {/* Pagination */}
-            <CommonPagination
-              page={pagination.pageIndex + 1}
-              pageCount={results.totalPages}
-              pageSize={pagination.pageSize}
+            <Pagination
+              page={page}
+              pageCount={Math.ceil(goals.length / pageSize)}
+              pageSize={pageSize}
               openPageSize={openPageSize}
-              setPage={(updater) => {
-                const currentPage = pagination.pageIndex + 1
-                const next = typeof updater === 'function' ? (updater as (p: number) => number)(currentPage) : updater
-                setPagination(prev => ({ ...prev, pageIndex: Math.max(0, next - 1) }))
-              }}
-              setPageSize={(updater) => {
-                const next = typeof updater === 'function' ? (updater as (s: number) => number)(pagination.pageSize) : updater
-                setPagination(prev => ({ ...prev, pageSize: next, pageIndex: 0 }))
-              }}
+              setPage={setPage}
+              setPageSize={setPageSize}
               setOpenPageSize={setOpenPageSize}
             />
           </div>

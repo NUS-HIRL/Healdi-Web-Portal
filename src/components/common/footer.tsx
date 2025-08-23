@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export function Footer() {
+export const Footer = () => {
   return (
         <div className="bg-white">
         {/* Download App Section */}

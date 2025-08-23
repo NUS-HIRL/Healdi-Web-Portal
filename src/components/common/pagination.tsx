@@ -14,7 +14,7 @@ type PaginationProps = {
   setOpenPageSize: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export function Pagination({
+export const Pagination = ({
   page,
   pageCount,
   pageSize,
@@ -22,7 +22,7 @@ export function Pagination({
   setPage,
   setPageSize,
   setOpenPageSize,
-}: PaginationProps) {
+}: PaginationProps) => {
   return (
     <div className="mt-4 flex items-center justify-end gap-2 relative">
       <Button

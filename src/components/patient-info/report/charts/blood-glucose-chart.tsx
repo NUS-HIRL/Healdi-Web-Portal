@@ -14,7 +14,7 @@ const data = [
   { day: '8PM', value: 10 },
 ]
 
-export function BloodGlucoseChart() {
+export const BloodGlucoseChart = () => {
   const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
   const handleBarMouseEnter = (data: ChartDataPoint) => {

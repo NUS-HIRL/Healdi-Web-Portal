@@ -8,7 +8,7 @@ interface PatientListProps {
   patients: Patient[]
 }
 
-export function PatientList({ patients }: PatientListProps) {
+export const PatientList = ({ patients }: PatientListProps) => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,

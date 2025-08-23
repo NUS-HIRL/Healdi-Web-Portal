@@ -14,7 +14,7 @@ const data = [
   { day: '8PM', value: 90 },
 ]
 
-export function ActiveMinutesChart() {
+export const ActiveMinutesChart = () => {
   const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
   const handleBarMouseEnter = (data: ChartDataPoint) => {

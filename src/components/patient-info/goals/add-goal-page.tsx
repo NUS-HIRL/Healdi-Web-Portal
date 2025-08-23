@@ -10,7 +10,7 @@ import { Footer } from '../../common/footer'
 import { Sidebar } from '../../common/sidebar'
 import { Search, Bell, User } from 'lucide-react'
 
-export function AddGoalPage() {
+export const AddGoalPage = () => {
   type AddGoalForm = {
     category: string
     completionType: string

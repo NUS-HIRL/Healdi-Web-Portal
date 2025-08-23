@@ -14,7 +14,7 @@ const data = [
   { time: '8PM', value: 115 },
 ]
 
-export function HeartRateChart() {
+export const HeartRateChart = () => {
   const [hoveredData, setHoveredData] = useState<ChartDataPoint | null>(null)
 
   const handleBarMouseEnter = (data: ChartDataPoint) => {

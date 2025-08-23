@@ -16,6 +16,15 @@ interface EditGoalPageProps {
   goalId: string
 }
 
+type EditGoalForm = {
+  category: string;
+  completionType: string;
+  title: string;
+  description: string;
+  coins: number;
+  bonus: number;
+};
+
 // Mock goal data - in a real app, this would be fetched from an API
 const mockGoal: Goal = {
   id: '1',
@@ -28,16 +37,8 @@ const mockGoal: Goal = {
   progress: '1/3'
 }
 
-export function EditGoalPage({ goalId }: EditGoalPageProps) {
+export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
   const [goal, setGoal] = useState<Goal | null>(null)
-  type EditGoalForm = {
-    category: string
-    completionType: string
-    title: string
-    description: string
-    coins: number
-    bonus: number
-  }
 
   const { register, control, handleSubmit, reset } = useForm<EditGoalForm>({
     defaultValues: {

@@ -13,7 +13,7 @@ interface GoalsTableProps {
   error?: unknown
 }
 
-export function GoalsTable({ results, columns, pagination, setPagination, error }: GoalsTableProps) {
+export const GoalsTable = ({ results, columns, pagination, setPagination, error }: GoalsTableProps) => {
   const { table } = useDataTable<Goal>(results, columns, pagination, setPagination, error)
   return (
     <div className="overflow-hidden rounded-lg">

@@ -12,47 +12,48 @@ export type CognitoInitiateAuthResponse = {
   Session?: string
 }
 
-import { COGNITO_CLIENT_ID, COGNITO_ENDPOINT } from '@/config/api'
+import { COGNITO_CLIENT_ID } from '@/config/api'
+import { cognitoAxios } from './axios'
+import { AxiosError } from 'axios'
 
 export const login = async (username: string, password: string): Promise<CognitoAuthResult> => {
-  const res = await fetch(COGNITO_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-amz-json-1.1',
-      'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth',
-    },
-    body: JSON.stringify({
+  try {
+    const response = await cognitoAxios.post('', {
       AuthParameters: {
         USERNAME: username,
         PASSWORD: password,
       },
       AuthFlow: 'USER_PASSWORD_AUTH',
       ClientId: COGNITO_CLIENT_ID,
-    }),
-  })
+    }, {
+      headers: {
+        'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth',
+      }
+    })
 
-  if (!res.ok) {
-    const text = await res.text().catch(() => '')
-    throw new Error(`Login failed (${res.status}): ${text || res.statusText}`)
+    const data = response.data as CognitoInitiateAuthResponse
+    if (!data.AuthenticationResult?.AccessToken) {
+      throw new Error('Login challenge or missing tokens returned from Cognito')
+    }
+
+    const result = data.AuthenticationResult
+    const nowSeconds = Math.floor(Date.now() / 1000)
+    const expiresAt = nowSeconds + (result.ExpiresIn || 3600)
+
+    try {
+      localStorage.setItem('accessToken', result.AccessToken)
+      localStorage.setItem('idToken', result.IdToken)
+      if (result.RefreshToken) localStorage.setItem('refreshToken', result.RefreshToken)
+      localStorage.setItem('tokenExpiresAt', String(expiresAt))
+    } catch {}
+
+    return result
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status) {
+      throw new Error(`Login failed (${error.response.status}): ${error.response.data || error.response.statusText}`)
+    }
+    throw new Error(`Login failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
   }
-
-  const data = (await res.json()) as CognitoInitiateAuthResponse
-  if (!data.AuthenticationResult?.AccessToken) {
-    throw new Error('Login challenge or missing tokens returned from Cognito')
-  }
-
-  const result = data.AuthenticationResult
-  const nowSeconds = Math.floor(Date.now() / 1000)
-  const expiresAt = nowSeconds + (result.ExpiresIn || 3600)
-
-  try {
-    localStorage.setItem('accessToken', result.AccessToken)
-    localStorage.setItem('idToken', result.IdToken)
-    if (result.RefreshToken) localStorage.setItem('refreshToken', result.RefreshToken)
-    localStorage.setItem('tokenExpiresAt', String(expiresAt))
-  } catch {}
-
-  return result
 }
 
 export const getAccessToken = (): string | null => {

@@ -12,7 +12,7 @@ interface PatientDashboardProps {
   patientId: string
 }
 
-export function PatientDashboard({ patientId }: PatientDashboardProps) {
+export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
   const [activeTab, setActiveTab] = useState('Reports')
 
   return (

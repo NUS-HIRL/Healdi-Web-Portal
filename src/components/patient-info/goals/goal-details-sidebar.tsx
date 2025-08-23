@@ -12,7 +12,7 @@ interface GoalDetailsSidebarProps {
   onClose: () => void
 }
 
-export function GoalDetailsSidebar({ goal, isOpen, onClose }: GoalDetailsSidebarProps) {
+export const GoalDetailsSidebar = ({ goal, isOpen, onClose }: GoalDetailsSidebarProps) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto">

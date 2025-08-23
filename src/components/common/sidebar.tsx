@@ -5,7 +5,7 @@ import { Home, Users, FileText, Calendar, Settings, LogOut } from 'lucide-react'
 import Image from 'next/image'
 
 // TODO: Replace with actual paths to your icons
-export function Sidebar() {
+export const Sidebar = () => {
   const [selectedTab, setSelectedTab] = useState('users')
 
   const navigationItems = [

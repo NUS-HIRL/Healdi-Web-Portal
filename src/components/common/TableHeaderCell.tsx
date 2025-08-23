@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export type SortDir = "asc" | "desc";
 
-export function TableHeaderCell({
+export const TableHeaderCell = ({
   label,
   active,
   dir,
@@ -17,7 +17,7 @@ export function TableHeaderCell({
   dir?: SortDir;
   onClick?: () => void;
   noSort?: boolean;
-}) {
+}) => {
   const content = (
     <div className="flex items-center gap-1">
       <span>{label}</span>

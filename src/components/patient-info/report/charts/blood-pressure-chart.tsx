@@ -14,7 +14,7 @@ const data = [
   { time: '8PM', systolic: 160, diastolic: 95 },
 ]
 
-export function BloodPressureChart() {
+export const BloodPressureChart = () => {
   const [hoveredData, setHoveredData] = useState<BloodPressureDataPoint | null>(null)
 
   const handleDotMouseEnter = (payload: BloodPressureDataPoint) => {
