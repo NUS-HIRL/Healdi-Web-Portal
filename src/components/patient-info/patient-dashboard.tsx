@@ -4,10 +4,12 @@ import { useState } from "react"
 import { Footer } from "../common/footer"
 import { Sidebar } from "../common/sidebar"
 import { GoalsTab } from "./goals/goals-tab"
-import Medications from "./medications/medications"
+import { Medications } from "./medications/medications"
 import { PatientHeader } from "./patient-header"
 import { ReportTab } from "./report/report-tab"
 import { Button } from "../ui/button"
+import { AllergiesDetailsSidebar } from "./allergies/allergies-details.sidebar"
+import { AiExerciseRecommendations } from "./ai-exercise-recommendations/ai-exercise-recommendations"
 
 interface PatientDashboardProps {
   patientId: string
@@ -24,13 +26,17 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
     "AI Exercise Recommendations",
     "Resources"
   ]
+  const [isAllergiesOpen, setIsAllergiesOpen] = useState(false)
 
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
 
       <div className="flex-1 flex flex-col">
-        <PatientHeader patientId={patientId} />
+        <PatientHeader
+          patientId={patientId}
+          onViewAllergies={() => setIsAllergiesOpen(true)}
+        />
 
         <main className="flex-1 overflow-auto">
           <div className="p-2">
@@ -61,9 +67,7 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
             )}
             {activeTab === "Goals" && <GoalsTab patientId={patientId} />}
             {activeTab === "AI Exercise Recommendations" && (
-              <div className="text-gray-500">
-                AI Exercise Recommendations content coming soon...
-              </div>
+              <AiExerciseRecommendations patientId={patientId} />
             )}
             {activeTab === "Resources" && (
               <div className="text-gray-500">
@@ -76,6 +80,12 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
         {/* Footer */}
         <Footer />
       </div>
+
+      {/* Allergies modal */}
+      <AllergiesDetailsSidebar
+        isOpen={isAllergiesOpen}
+        onClose={() => setIsAllergiesOpen(false)}
+      />
     </div>
   )
 }

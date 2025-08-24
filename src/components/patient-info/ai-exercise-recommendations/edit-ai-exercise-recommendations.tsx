@@ -4,8 +4,8 @@ import { useState } from "react"
 import { Sidebar } from "../../common/sidebar"
 import { PatientHeader } from "../patient-header"
 import { ReportTab } from "../report/report-tab"
-import Medications from "../medications/medications"
-import AiExerciseRecommendations from "./ai-exercise-recommendations"
+import { Medications } from "../medications/medications"
+import { AiExerciseRecommendations } from "./ai-exercise-recommendations"
 
 interface PatientDashboardProps {
   patientId: string

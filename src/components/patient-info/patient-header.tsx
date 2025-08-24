@@ -1,54 +1,87 @@
-import { Search, Bell } from "lucide-react"
+import { Eye, User } from "lucide-react"
 
-interface PatientHeaderProps {
+export type PatientHeaderProps = {
   patientId: string
+  dob?: string // e.g. "12 / 03 / 1965"
+  gender?: string // e.g. "M"
+  fitnessLevel?: string // e.g. "Moderate"
+  hrvMs?: number | string // e.g. 65
+  healthConditionsCount?: number // e.g. 4
+  allergiesCount?: number // e.g. 3
+  onViewHealthConditions?: () => void
+  onViewAllergies?: () => void
 }
 
-// TODO: Replace with the actual figma design
-export const PatientHeader = ({ patientId }: PatientHeaderProps) => {
-  return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
-      <div className="flex items-center justify-between">
-        {/* Left side - Patient info */}
-        <div className="flex items-center space-x-4">
-          <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center">
-            <span className="text-white font-semibold text-lg">L</span>
-          </div>
-          <div>
-            <h1 className="text-2xl font-semibold text-gray-900">
-              Landon Smith
-            </h1>
-            <p className="text-sm text-gray-500">Patient ID: {patientId}</p>
-          </div>
+const InfoCell = ({
+  label,
+  children
+}: {
+  label: string
+  children: React.ReactNode
+}) => (
+  <div className="px-6 first:pl-0">
+    <div className="text-xs font-medium text-gray-500">{label}</div>
+    <div className="mt-1 text-base font-semibold text-gray-900">{children}</div>
+  </div>
+)
+
+export const PatientHeader = ({
+  patientId,
+  dob = "12 / 03 / 1965",
+  gender = "M",
+  fitnessLevel = "Moderate",
+  hrvMs = 65,
+  healthConditionsCount = 4,
+  allergiesCount = 3,
+  onViewAllergies
+}: PatientHeaderProps) => (
+  <header className="bg-white border-b border-gray-200 pt-8 pb-4 px-6">
+    <div className="flex items-center justify-between">
+      {/* Left: Avatar + ID */}
+      <div className="flex items-center gap-4 pr-6">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-100 to-orange-100 flex items-center justify-center">
+          <User className="text-white" size={24} />
         </div>
-
-        {/* Right side - Search and notifications */}
-        <div className="flex items-center space-x-4">
-          {/* Search */}
-          <div className="relative">
-            <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-              size={20}
-            />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="pl-10 pr-4 py-2 w-64 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+        <div>
+          <div className="text-base font-semibold text-gray-900 leading-tight">
+            {patientId}
           </div>
-
-          {/* Notifications */}
-          <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-            <Bell size={20} />
-          </button>
-
-          {/* User profile */}
-          <div className="flex items-center space-x-3 pl-4 border-l border-gray-200">
-            <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-            <span className="text-sm font-medium text-gray-700">John Doe</span>
-          </div>
+          <div className="text-sm text-gray-500">Patient</div>
         </div>
       </div>
-    </header>
-  )
-}
+
+      {/* Right: Key facts */}
+      <div className="ml-8 pl-8 border-l border-gray-200 flex items-center divide-x divide-gray-200 ml-auto">
+        <InfoCell label="DOB">{dob}</InfoCell>
+        <InfoCell label="Gender">{gender}</InfoCell>
+        <InfoCell label="Fitness Level">{fitnessLevel}</InfoCell>
+        <InfoCell label="HRV (ms)">{hrvMs}</InfoCell>
+        <InfoCell label="Health Conditions">
+          <div className="flex items-center gap-3">
+            <span>{healthConditionsCount}</span>
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              aria-label="View health conditions">
+              <Eye size={14} className="-ml-0.5" aria-hidden="true" />
+              View
+            </button>
+          </div>
+        </InfoCell>
+        <InfoCell label="Allergies">
+          <div className="flex items-center gap-3">
+            <span>{allergiesCount}</span>
+            <button
+              type="button"
+              onClick={onViewAllergies}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              aria-label="View allergies">
+              <Eye size={14} className="-ml-0.5" aria-hidden="true" />
+              View
+            </button>
+          </div>
+        </InfoCell>
+      </div>
+    </div>
+  </header>
+)

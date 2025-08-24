@@ -49,7 +49,7 @@ const INITIAL_DATA: Exercise[] = [
   }
 ]
 
-export default function AiExerciseRecommendations({
+export function AiExerciseRecommendations({
   patientId
 }: {
   patientId: string
