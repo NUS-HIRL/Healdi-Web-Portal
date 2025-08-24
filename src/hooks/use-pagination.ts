@@ -1,6 +1,13 @@
+import { PaginationState } from "@tanstack/react-table"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useState } from "react"
 
 const usePagination = () => {
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10
+  })
+
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -44,21 +51,9 @@ const usePagination = () => {
     router.push(`?${newParams.toString()}`)
   }
 
-  const handleDateRangeFilter = (startDate: string, endDate: string) => {
-    const newParams = new URLSearchParams(searchParams)
-    newParams.set("startDate", startDate)
-    newParams.set("endDate", endDate)
-    router.push(`?${newParams.toString()}`)
-  }
-
-  const clearDateRangeFilter = () => {
-    const newParams = new URLSearchParams(searchParams)
-    newParams.delete("startDate")
-    newParams.delete("endDate")
-    router.push(`?${newParams.toString()}`)
-  }
-
   return {
+    pagination,
+    setPagination,
     sortBy,
     sortOrder,
     filterBy,
@@ -70,9 +65,7 @@ const usePagination = () => {
     handleSort,
     handleFilter,
     handleSearch,
-    clearSearchParams,
-    handleDateRangeFilter,
-    clearDateRangeFilter
+    clearSearchParams
   }
 }
 

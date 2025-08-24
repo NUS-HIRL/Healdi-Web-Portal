@@ -1,18 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// TODO: Remove disable above and fix pagination
 "use client"
 
 import { Eye, Plus } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { Button } from "@/components/ui/button"
-import { Med } from "../../../types/medications-types"
 import { KeyValueRow } from "../../common/key-value-row"
 import { LabeledInput } from "../../common/labeled-input"
 import { Modal } from "../../common/modal"
 import { TableHeaderCell } from "../../common/table-header-cell"
+import usePagination from "@/hooks/use-pagination"
+import { Medication } from "@/types/medication"
+import { MedicationColumns } from "@/components/columns/medication-columns"
+import CustomDataTable from "@/components/common/table/custom-data-table"
 
-const INITIAL_DATA: Med[] = [
+const INITIAL_DATA: Medication[] = [
   {
     id: "1",
     name: "Propranolol Hydrochloride",
@@ -43,63 +44,37 @@ const INITIAL_DATA: Med[] = [
   }
 ]
 
-export const Medications = () => {
-  const [rows, setRows] = useState<Med[]>(INITIAL_DATA)
+type MedForm = {
+  name: string
+  dosage: string
+  type: "Tablet" | "Capsule" | "Injection"
+  creator: "Patient" | "Doctor"
+}
 
-  // sorting
-  const [sortKey, setSortKey] = useState<keyof Med>("name")
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc")
+export const Medications = () => {
+  const [rows, setRows] = useState<Medication[]>(INITIAL_DATA)
 
   // pagination
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [openPageSize, setOpenPageSize] = useState(false)
+  const { pagination, setPagination } = usePagination()
 
   // modals
-  const [viewing, setViewing] = useState<Med | null>(null)
+  const [viewing, setViewing] = useState<Medication | null>(null)
   const [showAdd, setShowAdd] = useState(false)
 
   // add form (dummy)
-  const [form, setForm] = useState<
-    Pick<Med, "name" | "dosage" | "type" | "creator">
-  >({
+  const [form, setForm] = useState<MedForm>({
     name: "",
     dosage: "",
     type: "Tablet",
     creator: "Patient"
   })
 
-  const sorted = useMemo(() => {
-    const copy = [...rows]
-    copy.sort((a, b) => {
-      const av = String(a[sortKey] ?? "")
-      const bv = String(b[sortKey] ?? "")
-      return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av)
-    })
-    return copy
-  }, [rows, sortKey, sortDir])
-
-  const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize))
-  const pageItems = useMemo(() => {
-    const start = (page - 1) * pageSize
-    return sorted.slice(start, start + pageSize)
-  }, [sorted, page, pageSize])
-
-  function toggleSort(key: keyof Med) {
-    if (sortKey === key) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"))
-    } else {
-      setSortKey(key)
-      setSortDir("asc")
-    }
-  }
-
   function handleAdd() {
     if (!form.name.trim()) {
       alert("Enter a medication name (dummy validation).")
       return
     }
-    const newRow: Med = {
+    const newRow: Medication = {
       id: String(Date.now()),
       name: form.name.trim(),
       dosage: form.dosage.trim() || "N/A",
@@ -111,87 +86,55 @@ export const Medications = () => {
     setForm({ name: "", dosage: "", type: "Tablet", creator: "Patient" })
   }
 
+  const handleViewMedication = (medication: Medication) => {
+    setViewing(medication)
+    setShowAdd(true)
+  }
+
+  const columns = MedicationColumns({ onViewMedication: handleViewMedication })
+
+  const MedicationTable = CustomDataTable<Medication>
+
+  // TODO: Change this mock data to API fetched data
+  const results = {
+    data: rows,
+    totalCount: rows.length,
+    page: 1,
+    totalPages: Math.ceil(rows.length / pagination.pageSize)
+  }
+
   return (
     <div className="w-full px-4 py-6">
       {/* Title */}
-      <h1 className="text-2xl font-semibold text-gray-800 mb-4">Medications</h1>
+      <h1 className="text-2xl font-semibold text-gray-800 mb-4 border-b border-gray-200">
+        Medications
+      </h1>
 
       {/* Card */}
-      <section className="rounded-xl border border-gray-200 bg-gray-50">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-gray-800 font-semibold">Medication Plan</h2>
-          <Button
-            type="button"
-            onClick={() => setShowAdd(true)}
-            variant="outline"
-            size="sm"
-            className="gap-2">
-            <Plus className="h-4 w-4" />
-            Add
-          </Button>
-        </div>
+      {/* Header */}
+      <div className="flex items-center justify-between px-6 py-4">
+        <h2 className="text-gray-800 font-semibold">Medication Plan</h2>
+        <Button
+          type="button"
+          onClick={() => setShowAdd(true)}
+          variant="outline"
+          size="sm"
+          className="gap-2">
+          <Plus className="h-4 w-4" />
+          Add
+        </Button>
+      </div>
 
-        {/* Table */}
-        <div className="px-4 py-4">
-          <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
-            <table className="w-full table-fixed border-collapse">
-              <thead className="bg-gray-50 text-left">
-                <tr className="text-sm text-gray-700">
-                  <TableHeaderCell
-                    label="Medication Name"
-                    active={sortKey === "name"}
-                    dir={sortDir}
-                    onClick={() => toggleSort("name")}
-                  />
-                  <TableHeaderCell
-                    label="Dosage"
-                    active={sortKey === "dosage"}
-                    dir={sortDir}
-                    onClick={() => toggleSort("dosage")}
-                  />
-                  <TableHeaderCell
-                    label="Type"
-                    active={sortKey === "type"}
-                    dir={sortDir}
-                    onClick={() => toggleSort("type")}
-                  />
-                  <TableHeaderCell
-                    label="Creator"
-                    active={sortKey === "creator"}
-                    dir={sortDir}
-                    onClick={() => toggleSort("creator")}
-                  />
-                  <TableHeaderCell label="Action" noSort />
-                </tr>
-              </thead>
-
-              <tbody className="divide-y divide-gray-100">
-                {pageItems.map((m) => (
-                  <tr key={m.id} className="text-gray-700">
-                    <td className="px-4 py-4 truncate">{m.name}</td>
-                    <td className="px-4 py-4">{m.dosage}</td>
-                    <td className="px-4 py-4">{m.type}</td>
-                    <td className="px-4 py-4">{m.creator}</td>
-                    <td className="px-4 py-4">
-                      <Button
-                        type="button"
-                        onClick={() => setViewing(m)}
-                        variant="outline"
-                        size="icon"
-                        className="border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100"
-                        aria-label={`View ${m.name}`}
-                        title="View">
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+      {/* Table */}
+      {/* TODO: Replace isLoading and error hardcodes after integratin medication API */}
+      <MedicationTable
+        columns={columns}
+        data={results}
+        pagination={pagination}
+        setPagination={setPagination}
+        isLoading={false}
+        error={null}
+      />
 
       {/* View Modal (dummy) */}
       {viewing && (
