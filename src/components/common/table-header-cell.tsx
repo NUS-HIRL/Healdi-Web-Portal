@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 
 export type SortDir = "asc" | "desc"
 
+// TODO: Kervyn: Modify/Remove the usage entirely once sorting is handled by API
 export const TableHeaderCell = ({
   label,
   active,

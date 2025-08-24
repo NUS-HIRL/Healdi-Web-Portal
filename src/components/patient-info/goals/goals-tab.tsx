@@ -40,6 +40,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     direction: null
   })
 
+  // TODO: Ze Kai: Modify once API data comes through, no longer need useMemo as useSWR handles it
   // Transform API data to component data
   const goals: Goal[] = useMemo(() => {
     let goalsData: ApiGoal[] = []
@@ -68,7 +69,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     }))
   }, [response])
 
-  // Apply sorting to goals
+  // TODO: Ze Kai: Remove once API data comes through
   const sortedGoals = useMemo(() => {
     const sortedGoals = [...goals]
 
