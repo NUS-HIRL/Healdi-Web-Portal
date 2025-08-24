@@ -66,7 +66,10 @@ export const EditAllergiesPage = () => {
   const updateOther = (id: string, other: string) =>
     setItems((prev) => prev.map((i) => (i.id === id ? { ...i, other } : i)))
 
-  const payload = useMemo(() => items.map(({ id, ...rest }) => rest), [items])
+    const payload = useMemo(
+    () => items.map((i) => ({ title: i.title, reactions: i.reactions, other: i.other })),
+    [items]
+    )
 
   const onSave = () => {
     // TODO: integrate API call

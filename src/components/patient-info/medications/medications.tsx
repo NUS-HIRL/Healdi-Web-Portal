@@ -43,9 +43,9 @@ const INITIAL_DATA: Med[] = [
   }
 ]
 
-export default function Medications() {
+export function Medications() {
   const [rows, setRows] = useState<Med[]>(INITIAL_DATA)
-
+ 
   // sorting
   const [sortKey, setSortKey] = useState<keyof Med>("name")
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc")

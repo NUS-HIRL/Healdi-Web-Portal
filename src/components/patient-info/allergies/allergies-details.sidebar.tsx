@@ -1,13 +1,10 @@
 "use client"
-
-import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
   Sheet,
   SheetContent,
   SheetTitle,
-  SheetClose
 } from "@/components/ui/sheet"
 
 // Types
@@ -51,7 +48,6 @@ export const AllergiesDetailsSidebar = ({
   allergies = DEFAULT_ALLERGIES,
   isOpen,
   onClose,
-  onEdit
 }: AllergiesDetailsSidebarProps) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
