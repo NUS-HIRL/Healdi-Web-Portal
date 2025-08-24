@@ -1,40 +1,47 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { Goal } from '@/types/goal'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
-import { Footer } from '../../common/footer'
-import { Sidebar } from '../../common/sidebar'
-import { Search, Bell, User } from 'lucide-react'
+import { useState, useEffect } from "react"
+import { useForm, Controller } from "react-hook-form"
+import { Goal } from "@/types/goal"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { Footer } from "../../common/footer"
+import { Sidebar } from "../../common/sidebar"
+import { Search, Bell, User } from "lucide-react"
 
 interface EditGoalPageProps {
   goalId: string
 }
 
 type EditGoalForm = {
-  category: string;
-  completionType: string;
-  title: string;
-  description: string;
-  coins: number;
-  bonus: number;
-};
+  category: string
+  completionType: string
+  title: string
+  description: string
+  coins: number
+  bonus: number
+}
 
 // Mock goal data - in a real app, this would be fetched from an API
 const mockGoal: Goal = {
-  id: '1',
-  category: 'Physical Activity',
-  completionType: 'Short Term',
-  title: 'I will jog for 15 minutes three times a week.',
-  description: 'Jog for at least 15 minutes three times a week to complete this goal. Whether you\'re at the park, on a running track, treadmill, or around your neighbourhood, it all counts. Come back to Healdi to mark it as complete. You can only complete this goal once per day.',
+  id: "1",
+  category: "Physical Activity",
+  completionType: "Short Term",
+  title: "I will jog for 15 minutes three times a week.",
+  description:
+    "Jog for at least 15 minutes three times a week to complete this goal. Whether you're at the park, on a running track, treadmill, or around your neighbourhood, it all counts. Come back to Healdi to mark it as complete. You can only complete this goal once per day.",
   coins: 50,
   bonus: 500,
-  progress: '1/3'
+  progress: "1/3"
 }
 
 export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
@@ -42,10 +49,10 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
 
   const { register, control, handleSubmit, reset } = useForm<EditGoalForm>({
     defaultValues: {
-      category: '',
-      completionType: '',
-      title: '',
-      description: '',
+      category: "",
+      completionType: "",
+      title: "",
+      description: "",
       coins: 0,
       bonus: 0
     }
@@ -71,7 +78,7 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
 
   const onSubmit = (data: EditGoalForm) => {
     // Handle form submission - in a real app, this would update the goal
-    console.log('Updated goal data:', data)
+    console.log("Updated goal data:", data)
   }
 
   if (!goal) {
@@ -128,29 +135,41 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
           <div className="px-6 pt-4 pb-6 bg-white">
             <div className="w-full">
               <div className="mb-6">
-                <h2 className="text-blue-600 text-xl font-semibold">Edit Goal</h2>
+                <h2 className="text-blue-600 text-xl font-semibold">
+                  Edit Goal
+                </h2>
               </div>
-              
+
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                 {/* Category */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Category</Label>
-                    <p className="text-sm text-gray-500 mt-1">Select the category type</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Category
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Select the category type
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Controller
                       control={control}
                       name="category"
                       render={({ field }) => (
-                        <Select value={field.value || undefined} onValueChange={field.onChange}>
+                        <Select
+                          value={field.value || undefined}
+                          onValueChange={field.onChange}>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select Category" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Physical Activity">Physical Activity</SelectItem>
+                            <SelectItem value="Physical Activity">
+                              Physical Activity
+                            </SelectItem>
                             <SelectItem value="Nutrition">Nutrition</SelectItem>
-                            <SelectItem value="Mental Health">Mental Health</SelectItem>
+                            <SelectItem value="Mental Health">
+                              Mental Health
+                            </SelectItem>
                             <SelectItem value="Sleep">Sleep</SelectItem>
                           </SelectContent>
                         </Select>
@@ -162,20 +181,28 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                 {/* Completion Type */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Completion Type</Label>
-                    <p className="text-sm text-gray-500 mt-1">Select Short Term, Long Term or One-Off</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Completion Type
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Select Short Term, Long Term or One-Off
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Controller
                       control={control}
                       name="completionType"
                       render={({ field }) => (
-                        <Select value={field.value || undefined} onValueChange={field.onChange}>
+                        <Select
+                          value={field.value || undefined}
+                          onValueChange={field.onChange}>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select Completion Type" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Short Term">Short Term</SelectItem>
+                            <SelectItem value="Short Term">
+                              Short Term
+                            </SelectItem>
                             <SelectItem value="Long Term">Long Term</SelectItem>
                             <SelectItem value="One-Off">One-Off</SelectItem>
                           </SelectContent>
@@ -188,14 +215,18 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                 {/* Title */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Title</Label>
-                    <p className="text-sm text-gray-500 mt-1">Fill in the goal title</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Title
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Fill in the goal title
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Input
                       placeholder="Goal Title"
                       className="w-full"
-                      {...register('title')}
+                      {...register("title")}
                     />
                   </div>
                 </div>
@@ -203,14 +234,18 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                 {/* How It Works */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">How It Works</Label>
-                    <p className="text-sm text-gray-500 mt-1">Fill in the description</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      How It Works
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Fill in the description
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Textarea
                       placeholder="Description of the activity"
                       className="w-full min-h-[120px]"
-                      {...register('description')}
+                      {...register("description")}
                     />
                   </div>
                 </div>
@@ -218,15 +253,19 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                 {/* Coin Reward */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Coin Reward</Label>
-                    <p className="text-sm text-gray-500 mt-1">Awarded each time the user marks the activity as completed</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Coin Reward
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Awarded each time the user marks the activity as completed
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Input
                       type="number"
                       placeholder="0"
                       className="w-full"
-                      {...register('coins', { valueAsNumber: true })}
+                      {...register("coins", { valueAsNumber: true })}
                     />
                   </div>
                 </div>
@@ -234,27 +273,37 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                 {/* Coin Bonus */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Coin Bonus on Goal Completion</Label>
-                    <p className="text-sm text-gray-500 mt-1">Awarded when the user completes the entire goal duration.</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Coin Bonus on Goal Completion
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Awarded when the user completes the entire goal duration.
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Input
                       type="number"
                       placeholder="0"
                       className="w-full"
-                      {...register('bonus', { valueAsNumber: true })}
+                      {...register("bonus", { valueAsNumber: true })}
                     />
                   </div>
                 </div>
 
                 {/* Ready to Submit Section */}
                 <div className="bg-gray-100 rounded-lg p-6 mt-8">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Ready to Submit?</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    Ready to Submit?
+                  </h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    Review your filled form details and make sure everything is accurate. Once you are ready, click the Submit button to update the goal.
+                    Review your filled form details and make sure everything is
+                    accurate. Once you are ready, click the Submit button to
+                    update the goal.
                   </p>
                   <div className="flex justify-end">
-                    <Button type="submit" className="bg-black text-white hover:bg-gray-800">
+                    <Button
+                      type="submit"
+                      className="bg-black text-white hover:bg-gray-800">
                       Submit
                     </Button>
                   </div>

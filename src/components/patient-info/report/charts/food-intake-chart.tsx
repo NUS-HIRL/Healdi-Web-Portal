@@ -1,17 +1,25 @@
-'use client'
+"use client"
 
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
-import { useState } from 'react'
-import { CustomBar } from '@/components/common/chart/custom-bar'
-import { ChartDataPoint, ChartProps } from '@/types/chart'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  ReferenceLine,
+  Tooltip
+} from "recharts"
+import { useState } from "react"
+import { CustomBar } from "@/components/common/chart/custom-bar"
+import { ChartDataPoint, ChartProps } from "@/types/chart"
 
 const data = [
-  { day: '12AM', value: 2100 },
-  { day: '4AM', value: 1850 },
-  { day: '8AM', value: 2250 },
-  { day: '12PM', value: 1950 },
-  { day: '4PM', value: 2000 },
-  { day: '8PM', value: 2300 },
+  { day: "12AM", value: 2100 },
+  { day: "4AM", value: 1850 },
+  { day: "8AM", value: 2250 },
+  { day: "12PM", value: 1950 },
+  { day: "4PM", value: 2000 },
+  { day: "8PM", value: 2300 }
 ]
 
 export const FoodIntakeChart = () => {
@@ -33,8 +41,12 @@ export const FoodIntakeChart = () => {
       <div className="flex flex-col gap-1 mb-6 h-[90px]">
         <h2 className="text-xl font-semibold text-gray-800">Food Intake</h2>
         <div className="flex items-baseline gap-2">
-          <p className="text-4xl font-bold text-[#22c55e]">{displayValue || ""}</p>
-          <span className="text-xl text-gray-500">{displayValue ? "Kcal" : ""}</span>
+          <p className="text-4xl font-bold text-[#22c55e]">
+            {displayValue || ""}
+          </p>
+          <span className="text-xl text-gray-500">
+            {displayValue ? "Kcal" : ""}
+          </span>
         </div>
         <p className="text-sm text-gray-500">{displayTime || ""}</p>
       </div>
@@ -42,44 +54,38 @@ export const FoodIntakeChart = () => {
       {/* Chart Section */}
       <div className="h-[450px]">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart 
-            data={data} 
-            barCategoryGap="20%"
-          >
-            <XAxis 
-              dataKey="day" 
+          <BarChart data={data} barCategoryGap="20%">
+            <XAxis
+              dataKey="day"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 10, fill: '#9ca3af' }}
+              tick={{ fontSize: 10, fill: "#9ca3af" }}
             />
-            <YAxis 
+            <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#9ca3af' }}
+              tick={{ fontSize: 12, fill: "#9ca3af" }}
               domain={[1500, 2500]}
               width={40}
               orientation="right"
             />
-            <Tooltip 
-              content={() => null}
-              cursor={false}
-            />
+            <Tooltip content={() => null} cursor={false} />
             {hoveredData && (
-              <ReferenceLine 
-                x={hoveredData.day} 
-                stroke="#000000" 
-                strokeWidth={2} 
+              <ReferenceLine
+                x={hoveredData.day}
+                stroke="#000000"
+                strokeWidth={2}
                 strokeDasharray="none"
               />
             )}
-            <Bar 
-              dataKey="value" 
-              fill="#22c55e" 
-              radius={[2, 2, 0, 0]} 
+            <Bar
+              dataKey="value"
+              fill="#22c55e"
+              radius={[2, 2, 0, 0]}
               maxBarSize={16}
               shape={(props: unknown) => (
                 <CustomBar<ChartDataPoint>
-                  {...props as ChartProps} 
+                  {...(props as ChartProps)}
                   onMouseEnter={handleBarMouseEnter}
                   onMouseLeave={handleBarMouseLeave}
                 />

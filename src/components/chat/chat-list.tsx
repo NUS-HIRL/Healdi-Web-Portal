@@ -1,22 +1,22 @@
-"use client";
+"use client"
 
-import { Chat, UserType } from "@/types/chat";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
-import ChatBox from "@/components/chat/ChatBox";
-import { Switch } from "@/components/ui/switch";
-import useChat from "@/hooks/use-chat";
-import Image from "next/image";
+import { Chat, UserType } from "@/types/chat"
+import { cn } from "@/lib/utils"
+import { useState } from "react"
+import ChatBox from "@/components/chat/chat-box"
+import { Switch } from "@/components/ui/switch"
+import useChat from "@/hooks/use-chat"
+import Image from "next/image"
 
 interface ChatListProps {
-  initialItems: Chat[];
-  users: UserType[];
+  initialItems: Chat[]
+  users: UserType[]
 }
 
 const ChatList: React.FC<ChatListProps> = ({ initialItems }) => {
-  const [items, setItems] = useState(initialItems);
+  const [items] = useState(initialItems)
 
-  const { chatId } = useChat();
+  const { chatId } = useChat()
 
   return (
     <>
@@ -32,8 +32,7 @@ const ChatList: React.FC<ChatListProps> = ({ initialItems }) => {
           overflow-x-hidden
           border-r
           border-gray-200`
-        )}
-      >
+        )}>
         <div className="flex flex-col h-full">
           <div className="sticky top-0 z-10 bg-white">
             <div className="flex justify-between items-center mb-4 pt-4 px-2">
@@ -42,8 +41,7 @@ const ChatList: React.FC<ChatListProps> = ({ initialItems }) => {
                 text-2xl
                 font-bold
                 text-neutral-800
-              "
-              >
+              ">
                 Chat
               </div>
 
@@ -84,7 +82,7 @@ const ChatList: React.FC<ChatListProps> = ({ initialItems }) => {
         </div>
       </aside>
     </>
-  );
-};
+  )
+}
 
-export default ChatList;
+export default ChatList

@@ -1,4 +1,4 @@
-import { ChevronUp, ChevronDown } from 'lucide-react'
+import { ChevronUp, ChevronDown } from "lucide-react"
 
 interface TableHeaderProps {
   title: string
@@ -6,7 +6,11 @@ interface TableHeaderProps {
   sortable?: boolean
 }
 
-export const TableHeader = ({ title, onSort, sortable = true }: TableHeaderProps) => {
+export const TableHeader = ({
+  title,
+  onSort,
+  sortable = true
+}: TableHeaderProps) => {
   if (!sortable) {
     return (
       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -19,8 +23,7 @@ export const TableHeader = ({ title, onSort, sortable = true }: TableHeaderProps
     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
       <button
         onClick={onSort}
-        className="flex items-center space-x-1 font-medium text-gray-900"
-      >
+        className="flex items-center space-x-1 font-medium text-gray-900">
         <span>{title}</span>
         <div className="flex flex-col ml-1">
           <ChevronUp size={12} className="text-gray-400" />
@@ -29,4 +32,4 @@ export const TableHeader = ({ title, onSort, sortable = true }: TableHeaderProps
       </button>
     </th>
   )
-} 
+}

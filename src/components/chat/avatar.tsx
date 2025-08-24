@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import { UserType } from "@/types/chat";
+import Image from "next/image"
+import { UserType } from "@/types/chat"
 
 interface AvatarProps {
-  user?: UserType;
+  user?: UserType
 }
 
 const Avatar: React.FC<AvatarProps> = ({ user }) => {
@@ -17,7 +17,7 @@ const Avatar: React.FC<AvatarProps> = ({ user }) => {
         width={256}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Avatar;
+export default Avatar

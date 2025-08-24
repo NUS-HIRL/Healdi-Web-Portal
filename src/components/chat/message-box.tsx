@@ -1,36 +1,36 @@
-"use client";
+"use client"
 
-import { Message } from "@/types/chat";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import Image from "next/image";
+import { Message } from "@/types/chat"
+import { cn } from "@/lib/utils"
+import { format } from "date-fns"
+import Image from "next/image"
 
 interface MessageBoxProps {
-  data: Message;
+  data: Message
 }
 
 const MessageBox: React.FC<MessageBoxProps> = ({ data }) => {
-  const currentUserEmail = "johndoe@example.com";
+  const currentUserEmail = "johndoe@example.com"
   const isOwn =
     (currentUserEmail &&
       data?.sender?.email &&
       currentUserEmail === data.sender.email) ||
-    false;
+    false
 
-  const container = cn("flex gap-3 p-4", isOwn && "justify-end");
+  const container = cn("flex gap-3 p-4", isOwn && "justify-end")
   const body = cn(
     "flex flex-col gap-2 rounded-lg p-2",
     isOwn ? "items-end bg-sky-500 text-white" : "bg-sky-100"
-  );
+  )
   const message = cn(
     `text-sm 
      max-w-2xl
      break-words
      whitespace-break-spaces`,
     data.image && "rounded p-0"
-  );
+  )
 
-  const date = cn(`text-sm`, isOwn ? "text-white" : "text-gray-400");
+  const date = cn(`text-sm`, isOwn ? "text-white" : "text-gray-400")
 
   return (
     <div className={container}>
@@ -62,7 +62,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data }) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MessageBox;
+export default MessageBox

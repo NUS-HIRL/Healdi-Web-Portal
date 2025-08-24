@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { useMemo, useState, useEffect } from 'react'
-import { Patient } from '@/types/patient'
-import { PatientTable, Pagination } from './table'
+import { useMemo, useState, useEffect } from "react"
+import { Patient } from "@/types/patient"
+import { PatientTable, Pagination } from "./table"
 
 interface PatientListProps {
   patients: Patient[]
@@ -11,25 +11,25 @@ interface PatientListProps {
 export const PatientList = ({ patients }: PatientListProps) => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 10
   })
 
   const [sorting, setSorting] = useState<{
-    column: string | null;
-    direction: 'asc' | 'desc' | null;
+    column: string | null
+    direction: "asc" | "desc" | null
   }>({
-    column: 'patientUid',
-    direction: 'asc'
+    column: "patientUid",
+    direction: "asc"
   })
 
   // Reset to first page when patients data changes
   useEffect(() => {
-    setPagination(prev => ({ ...prev, pageIndex: 0 }))
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }))
   }, [patients])
 
   // Handle page changes
   const handlePageChange = (newPageIndex: number) => {
-    setPagination(prev => ({
+    setPagination((prev) => ({
       ...prev,
       pageIndex: newPageIndex
     }))
@@ -37,23 +37,23 @@ export const PatientList = ({ patients }: PatientListProps) => {
 
   // Handle sorting
   const handleSortingChange = (columnKey: string) => {
-    setSorting(prev => {
+    setSorting((prev) => {
       if (prev.column === columnKey) {
         // If same column, cycle through: asc -> desc -> null -> asc
-        if (prev.direction === 'asc') {
-          return { column: columnKey, direction: 'desc' }
-        } else if (prev.direction === 'desc') {
+        if (prev.direction === "asc") {
+          return { column: columnKey, direction: "desc" }
+        } else if (prev.direction === "desc") {
           return { column: columnKey, direction: null }
         } else {
           // prev.direction is null, start with asc
-          return { column: columnKey, direction: 'asc' }
+          return { column: columnKey, direction: "asc" }
         }
       }
       // If different column, start with asc
-      return { column: columnKey, direction: 'asc' }
+      return { column: columnKey, direction: "asc" }
     })
     // Reset to first page when sorting changes
-    setPagination(prev => ({ ...prev, pageIndex: 0 }))
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }))
   }
 
   // Sort patients based on current sorting state
@@ -66,16 +66,14 @@ export const PatientList = ({ patients }: PatientListProps) => {
       const aValue = a[sorting.column as keyof Patient]
       const bValue = b[sorting.column as keyof Patient]
 
-      if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return sorting.direction === 'asc' 
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return sorting.direction === "asc"
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue)
       }
 
-      if (typeof aValue === 'number' && typeof bValue === 'number') {
-        return sorting.direction === 'asc' 
-          ? aValue - bValue
-          : bValue - aValue
+      if (typeof aValue === "number" && typeof bValue === "number") {
+        return sorting.direction === "asc" ? aValue - bValue : bValue - aValue
       }
 
       return 0
@@ -91,13 +89,10 @@ export const PatientList = ({ patients }: PatientListProps) => {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold text-gray-900">Patient List</h2>      
+      <h2 className="text-lg font-semibold text-gray-900">Patient List</h2>
       <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-        <PatientTable 
-          patients={currentPageData}
-          onSort={handleSortingChange}
-        />
-        
+        <PatientTable patients={currentPageData} onSort={handleSortingChange} />
+
         <Pagination
           currentPage={pagination.pageIndex}
           totalPages={totalPages}
@@ -106,4 +101,4 @@ export const PatientList = ({ patients }: PatientListProps) => {
       </div>
     </div>
   )
-} 
+}

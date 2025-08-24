@@ -18,20 +18,17 @@ export const CustomBar = <T = Record<string, unknown>,>({
   y = 0,
   width = 0,
   height = 0,
-  fill = '#000000',
+  fill = "#000000",
   onMouseEnter,
   onMouseLeave,
   hoverZoneHeight = 400,
-  borderRadius = 2,
+  borderRadius = 2
 }: CustomBarProps<T>) => {
-
-
   return (
     <g
       onMouseEnter={() => payload && onMouseEnter?.(payload)}
       onMouseLeave={onMouseLeave}
-      style={{ cursor: 'pointer' }}
-    >
+      style={{ cursor: "pointer" }}>
       {/* Invisible hover zone - extends full chart height */}
       <rect
         x={x}

@@ -1,25 +1,24 @@
-"use client";
+"use client"
 
-import { X } from "lucide-react";
-import * as React from "react";
-import { Button } from "@/components/ui/button";
+import { X } from "lucide-react"
+import * as React from "react"
+import { Button } from "@/components/ui/button"
 
 export const Modal = ({
   title,
   children,
-  onClose,
+  onClose
 }: {
-  title: string;
-  children: React.ReactNode;
-  onClose: () => void;
+  title: string
+  children: React.ReactNode
+  onClose: () => void
 }) => {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
-      aria-label={title}
-    >
+      aria-label={title}>
       <div
         className="absolute inset-0 bg-black/30"
         onClick={onClose}
@@ -34,14 +33,12 @@ export const Modal = ({
             size="icon"
             onClick={onClose}
             className="h-8 w-8 rounded-md text-gray-500 hover:bg-gray-100"
-            aria-label="Close"
-          >
+            aria-label="Close">
             <X className="h-5 w-5" />
           </Button>
         </div>
         {children}
       </div>
     </div>
-  );
+  )
 }
-
