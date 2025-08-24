@@ -7,6 +7,7 @@ import { GoalsTab } from "./goals/goals-tab"
 import Medications from "./medications/medications"
 import { PatientHeader } from "./patient-header"
 import { ReportTab } from "./report/report-tab"
+import { Button } from "../ui/button"
 
 interface PatientDashboardProps {
   patientId: string
@@ -14,6 +15,15 @@ interface PatientDashboardProps {
 
 export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
   const [activeTab, setActiveTab] = useState("Reports")
+
+  const tabs = [
+    "Reports",
+    "Medications",
+    "Lab Results",
+    "Goals",
+    "AI Exercise Recommendations",
+    "Resources"
+  ]
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -26,15 +36,8 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
           <div className="p-2">
             <div className="mb-2">
               <div className="flex border-b border-gray-200">
-                {[
-                  "Reports",
-                  "Medications",
-                  "Lab Results",
-                  "Goals",
-                  "AI Exercise Recommendations",
-                  "Resources"
-                ].map((tab) => (
-                  <button
+                {tabs.map((tab) => (
+                  <Button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
                     className={`px-4 py-3 font-medium text-sm ${
@@ -43,7 +46,7 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
                         : "text-gray-500 hover:text-gray-700"
                     }`}>
                     {tab}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
