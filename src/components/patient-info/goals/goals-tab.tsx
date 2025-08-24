@@ -1,5 +1,6 @@
 "use client"
 
+import CustomDataTable from "@/components/common/custom-data-table"
 import { Pagination } from "@/components/common/pagination"
 import { Button } from "@/components/ui/button"
 import fetcher from "@/lib/fetcher"
@@ -9,15 +10,16 @@ import { useMemo, useState } from "react"
 import useSWR from "swr"
 import { goalColumns } from "../../columns/goal-columns"
 import { GoalDetailsSidebar } from "./goal-details-sidebar"
-import { GoalsTable } from "./goals-table"
 
 interface GoalsTabProps {
   patientId: string
 }
 
 export const GoalsTab = ({ patientId }: GoalsTabProps) => {
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10
+  })
   const [openPageSize, setOpenPageSize] = useState(false)
 
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
@@ -111,7 +113,10 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     })
 
     // Reset to first page when sorting changes
-    setPage(1)
+    setPagination((prev) => ({
+      ...prev,
+      pageIndex: 1
+    }))
   }
 
   // Handle view button click
@@ -133,19 +138,30 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     setSelectedGoal(null)
   }
 
+  const GoalsTable = CustomDataTable<Goal>
+
+  // TODO: Change this mock data to API fetched data
+  const results = {
+    data: sortedGoals,
+    totalCount: goals.length,
+    page: 1,
+    totalPages: Math.ceil(goals.length / pagination.pageSize)
+  }
+
   return (
     <div className="bg-gray-100">
       {/* Goals Section */}
       <div className="px-6 pb-6">
         <div className="bg-gray-100">
           {/* Section Header */}
-          <div className="px-2 py-3 border-b border-gray-200">
+          <div className="py-3 border-b border-gray-200">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold text-gray-900">Goals</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Goals</h2>
+              {/* TODO: Abstract this to a separate data table options component */}
               <Button
                 variant="outline"
                 size="sm"
-                className="border-blue-300 text-blue-600 hover:bg-blue-50"
+                className="border-blue-500 text-blue-500 bg-transparent"
                 onClick={() => {
                   window.location.href = "/patient-info/goals/add"
                 }}>
@@ -156,40 +172,30 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
           </div>
 
           {/* Goals Table */}
-          <div className="px-2 py-4">
+          <div className="py-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Assigned Goals
             </h3>
-            {isLoading && (
-              <div className="text-sm text-gray-500 mb-2">Loading goals…</div>
-            )}
-            {error && (
-              <div className="text-sm text-red-600 mb-2">{error.message}</div>
-            )}
 
             <GoalsTable
-              results={{
-                data: sortedGoals,
-                totalCount: goals.length,
-                page: 1,
-                totalPages: Math.ceil(goals.length / pageSize)
-              }}
+              data={results}
               columns={columns}
-              pagination={{ pageIndex: 0, pageSize: pageSize }}
-              setPagination={() => {}}
-              error={error?.message ?? undefined}
+              pagination={{ pageIndex: 0, pageSize: pagination.pageSize }}
+              error={error}
+              isLoading={isLoading}
+              setPagination={setPagination}
             />
 
             {/* Pagination */}
-            <Pagination
-              page={page}
-              pageCount={Math.ceil(goals.length / pageSize)}
-              pageSize={pageSize}
+            {/* <Pagination
+              page={pagination.page}
+              pageCount={Math.ceil(goals.length / pagination.pageSize)}
+              pageSize={pagination.pageSize}
               openPageSize={openPageSize}
-              setPage={setPage}
+              setPage={pagination.setPage}
               setPageSize={setPageSize}
               setOpenPageSize={setOpenPageSize}
-            />
+            /> */}
           </div>
         </div>
       </div>
