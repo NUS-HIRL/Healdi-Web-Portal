@@ -32,6 +32,7 @@ apiAxios.interceptors.request.use(
   }
 )
 
+// TODO: Kervyn: Remove use of interceptors and use NextJs built-in re-routing
 apiAxios.interceptors.response.use(
   (response) => response,
   (error) => {
