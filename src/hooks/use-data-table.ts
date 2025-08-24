@@ -1,4 +1,3 @@
-import { PaginatedResponse } from "@/types/response";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -6,9 +5,11 @@ import {
   getFilteredRowModel,
   SortingState,
   useReactTable,
-  VisibilityState,
-} from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+  VisibilityState
+} from "@tanstack/react-table"
+import { useEffect, useState } from "react"
+
+import { PaginatedResponse } from "@/types/response"
 
 const useDataTable = <T>(
   results: PaginatedResponse<T>,
@@ -19,11 +20,11 @@ const useDataTable = <T>(
   >,
   error?: unknown
 ) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-  const [showIdColumn, setShowIdColumn] = useState<boolean>(false);
+  const [sorting, setSorting] = useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = useState({})
+  const [showIdColumn, setShowIdColumn] = useState<boolean>(false)
 
   const typeSafeResults =
     error || !results
@@ -31,17 +32,17 @@ const useDataTable = <T>(
           data: [],
           totalCount: 0,
           page: 0,
-          totalPages: 0,
+          totalPages: 0
         }
-      : results;
+      : results
 
   // Sync column visibility with the showIdColumn toggle
   useEffect(() => {
     setColumnVisibility((prev) => ({
       ...prev,
-      id: showIdColumn,
-    }));
-  }, [showIdColumn]);
+      id: showIdColumn
+    }))
+  }, [showIdColumn])
 
   const table = useReactTable({
     data: typeSafeResults.data,
@@ -61,9 +62,9 @@ const useDataTable = <T>(
       columnFilters,
       columnVisibility,
       rowSelection,
-      pagination,
-    },
-  });
+      pagination
+    }
+  })
 
   return {
     table,
@@ -74,8 +75,8 @@ const useDataTable = <T>(
     pagination,
     setPagination,
     showIdColumn,
-    toggleIdColumn: setShowIdColumn,
-  };
-};
+    toggleIdColumn: setShowIdColumn
+  }
+}
 
-export default useDataTable;
+export default useDataTable

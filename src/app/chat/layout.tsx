@@ -1,9 +1,9 @@
-import { Sidebar } from "@/components/common/sidebar";
-import ChatList from "@/components/chat/chat-list";
-import { Chat, UserType } from "@/types/chat";
-import { Footer } from "@/components/common/footer";
+import { Sidebar } from "@/components/common/sidebar"
+import ChatList from "@/components/chat/chat-list"
+import { Chat, UserType } from "@/types/chat"
+import { Footer } from "@/components/common/footer"
 
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/common/header"
 
 export const users: UserType[] = [
   {
@@ -12,7 +12,7 @@ export const users: UserType[] = [
     email: "johndoe@example.com",
     image: "",
     createdAt: new Date("2025-01-10T15:00:00Z"),
-    updatedAt: new Date("2025-02-10T15:00:00Z"),
+    updatedAt: new Date("2025-02-10T15:00:00Z")
   },
   {
     id: "u1",
@@ -20,7 +20,7 @@ export const users: UserType[] = [
     email: "alice@example.com",
     image: "",
     createdAt: new Date("2025-01-01T10:00:00Z"),
-    updatedAt: new Date("2025-02-01T10:00:00Z"),
+    updatedAt: new Date("2025-02-01T10:00:00Z")
   },
   {
     id: "u2",
@@ -28,7 +28,7 @@ export const users: UserType[] = [
     email: "bob@example.com",
     image: "",
     createdAt: new Date("2025-01-05T12:00:00Z"),
-    updatedAt: new Date("2025-02-05T12:00:00Z"),
+    updatedAt: new Date("2025-02-05T12:00:00Z")
   },
   {
     id: "u3",
@@ -36,9 +36,9 @@ export const users: UserType[] = [
     email: "charlie@example.com",
     image: "",
     createdAt: new Date("2025-01-10T15:00:00Z"),
-    updatedAt: new Date("2025-02-10T15:00:00Z"),
-  },
-];
+    updatedAt: new Date("2025-02-10T15:00:00Z")
+  }
+]
 
 export const conversations: Chat[] = [
   {
@@ -57,7 +57,7 @@ Once your emergency situation is resolved, you can enter /emergencyoff in the in
         chatId: "c1",
         senderId: "u0",
         sender: users[0],
-        seen: [{ userId: "u2", seenAt: new Date("2025-02-18T09:35:00Z") }],
+        seen: [{ userId: "u2", seenAt: new Date("2025-02-18T09:35:00Z") }]
       },
       {
         id: "m2",
@@ -66,9 +66,9 @@ Once your emergency situation is resolved, you can enter /emergencyoff in the in
         chatId: "c1",
         senderId: "u1",
         sender: users[1],
-        seen: [{ userId: "u1", seenAt: new Date("2025-02-18T09:46:00Z") }],
-      },
-    ],
+        seen: [{ userId: "u1", seenAt: new Date("2025-02-18T09:46:00Z") }]
+      }
+    ]
   },
   {
     id: "c2",
@@ -86,7 +86,7 @@ Once your emergency situation is resolved, you can enter /emergencyoff in the in
         chatId: "c2",
         senderId: "u0",
         sender: users[0],
-        seen: [{ userId: "u2", seenAt: new Date("2025-02-17T18:10:00Z") }],
+        seen: [{ userId: "u2", seenAt: new Date("2025-02-17T18:10:00Z") }]
       },
       {
         id: "m4",
@@ -95,11 +95,11 @@ Once your emergency situation is resolved, you can enter /emergencyoff in the in
         chatId: "c2",
         senderId: "u2",
         sender: users[2],
-        seen: [{ userId: "u0", seenAt: new Date("2025-02-17T20:05:00Z") }],
-      },
-    ],
-  },
-];
+        seen: [{ userId: "u0", seenAt: new Date("2025-02-17T20:05:00Z") }]
+      }
+    ]
+  }
+]
 
 const ChatsLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -117,7 +117,7 @@ const ChatsLayout = ({ children }: { children: React.ReactNode }) => {
         <Footer />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ChatsLayout;
+export default ChatsLayout

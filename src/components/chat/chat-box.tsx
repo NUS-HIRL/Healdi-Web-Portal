@@ -1,56 +1,56 @@
-"use client";
+"use client"
 
-import { useCallback, useMemo } from "react";
-import { useRouter } from "next/navigation";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { Chat } from "@/types/chat";
-import Avatar from "@/components/chat/avatar";
-import useOtherUser from "@/hooks/use-other-user";
+import { useCallback, useMemo } from "react"
+import { useRouter } from "next/navigation"
+import { format } from "date-fns"
+import { cn } from "@/lib/utils"
+import { Chat } from "@/types/chat"
+import Avatar from "@/components/chat/avatar"
+import useOtherUser from "@/hooks/use-other-user"
 
 interface ChatBoxProps {
-  data: Chat;
-  selected?: boolean;
+  data: Chat
+  selected?: boolean
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }) => {
-  const isActive = true;
+  const isActive = true
   const currentUser = {
     id: "u0",
     name: "John Doe",
     email: "johndoe@example.com",
     image: "",
     createdAt: new Date("2025-01-10T15:00:00Z"),
-    updatedAt: new Date("2025-02-10T15:00:00Z"),
-  };
+    updatedAt: new Date("2025-02-10T15:00:00Z")
+  }
 
-  const otherUser = useOtherUser(data);
-  const router = useRouter();
+  const otherUser = useOtherUser(data)
+  const router = useRouter()
 
   const handleClick = useCallback(() => {
-    router.push(`/chat/${data.id}`);
-  }, [data.id, router]);
+    router.push(`/chat/${data.id}`)
+  }, [data.id, router])
 
   const lastMessage = useMemo(() => {
-    const messages = data.messages || [];
-    return messages[messages.length - 1];
-  }, [data.messages]);
+    const messages = data.messages || []
+    return messages[messages.length - 1]
+  }, [data.messages])
 
-  const userId = currentUser.id;
+  const userId = currentUser.id
 
   const hasSeen = useMemo(() => {
-    if (!lastMessage) return false;
-    if (!userId) return false;
+    if (!lastMessage) return false
+    if (!userId) return false
 
-    const seenArray = lastMessage.seen || [];
-    return seenArray.some((user) => user.userId === userId);
-  }, [userId, lastMessage]);
+    const seenArray = lastMessage.seen || []
+    return seenArray.some((user) => user.userId === userId)
+  }, [userId, lastMessage])
 
   const lastMessageText = useMemo(() => {
-    if (lastMessage?.image) return "Sent an Image";
-    if (lastMessage?.body) return lastMessage.body;
-    return "Started a chat";
-  }, [lastMessage]);
+    if (lastMessage?.image) return "Sent an Image"
+    if (lastMessage?.body) return lastMessage.body
+    return "Started a chat"
+  }, [lastMessage])
 
   return (
     <div
@@ -59,8 +59,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }) => {
         `w-full max-w-full flex items-center space-x-3 p-3 hover:bg-neutral-100 rounded-lg transition cursor-pointer
       `,
         selected ? "bg-amber-50" : "bg-white"
-      )}
-    >
+      )}>
       <Avatar user={otherUser} />
 
       <div className="min-w-0 flex-1">
@@ -84,8 +83,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }) => {
                 flex-1 min-w-0
                 `,
                 hasSeen ? "text-gray-500" : "text-black font-medium"
-              )}
-            >
+              )}>
               {lastMessageText}
             </p>
             {isActive ? (
@@ -106,7 +104,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ data, selected }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ChatBox;
+export default ChatBox

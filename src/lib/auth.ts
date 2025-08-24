@@ -1,3 +1,8 @@
+import { COGNITO_CLIENT_ID } from "@/config/api"
+import { AxiosError } from "axios"
+
+import { cognitoAxios } from "./axios"
+
 export type CognitoAuthResult = {
   AccessToken: string
   ExpiresIn: number
@@ -12,28 +17,31 @@ export type CognitoInitiateAuthResponse = {
   Session?: string
 }
 
-import { COGNITO_CLIENT_ID } from '@/config/api'
-import { cognitoAxios } from './axios'
-import { AxiosError } from 'axios'
-
-export const login = async (username: string, password: string): Promise<CognitoAuthResult> => {
+export const login = async (
+  username: string,
+  password: string
+): Promise<CognitoAuthResult> => {
   try {
-    const response = await cognitoAxios.post('', {
-      AuthParameters: {
-        USERNAME: username,
-        PASSWORD: password,
+    const response = await cognitoAxios.post(
+      "",
+      {
+        AuthParameters: {
+          USERNAME: username,
+          PASSWORD: password
+        },
+        AuthFlow: "USER_PASSWORD_AUTH",
+        ClientId: COGNITO_CLIENT_ID
       },
-      AuthFlow: 'USER_PASSWORD_AUTH',
-      ClientId: COGNITO_CLIENT_ID,
-    }, {
-      headers: {
-        'X-Amz-Target': 'AWSCognitoIdentityProviderService.InitiateAuth',
+      {
+        headers: {
+          "X-Amz-Target": "AWSCognitoIdentityProviderService.InitiateAuth"
+        }
       }
-    })
+    )
 
     const data = response.data as CognitoInitiateAuthResponse
     if (!data.AuthenticationResult?.AccessToken) {
-      throw new Error('Login challenge or missing tokens returned from Cognito')
+      throw new Error("Login challenge or missing tokens returned from Cognito")
     }
 
     const result = data.AuthenticationResult
@@ -41,25 +49,30 @@ export const login = async (username: string, password: string): Promise<Cognito
     const expiresAt = nowSeconds + (result.ExpiresIn || 3600)
 
     try {
-      localStorage.setItem('accessToken', result.AccessToken)
-      localStorage.setItem('idToken', result.IdToken)
-      if (result.RefreshToken) localStorage.setItem('refreshToken', result.RefreshToken)
-      localStorage.setItem('tokenExpiresAt', String(expiresAt))
+      localStorage.setItem("accessToken", result.AccessToken)
+      localStorage.setItem("idToken", result.IdToken)
+      if (result.RefreshToken)
+        localStorage.setItem("refreshToken", result.RefreshToken)
+      localStorage.setItem("tokenExpiresAt", String(expiresAt))
     } catch {}
 
     return result
   } catch (error) {
     if (error instanceof AxiosError && error.response?.status) {
-      throw new Error(`Login failed (${error.response.status}): ${error.response.data || error.response.statusText}`)
+      throw new Error(
+        `Login failed (${error.response.status}): ${error.response.data || error.response.statusText}`
+      )
     }
-    throw new Error(`Login failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    throw new Error(
+      `Login failed: ${error instanceof Error ? error.message : "Unknown error"}`
+    )
   }
 }
 
 export const getAccessToken = (): string | null => {
   try {
-    const token = localStorage.getItem('accessToken')
-    const exp = localStorage.getItem('tokenExpiresAt')
+    const token = localStorage.getItem("accessToken")
+    const exp = localStorage.getItem("tokenExpiresAt")
     if (!token || !exp) return null
     const now = Math.floor(Date.now() / 1000)
     if (now >= Number(exp)) return null
@@ -71,11 +84,9 @@ export const getAccessToken = (): string | null => {
 
 export const logout = () => {
   try {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('idToken')
-    localStorage.removeItem('refreshToken')
-    localStorage.removeItem('tokenExpiresAt')
+    localStorage.removeItem("accessToken")
+    localStorage.removeItem("idToken")
+    localStorage.removeItem("refreshToken")
+    localStorage.removeItem("tokenExpiresAt")
   } catch {}
 }
-
-

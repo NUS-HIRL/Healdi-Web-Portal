@@ -1,5 +1,5 @@
 export interface ChartDataPoint {
-value: number
+  value: number
   day?: string
   time?: string
 }

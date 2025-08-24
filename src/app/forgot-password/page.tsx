@@ -1,24 +1,24 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import { useForm, FormProvider } from "react-hook-form";
-import { TextInput } from "@/components/auth/TextInput";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import Image from "next/image"
+import { useForm, FormProvider } from "react-hook-form"
+import { TextInput } from "@/components/auth/TextInput"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
-type Username = string;
+type Username = string
 
 type FormValues = {
-  username: Username;
-};
+  username: Username
+}
 
 export default function SignUpPage() {
   const methods = useForm<FormValues>({
-    defaultValues: { username: "" as Username },
-  });
+    defaultValues: { username: "" as Username }
+  })
 
-  const onSubmit = async (data: FormValues) => {
-  };
+  // TODO: Sai: Add data: FormValues when integrating form submission through API
+  const onSubmit = async () => {}
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -58,8 +58,7 @@ export default function SignUpPage() {
           <form
             className="space-y-4"
             onSubmit={methods.handleSubmit(onSubmit)}
-            noValidate
-          >
+            noValidate>
             <TextInput
               name="username"
               placeholder="Username"
@@ -67,13 +66,11 @@ export default function SignUpPage() {
               rules={{ required: "Username is required" }}
             />
 
-          <div className="flex justify-center">
-            <Button
-              className="w-full h-14 rounded-full  text-lg font-semibold"
-            >
-              Continue
-            </Button>
-          </div>
+            <div className="flex justify-center">
+              <Button className="w-full h-14 rounded-full  text-lg font-semibold">
+                Continue
+              </Button>
+            </div>
           </form>
         </FormProvider>
 
@@ -88,5 +85,5 @@ export default function SignUpPage() {
         </p>
       </div>
     </div>
-  );
+  )
 }

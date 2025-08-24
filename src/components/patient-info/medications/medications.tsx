@@ -1,92 +1,113 @@
-"use client";
+"use client"
 
-import { useMemo, useState } from "react";
-import {
-  Plus,
-  Eye,
-} from "lucide-react";
+import { Eye, Plus } from "lucide-react"
+import { useMemo, useState } from "react"
 
-import { TableHeaderCell } from "../../common/table-header-cell";
-import { Modal } from "../../common/modal";
-import { KeyValueRow } from "../../common/key-value-row";
-import { LabeledInput } from "../../common/labeled-input";
-import { Footer } from "@/components/common/footer";
-import { Button } from "@/components/ui/button";
-import { Pagination } from "@/components/common/pagination";
-import { Med } from "../../../types/medications-types";
-
+import { Pagination } from "@/components/common/pagination"
+import { Button } from "@/components/ui/button"
+import { Med } from "../../../types/medications-types"
+import { KeyValueRow } from "../../common/key-value-row"
+import { LabeledInput } from "../../common/labeled-input"
+import { Modal } from "../../common/modal"
+import { TableHeaderCell } from "../../common/table-header-cell"
 
 const INITIAL_DATA: Med[] = [
-  { id: "1", name: "Propranolol Hydrochloride", dosage: "500 mg", type: "Tablet", creator: "Patient" },
-  { id: "2", name: "Amiloride Hydrochloride / Hydrochlorothiazide", dosage: "5 / 50 mg", type: "Tablet", creator: "Patient" },
-  { id: "3", name: "Metformin", dosage: "500 mg", type: "Tablet", creator: "Patient" },
-  { id: "4", name: "Paracetamol", dosage: "N/A", type: "Tablet", creator: "Patient" },
-];
+  {
+    id: "1",
+    name: "Propranolol Hydrochloride",
+    dosage: "500 mg",
+    type: "Tablet",
+    creator: "Patient"
+  },
+  {
+    id: "2",
+    name: "Amiloride Hydrochloride / Hydrochlorothiazide",
+    dosage: "5 / 50 mg",
+    type: "Tablet",
+    creator: "Patient"
+  },
+  {
+    id: "3",
+    name: "Metformin",
+    dosage: "500 mg",
+    type: "Tablet",
+    creator: "Patient"
+  },
+  {
+    id: "4",
+    name: "Paracetamol",
+    dosage: "N/A",
+    type: "Tablet",
+    creator: "Patient"
+  }
+]
 
 export default function Medications() {
-  const [rows, setRows] = useState<Med[]>(INITIAL_DATA);
+  const [rows, setRows] = useState<Med[]>(INITIAL_DATA)
 
   // sorting
-  const [sortKey, setSortKey] = useState<keyof Med>("name");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const [sortKey, setSortKey] = useState<keyof Med>("name")
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc")
 
   // pagination
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [openPageSize, setOpenPageSize] = useState(false);
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [openPageSize, setOpenPageSize] = useState(false)
 
   // modals
-  const [viewing, setViewing] = useState<Med | null>(null);
-  const [showAdd, setShowAdd] = useState(false);
+  const [viewing, setViewing] = useState<Med | null>(null)
+  const [showAdd, setShowAdd] = useState(false)
 
   // add form (dummy)
-  const [form, setForm] = useState<Pick<Med, "name" | "dosage" | "type" | "creator">>({
+  const [form, setForm] = useState<
+    Pick<Med, "name" | "dosage" | "type" | "creator">
+  >({
     name: "",
     dosage: "",
     type: "Tablet",
-    creator: "Patient",
-  });
+    creator: "Patient"
+  })
 
   const sorted = useMemo(() => {
-    const copy = [...rows];
+    const copy = [...rows]
     copy.sort((a, b) => {
-      const av = String(a[sortKey] ?? "");
-      const bv = String(b[sortKey] ?? "");
-      return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
-    });
-    return copy;
-  }, [rows, sortKey, sortDir]);
+      const av = String(a[sortKey] ?? "")
+      const bv = String(b[sortKey] ?? "")
+      return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av)
+    })
+    return copy
+  }, [rows, sortKey, sortDir])
 
-  const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize))
   const pageItems = useMemo(() => {
-    const start = (page - 1) * pageSize;
-    return sorted.slice(start, start + pageSize);
-  }, [sorted, page, pageSize]);
+    const start = (page - 1) * pageSize
+    return sorted.slice(start, start + pageSize)
+  }, [sorted, page, pageSize])
 
   function toggleSort(key: keyof Med) {
     if (sortKey === key) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"))
     } else {
-      setSortKey(key);
-      setSortDir("asc");
+      setSortKey(key)
+      setSortDir("asc")
     }
   }
 
   function handleAdd() {
     if (!form.name.trim()) {
-      alert("Enter a medication name (dummy validation).");
-      return;
+      alert("Enter a medication name (dummy validation).")
+      return
     }
     const newRow: Med = {
       id: String(Date.now()),
       name: form.name.trim(),
       dosage: form.dosage.trim() || "N/A",
       type: form.type,
-      creator: form.creator,
-    };
-    setRows((r) => [newRow, ...r]);
-    setShowAdd(false);
-    setForm({ name: "", dosage: "", type: "Tablet", creator: "Patient" });
+      creator: form.creator
+    }
+    setRows((r) => [newRow, ...r])
+    setShowAdd(false)
+    setForm({ name: "", dosage: "", type: "Tablet", creator: "Patient" })
   }
 
   return (
@@ -104,8 +125,7 @@ export default function Medications() {
             onClick={() => setShowAdd(true)}
             variant="outline"
             size="sm"
-            className="gap-2"
-          >
+            className="gap-2">
             <Plus className="h-4 w-4" />
             Add
           </Button>
@@ -160,8 +180,7 @@ export default function Medications() {
                         size="icon"
                         className="border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100"
                         aria-label={`View ${m.name}`}
-                        title="View"
-                      >
+                        title="View">
                         <Eye className="h-4 w-4" />
                       </Button>
                     </td>
@@ -172,7 +191,7 @@ export default function Medications() {
           </div>
 
           {/* Pagination */}
-           <Pagination
+          <Pagination
             page={page}
             pageCount={pageCount}
             pageSize={pageSize}
@@ -180,8 +199,7 @@ export default function Medications() {
             setPage={setPage}
             setPageSize={setPageSize}
             setOpenPageSize={setOpenPageSize}
-            />
-
+          />
         </div>
       </section>
 
@@ -210,7 +228,9 @@ export default function Medications() {
             <LabeledInput
               label="Dosage"
               value={form.dosage}
-              onChange={(e) => setForm((f) => ({ ...f, dosage: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, dosage: e.target.value }))
+              }
               placeholder="e.g. 20 mg"
             />
             <LabeledInput
@@ -222,15 +242,16 @@ export default function Medications() {
             <LabeledInput
               label="Creator"
               value={form.creator}
-              onChange={(e) => setForm((f) => ({ ...f, creator: e.target.value }))}
+              onChange={(e) =>
+                setForm((f) => ({ ...f, creator: e.target.value }))
+              }
               placeholder="e.g. Patient"
             />
             <div className="pt-2 flex justify-end gap-2">
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => setShowAdd(false)}
-              >
+                onClick={() => setShowAdd(false)}>
                 Cancel
               </Button>
               <Button type="button" onClick={handleAdd}>
@@ -241,5 +262,5 @@ export default function Medications() {
         </Modal>
       )}
     </div>
-  );
+  )
 }

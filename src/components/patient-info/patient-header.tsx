@@ -1,4 +1,4 @@
-import { Search, Bell } from 'lucide-react'
+import { Search, Bell } from "lucide-react"
 
 interface PatientHeaderProps {
   patientId: string
@@ -15,7 +15,9 @@ export const PatientHeader = ({ patientId }: PatientHeaderProps) => {
             <span className="text-white font-semibold text-lg">L</span>
           </div>
           <div>
-            <h1 className="text-2xl font-semibold text-gray-900">Landon Smith</h1>
+            <h1 className="text-2xl font-semibold text-gray-900">
+              Landon Smith
+            </h1>
             <p className="text-sm text-gray-500">Patient ID: {patientId}</p>
           </div>
         </div>
@@ -24,7 +26,10 @@ export const PatientHeader = ({ patientId }: PatientHeaderProps) => {
         <div className="flex items-center space-x-4">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <Search
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              size={20}
+            />
             <input
               type="text"
               placeholder="Search..."

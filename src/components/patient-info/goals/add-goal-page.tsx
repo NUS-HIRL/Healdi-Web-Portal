@@ -1,14 +1,20 @@
-'use client'
+"use client"
 
-import { useForm, Controller } from 'react-hook-form'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
-import { Footer } from '../../common/footer'
-import { Sidebar } from '../../common/sidebar'
-import { Search, Bell, User } from 'lucide-react'
+import { useForm, Controller } from "react-hook-form"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { Footer } from "../../common/footer"
+import { Sidebar } from "../../common/sidebar"
+import { Search, Bell, User } from "lucide-react"
 
 export const AddGoalPage = () => {
   type AddGoalForm = {
@@ -22,16 +28,17 @@ export const AddGoalPage = () => {
 
   const { register, control, handleSubmit } = useForm<AddGoalForm>({
     defaultValues: {
-      category: '',
-      completionType: '',
-      title: '',
-      description: '',
+      category: "",
+      completionType: "",
+      title: "",
+      description: "",
       coins: 0,
       bonus: 0
     }
   })
 
-  const onSubmit = (data: AddGoalForm) => {
+  // TODO: Ze Kai: Add data: AddGoalForm when integrating form submission through API
+  const onSubmit = () => {
     // TODO: Handle form submission
   }
 
@@ -85,29 +92,41 @@ export const AddGoalPage = () => {
           <div className="px-6 pt-4 pb-6 bg-white">
             <div className="w-full">
               <div className="mb-6">
-                <h2 className="text-blue-600 text-xl font-semibold">New Goal</h2>
+                <h2 className="text-blue-600 text-xl font-semibold">
+                  New Goal
+                </h2>
               </div>
-              
+
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                 {/* Category */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Category</Label>
-                    <p className="text-sm text-gray-500 mt-1">Select the category type</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Category
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Select the category type
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Controller
                       control={control}
                       name="category"
                       render={({ field }) => (
-                        <Select value={field.value || undefined} onValueChange={field.onChange}>
+                        <Select
+                          value={field.value || undefined}
+                          onValueChange={field.onChange}>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select Category" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Physical Activity">Physical Activity</SelectItem>
+                            <SelectItem value="Physical Activity">
+                              Physical Activity
+                            </SelectItem>
                             <SelectItem value="Nutrition">Nutrition</SelectItem>
-                            <SelectItem value="Mental Health">Mental Health</SelectItem>
+                            <SelectItem value="Mental Health">
+                              Mental Health
+                            </SelectItem>
                             <SelectItem value="Sleep">Sleep</SelectItem>
                           </SelectContent>
                         </Select>
@@ -119,20 +138,28 @@ export const AddGoalPage = () => {
                 {/* Completion Type */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Completion Type</Label>
-                    <p className="text-sm text-gray-500 mt-1">Select Short Term, Long Term or One-Off</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Completion Type
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Select Short Term, Long Term or One-Off
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Controller
                       control={control}
                       name="completionType"
                       render={({ field }) => (
-                        <Select value={field.value || undefined} onValueChange={field.onChange}>
+                        <Select
+                          value={field.value || undefined}
+                          onValueChange={field.onChange}>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select Completion Type" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Short Term">Short Term</SelectItem>
+                            <SelectItem value="Short Term">
+                              Short Term
+                            </SelectItem>
                             <SelectItem value="Long Term">Long Term</SelectItem>
                             <SelectItem value="One-Off">One-Off</SelectItem>
                           </SelectContent>
@@ -145,14 +172,18 @@ export const AddGoalPage = () => {
                 {/* Title */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Title</Label>
-                    <p className="text-sm text-gray-500 mt-1">Fill in the goal title</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Title
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Fill in the goal title
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Input
                       placeholder="Goal Title"
                       className="w-full"
-                      {...register('title')}
+                      {...register("title")}
                     />
                   </div>
                 </div>
@@ -160,14 +191,18 @@ export const AddGoalPage = () => {
                 {/* How It Works */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">How It Works</Label>
-                    <p className="text-sm text-gray-500 mt-1">Fill in the description</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      How It Works
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Fill in the description
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Textarea
                       placeholder="Description of the activity"
                       className="w-full min-h-[120px]"
-                      {...register('description')}
+                      {...register("description")}
                     />
                   </div>
                 </div>
@@ -175,15 +210,19 @@ export const AddGoalPage = () => {
                 {/* Coin Reward */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Coin Reward</Label>
-                    <p className="text-sm text-gray-500 mt-1">Awarded each time the user marks the activity as completed</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Coin Reward
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Awarded each time the user marks the activity as completed
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Input
                       type="number"
                       placeholder="0"
                       className="w-full"
-                      {...register('coins', { valueAsNumber: true })}
+                      {...register("coins", { valueAsNumber: true })}
                     />
                   </div>
                 </div>
@@ -191,27 +230,37 @@ export const AddGoalPage = () => {
                 {/* Coin Bonus */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
-                    <Label className="text-sm font-semibold text-gray-700">Coin Bonus on Goal Completion</Label>
-                    <p className="text-sm text-gray-500 mt-1">Awarded when the user completes the entire goal duration.</p>
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Coin Bonus on Goal Completion
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Awarded when the user completes the entire goal duration.
+                    </p>
                   </div>
                   <div className="md:col-span-2">
                     <Input
                       type="number"
                       placeholder="0"
                       className="w-full"
-                      {...register('bonus', { valueAsNumber: true })}
+                      {...register("bonus", { valueAsNumber: true })}
                     />
                   </div>
                 </div>
 
                 {/* Ready to Submit Section */}
                 <div className="bg-gray-100 rounded-lg p-6 mt-8">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Ready to Submit?</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    Ready to Submit?
+                  </h3>
                   <p className="text-sm text-gray-600 mb-4">
-                    Review your filled form details and make sure everything is accurate. Once you are ready, click the Submit button to add the new goal.
+                    Review your filled form details and make sure everything is
+                    accurate. Once you are ready, click the Submit button to add
+                    the new goal.
                   </p>
                   <div className="flex justify-end">
-                    <Button type="submit" className="bg-black text-white hover:bg-gray-800">
+                    <Button
+                      type="submit"
+                      className="bg-black text-white hover:bg-gray-800">
                       Submit
                     </Button>
                   </div>

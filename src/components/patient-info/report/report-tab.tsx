@@ -1,35 +1,35 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { DropdownButton } from '../../common/dropdown-button'
-import { BloodPressureChart } from './charts/blood-pressure-chart'
-import { HeartRateChart } from './charts/heart-rate-chart'
-import { BloodGlucoseChart } from './charts/blood-glucose-chart'
-import { FoodIntakeChart } from './charts/food-intake-chart'
-import { StepsChart } from './charts/steps-chart'
-import { ActiveMinutesChart } from './charts/active-minutes-chart'
-import { CaloriesBurnedChart } from './charts/calories-burned-chart'
-import { WeightChart } from './charts/weight-chart'
+import { useState } from "react"
+import { DropdownButton } from "../../common/dropdown-button"
+import { BloodPressureChart } from "./charts/blood-pressure-chart"
+import { HeartRateChart } from "./charts/heart-rate-chart"
+import { BloodGlucoseChart } from "./charts/blood-glucose-chart"
+import { FoodIntakeChart } from "./charts/food-intake-chart"
+import { StepsChart } from "./charts/steps-chart"
+import { ActiveMinutesChart } from "./charts/active-minutes-chart"
+import { CaloriesBurnedChart } from "./charts/calories-burned-chart"
+import { WeightChart } from "./charts/weight-chart"
 
 export const ReportTab = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState('weekly')
+  const [selectedPeriod, setSelectedPeriod] = useState("weekly")
 
   const periodOptions = [
     {
-      label: 'Daily',
-      value: 'daily',
+      label: "Daily",
+      value: "daily",
       icon: "Filter by:"
     },
     {
-      label: 'Weekly',
-      value: 'weekly',
+      label: "Weekly",
+      value: "weekly",
       icon: "Filter by:"
     },
     {
-      label: 'Monthly',
-      value: 'monthly',
+      label: "Monthly",
+      value: "monthly",
       icon: "Filter by:"
-    },
+    }
   ]
 
   return (
@@ -47,7 +47,7 @@ export const ReportTab = () => {
           />
         </div>
       </div>
-      
+
       <div className="w-full h-0.5 bg-gray-200"></div>
 
       {/* First row - Blood Pressure and Heart Rate */}

@@ -1,17 +1,17 @@
-"use client";
+"use client"
 
-import Avatar from "./avatar";
-import { IoSearchOutline } from "react-icons/io5";
-import { cn } from "@/lib/utils";
-import useOtherUser from "@/hooks/use-other-user";
-import { Chat } from "@/types/chat";
+import Avatar from "./avatar"
+import { IoSearchOutline } from "react-icons/io5"
+import { cn } from "@/lib/utils"
+import useOtherUser from "@/hooks/use-other-user"
+import { Chat } from "@/types/chat"
 
 interface ChatHeaderProps {
-  chat: Chat;
+  chat: Chat
 }
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ chat }) => {
-  const otherUser = useOtherUser(chat);
+  const otherUser = useOtherUser(chat)
 
   return (
     <>
@@ -26,8 +26,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ chat }) => {
           justify-between
           items-center
           gap-3
-        "
-      >
+        ">
         <div className="flex flex-shrink-0 gap-3 items-center">
           <Avatar user={otherUser} />
 
@@ -38,8 +37,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ chat }) => {
                 text-sm
                 font-light
                 text-neutral-500
-              "
-            >
+              ">
               Patient
             </div>
           </div>
@@ -53,8 +51,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ chat }) => {
             justify-end
             items-center
             `
-          )}
-        >
+          )}>
           <IoSearchOutline
             size={32}
             className="
@@ -67,7 +64,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ chat }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ChatHeader;
+export default ChatHeader

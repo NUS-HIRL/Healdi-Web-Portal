@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 import {
   Control,
   FieldValues,
   Path,
   RegisterOptions,
   useController,
-  useFormContext,
-} from "react-hook-form";
-import { Input } from "@/components/ui/input";
+  useFormContext
+} from "react-hook-form"
+import { Input } from "@/components/ui/input"
 
 type BaseInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "name" | "value" | "onChange" | "onBlur" | "defaultValue" | "ref"
->;
+>
 
 export interface TextInputProps<TValues extends FieldValues>
   extends BaseInputProps {
-  label?: string;
-  name: Path<TValues>;
-  rules?: RegisterOptions<TValues, Path<TValues>>;
-  control?: Control<TValues>;
-  className?: string;
+  label?: string
+  name: Path<TValues>
+  rules?: RegisterOptions<TValues, Path<TValues>>
+  control?: Control<TValues>
+  className?: string
 }
 
 export const TextInput = <TValues extends FieldValues>({
@@ -36,23 +36,23 @@ export const TextInput = <TValues extends FieldValues>({
   type = "text",
   ...rest
 }: TextInputProps<TValues>) => {
-  const form = useFormContext<TValues>();
-  const control = controlProp ?? form?.control;
+  const form = useFormContext<TValues>()
+  const control = controlProp ?? form?.control
 
   if (!control) {
     throw new Error(
       "TextInput must be used within a FormProvider or be given a `control` prop."
-    );
+    )
   }
 
   const { field, fieldState } = useController<TValues, Path<TValues>>({
     name,
     control,
-    rules,
-  });
+    rules
+  })
 
-  const error = fieldState.error?.message;
-  const inputId = id ?? (name as string);
+  const error = fieldState.error?.message
+  const inputId = id ?? (name as string)
 
   return (
     <div className="flex flex-col">
@@ -73,7 +73,7 @@ export const TextInput = <TValues extends FieldValues>({
         className={[
           "rounded-full h-11 px-4",
           error ? "border-red-500" : "",
-          className,
+          className
         ]
           .filter(Boolean)
           .join(" ")}
@@ -88,5 +88,5 @@ export const TextInput = <TValues extends FieldValues>({
         </p>
       )}
     </div>
-  );
+  )
 }
