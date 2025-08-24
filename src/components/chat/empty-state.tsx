@@ -12,8 +12,7 @@ const EmptyState = () => {
         justify-center
         items-center
         bg-gray-100
-      "
-    >
+      ">
       <div
         className="
           text-center
@@ -21,10 +20,9 @@ const EmptyState = () => {
           flex
           flex-col
           gap-3
-        "
-      ></div>
+        "></div>
     </div>
-  );
-};
+  )
+}
 
-export default EmptyState;
+export default EmptyState

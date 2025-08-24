@@ -1,17 +1,25 @@
-'use client'
+"use client"
 
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, ReferenceLine, Tooltip } from 'recharts'
-import { useState } from 'react'
-import { CustomBar } from '@/components/common/chart/custom-bar'
-import { ChartDataPoint, ChartProps } from '@/types/chart'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  ReferenceLine,
+  Tooltip
+} from "recharts"
+import { useState } from "react"
+import { CustomBar } from "@/components/common/chart/custom-bar"
+import { ChartDataPoint, ChartProps } from "@/types/chart"
 
 const data = [
-  { day: '12AM', value: 80, index: 0 },
-  { day: '4AM', value: 80, index: 1 },
-  { day: '8AM', value: 81, index: 2 },
-  { day: '12PM', value: 80, index: 3 },
-  { day: '4PM', value: 79, index: 4 },
-  { day: '8PM', value: 80, index: 5 },
+  { day: "12AM", value: 80, index: 0 },
+  { day: "4AM", value: 80, index: 1 },
+  { day: "8AM", value: 81, index: 2 },
+  { day: "12PM", value: 80, index: 3 },
+  { day: "4PM", value: 79, index: 4 },
+  { day: "8PM", value: 80, index: 5 }
 ]
 
 export const WeightChart = () => {
@@ -33,8 +41,12 @@ export const WeightChart = () => {
       <div className="flex flex-col gap-1 mb-6 h-[90px]">
         <h2 className="text-xl font-semibold text-gray-800">Weight</h2>
         <div className="flex items-baseline gap-2">
-          <p className="text-4xl font-bold text-[#FF975B]">{displayValue || ""}</p>
-          <span className="text-xl text-gray-500">{displayValue ? "kg" : ""}</span>
+          <p className="text-4xl font-bold text-[#FF975B]">
+            {displayValue || ""}
+          </p>
+          <span className="text-xl text-gray-500">
+            {displayValue ? "kg" : ""}
+          </span>
         </div>
         <p className="text-sm text-gray-500">{displayTime || ""}</p>
       </div>
@@ -45,26 +57,22 @@ export const WeightChart = () => {
           <BarChart
             data={data}
             barCategoryGap="20%"
-            onMouseLeave={handleBarMouseLeave}
-          >
+            onMouseLeave={handleBarMouseLeave}>
             <XAxis
               dataKey="day"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 10, fill: '#9ca3af' }}
+              tick={{ fontSize: 10, fill: "#9ca3af" }}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#9ca3af' }}
+              tick={{ fontSize: 12, fill: "#9ca3af" }}
               domain={[0, 100]}
               width={40}
               orientation="right"
             />
-            <Tooltip
-              content={() => null}
-              cursor={false}
-            />
+            <Tooltip content={() => null} cursor={false} />
             {hoveredData && (
               <ReferenceLine
                 x={hoveredData.day}

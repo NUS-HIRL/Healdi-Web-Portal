@@ -1,8 +1,7 @@
-import { flexRender } from '@tanstack/react-table'
-import { TableHeader } from './table-header'
-import { FitnessLevelBadge } from './fitness-level-badge'
-import { ActionButton } from './action-button'
-import { Patient } from '@/types/patient'
+import { Patient } from "@/types/patient"
+import { ActionButton } from "./action-button"
+import { FitnessLevelBadge } from "./fitness-level-badge"
+import { TableHeader } from "./table-header"
 
 interface PatientTableProps {
   patients: Patient[]
@@ -15,48 +14,35 @@ export const PatientTable = ({ patients, onSort }: PatientTableProps) => {
       <table className="w-full">
         <thead className="bg-gray-50">
           <tr>
-            <TableHeader 
-              title="Patient UID" 
-              onSort={() => onSort('patientUid')}
+            <TableHeader
+              title="Patient UID"
+              onSort={() => onSort("patientUid")}
             />
-            <TableHeader 
-              title="Age" 
-              onSort={() => onSort('age')}
+            <TableHeader title="Age" onSort={() => onSort("age")} />
+            <TableHeader title="Gender" onSort={() => onSort("gender")} />
+            <TableHeader
+              title="Fitness Level"
+              onSort={() => onSort("fitnessLevel")}
             />
-            <TableHeader 
-              title="Gender" 
-              onSort={() => onSort('gender')}
-            />
-            <TableHeader 
-              title="Fitness Level" 
-              onSort={() => onSort('fitnessLevel')}
-            />
-            <TableHeader 
-              title="HRV (ms)" 
-              onSort={() => onSort('hrv')}
-            />
-            <TableHeader 
-              title="Health Conditions" 
-              onSort={() => {}} 
+            <TableHeader title="HRV (ms)" onSort={() => onSort("hrv")} />
+            <TableHeader
+              title="Health Conditions"
+              onSort={() => {}}
               sortable={false}
             />
-            <TableHeader 
-              title="Goals" 
-              onSort={() => {}} 
-              sortable={false}
-            />
-            <TableHeader 
-              title="Action" 
-              onSort={() => {}} 
-              sortable={false}
-            />
+            <TableHeader title="Goals" onSort={() => {}} sortable={false} />
+            <TableHeader title="Action" onSort={() => {}} sortable={false} />
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {patients.map((patient, index) => (
-            <tr key={patient.patientUid} className="hover:bg-gray-50 transition-colors">
+          {patients.map((patient) => (
+            <tr
+              key={patient.patientUid}
+              className="hover:bg-gray-50 transition-colors">
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                <div className="font-medium text-gray-900">{patient.patientUid}</div>
+                <div className="font-medium text-gray-900">
+                  {patient.patientUid}
+                </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                 {patient.age}
@@ -71,10 +57,10 @@ export const PatientTable = ({ patients, onSort }: PatientTableProps) => {
                 {patient.hrv}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {patient.healthConditions.join(', ')}
+                {patient.healthConditions.join(", ")}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {patient.goals.join(', ')}
+                {patient.goals.join(", ")}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                 <ActionButton patientUid={patient.patientUid} />
@@ -85,4 +71,4 @@ export const PatientTable = ({ patients, onSort }: PatientTableProps) => {
       </table>
     </div>
   )
-} 
+}

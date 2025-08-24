@@ -1,5 +1,5 @@
-export { TableHeader } from './table-header'
-export { FitnessLevelBadge } from './fitness-level-badge'
-export { ActionButton } from './action-button'
-export { Pagination } from './pagination'
-export { PatientTable } from './patient-table' 
+export { TableHeader } from "./table-header"
+export { FitnessLevelBadge } from "./fitness-level-badge"
+export { ActionButton } from "./action-button"
+export { Pagination } from "./pagination"
+export { PatientTable } from "./patient-table"

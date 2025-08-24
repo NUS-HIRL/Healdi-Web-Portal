@@ -1,29 +1,29 @@
-import { Eye, User } from "lucide-react";
+import { Eye, User } from "lucide-react"
 
 export type PatientHeaderProps = {
-  patientId: string;
-  dob?: string; // e.g. "12 / 03 / 1965"
-  gender?: string; // e.g. "M"
-  fitnessLevel?: string; // e.g. "Moderate"
-  hrvMs?: number | string; // e.g. 65
-  healthConditionsCount?: number; // e.g. 4
-  allergiesCount?: number; // e.g. 3
-  onViewHealthConditions?: () => void;
-  onViewAllergies?: () => void;
-};
+  patientId: string
+  dob?: string // e.g. "12 / 03 / 1965"
+  gender?: string // e.g. "M"
+  fitnessLevel?: string // e.g. "Moderate"
+  hrvMs?: number | string // e.g. 65
+  healthConditionsCount?: number // e.g. 4
+  allergiesCount?: number // e.g. 3
+  onViewHealthConditions?: () => void
+  onViewAllergies?: () => void
+}
 
 const InfoCell = ({
   label,
-  children,
+  children
 }: {
-  label: string;
-  children: React.ReactNode;
+  label: string
+  children: React.ReactNode
 }) => (
   <div className="px-6 first:pl-0">
     <div className="text-xs font-medium text-gray-500">{label}</div>
     <div className="mt-1 text-base font-semibold text-gray-900">{children}</div>
   </div>
-);
+)
 
 export const PatientHeader = ({
   patientId,
@@ -33,7 +33,7 @@ export const PatientHeader = ({
   hrvMs = 65,
   healthConditionsCount = 4,
   allergiesCount = 3,
-  onViewAllergies,
+  onViewAllergies
 }: PatientHeaderProps) => (
   <header className="bg-white border-b border-gray-200 pt-8 pb-4 px-6">
     <div className="flex items-center justify-between">
@@ -62,8 +62,7 @@ export const PatientHeader = ({
             <button
               type="button"
               className="inline-flex items-center gap-1.5 rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              aria-label="View health conditions"
-            >
+              aria-label="View health conditions">
               <Eye size={14} className="-ml-0.5" aria-hidden="true" />
               View
             </button>
@@ -76,8 +75,7 @@ export const PatientHeader = ({
               type="button"
               onClick={onViewAllergies}
               className="inline-flex items-center gap-1.5 rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
-              aria-label="View allergies"
-            >
+              aria-label="View allergies">
               <Eye size={14} className="-ml-0.5" aria-hidden="true" />
               View
             </button>
@@ -86,4 +84,4 @@ export const PatientHeader = ({
       </div>
     </div>
   </header>
-);
+)

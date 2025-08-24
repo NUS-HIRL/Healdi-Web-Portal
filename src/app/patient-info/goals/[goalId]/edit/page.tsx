@@ -1,4 +1,4 @@
-import { EditGoalPage } from '@/components/patient-info/goals/edit-goal-page'
+import { EditGoalPage } from "@/components/patient-info/goals/edit-goal-page"
 
 interface EditGoalPageProps {
   params: Promise<{

@@ -1,11 +1,11 @@
 export type Reaction =
-  | 'Skin Rash'
-  | 'Fever'
-  | 'Dizziness'
-  | 'Swelling'
-  | 'Itching'
-  | 'Nausea'
-  | 'Others'
+  | "Skin Rash"
+  | "Fever"
+  | "Dizziness"
+  | "Swelling"
+  | "Itching"
+  | "Nausea"
+  | "Others"
 
 export type AllergyItem = {
   id: string
@@ -13,4 +13,3 @@ export type AllergyItem = {
   reactions: Reaction[]
   other?: string
 }
-

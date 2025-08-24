@@ -1,10 +1,15 @@
-'use client'
+"use client"
 
-import { Goal } from '@/types/goal'
-import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
+import { Goal } from "@/types/goal"
+import { Button } from "@/components/ui/button"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle
+} from "@/components/ui/sheet"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
 
 interface GoalDetailsSidebarProps {
   goal: Goal | null
@@ -12,7 +17,11 @@ interface GoalDetailsSidebarProps {
   onClose: () => void
 }
 
-export const GoalDetailsSidebar = ({ goal, isOpen, onClose }: GoalDetailsSidebarProps) => {
+export const GoalDetailsSidebar = ({
+  goal,
+  isOpen,
+  onClose
+}: GoalDetailsSidebarProps) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="w-[500px] sm:w-[600px] overflow-y-auto">
@@ -31,8 +40,7 @@ export const GoalDetailsSidebar = ({ goal, isOpen, onClose }: GoalDetailsSidebar
               <h3 className="text-sm font-semibold text-gray-700">Category</h3>
               <Badge
                 variant="secondary"
-                className="bg-orange-50 text-red-400 border-orange-200"
-              >
+                className="bg-orange-50 text-red-400 border-orange-200">
                 {goal.category}
               </Badge>
             </div>
@@ -109,14 +117,12 @@ export const GoalDetailsSidebar = ({ goal, isOpen, onClose }: GoalDetailsSidebar
                 onClick={() => {
                   // Navigate to edit page
                   window.location.href = `/patient-info/goals/${goal.id}/edit`
-                }}
-              >
+                }}>
                 Edit
               </Button>
               <Button
                 variant="outline"
-                className="flex-1 border-red-500 text-red-500 hover:bg-red-50"
-              >
+                className="flex-1 border-red-500 text-red-500 hover:bg-red-50">
                 Delete
               </Button>
             </div>
@@ -124,5 +130,5 @@ export const GoalDetailsSidebar = ({ goal, isOpen, onClose }: GoalDetailsSidebar
         )}
       </SheetContent>
     </Sheet>
-  );
+  )
 }

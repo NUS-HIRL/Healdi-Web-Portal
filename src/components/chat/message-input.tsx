@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   ChangeEvent,
@@ -6,23 +6,23 @@ import {
   KeyboardEvent,
   useEffect,
   useImperativeHandle,
-  forwardRef,
-} from "react";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+  forwardRef
+} from "react"
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form"
 
 export interface MessageInputRef {
-  resetTextareaHeight: () => void;
+  resetTextareaHeight: () => void
 }
 
 interface MessageInputProps {
-  placeholder?: string;
-  id: string;
-  type?: string;
-  required?: boolean;
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
-  onEnterPress: () => void;
-  watchedMessage: string;
+  placeholder?: string
+  id: string
+  type?: string
+  required?: boolean
+  register: UseFormRegister<FieldValues>
+  errors: FieldErrors
+  onEnterPress: () => void
+  watchedMessage: string
 }
 
 const MessageInput = forwardRef<MessageInputRef, MessageInputProps>(
@@ -33,47 +33,47 @@ const MessageInput = forwardRef<MessageInputRef, MessageInputProps>(
       required,
       register,
       onEnterPress,
-      watchedMessage,
-    } = props;
+      watchedMessage
+    } = props
 
-    const [content, setContent] = useState("");
-    const MIN_HEIGHT_REM = 2.5;
-    const MAX_HEIGHT_REM = 8;
-    const BASE_FONT_SIZE = 16;
+    const [content, setContent] = useState("")
+    const MIN_HEIGHT_REM = 2.5
+    const MAX_HEIGHT_REM = 8
+    const BASE_FONT_SIZE = 16
 
     const resizeTextarea = (ta: HTMLTextAreaElement) => {
-      ta.style.height = "0";
+      ta.style.height = "0"
       const newHeight = Math.min(
         Math.max(ta.scrollHeight / BASE_FONT_SIZE, MIN_HEIGHT_REM),
         MAX_HEIGHT_REM
-      );
-      ta.style.height = `${newHeight}rem`;
-    };
+      )
+      ta.style.height = `${newHeight}rem`
+    }
 
     const resetTextareaHeight = () => {
-      const ta = document.getElementById(id) as HTMLTextAreaElement | null;
-      if (ta) ta.style.height = `${MIN_HEIGHT_REM}rem`;
-    };
+      const ta = document.getElementById(id) as HTMLTextAreaElement | null
+      if (ta) ta.style.height = `${MIN_HEIGHT_REM}rem`
+    }
 
     const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault();
-        onEnterPress();
-        setContent("");
-        resetTextareaHeight();
+        event.preventDefault()
+        onEnterPress()
+        setContent("")
+        resetTextareaHeight()
       }
-    };
+    }
 
     const handleInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
-      setContent(event.target.value);
-      resizeTextarea(event.target);
-    };
+      setContent(event.target.value)
+      resizeTextarea(event.target)
+    }
 
     useEffect(() => {
-      setContent(watchedMessage);
-    }, [watchedMessage]);
+      setContent(watchedMessage)
+    }, [watchedMessage])
 
-    useImperativeHandle(ref, () => ({ resetTextareaHeight }));
+    useImperativeHandle(ref, () => ({ resetTextareaHeight }))
 
     return (
       <div className="relative flex items-center w-full">
@@ -99,9 +99,9 @@ const MessageInput = forwardRef<MessageInputRef, MessageInputProps>(
           maxLength={4096}
         />
       </div>
-    );
+    )
   }
-);
+)
 
-MessageInput.displayName = "MessageInput";
-export default MessageInput;
+MessageInput.displayName = "MessageInput"
+export default MessageInput

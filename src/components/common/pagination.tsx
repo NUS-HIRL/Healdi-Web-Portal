@@ -1,28 +1,27 @@
-"use client";
-
-import * as React from "react";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+"use client"
+import * as React from "react"
+import { Button } from "@/components/ui/button"
+import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react"
 
 type PaginationProps = {
-  page: number;
-  pageCount: number;
-  pageSize: number;
-  openPageSize: boolean;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-  setPageSize: React.Dispatch<React.SetStateAction<number>>;
-  setOpenPageSize: React.Dispatch<React.SetStateAction<boolean>>;
-};
+  page: number
+  pageCount: number
+  pageSize: number
+  openPageSize: boolean
+  setPage: React.Dispatch<React.SetStateAction<number>>
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setOpenPageSize: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-export const Pagination = ({
+export function Pagination({
   page,
   pageCount,
   pageSize,
   openPageSize,
   setPage,
   setPageSize,
-  setOpenPageSize,
-}: PaginationProps) => {
+  setOpenPageSize
+}: PaginationProps) {
   return (
     <div className="mt-4 flex items-center justify-end gap-2 relative">
       <Button
@@ -32,8 +31,7 @@ export const Pagination = ({
         size="icon"
         className="text-gray-500"
         disabled={page <= 1}
-        aria-label="Previous page"
-      >
+        aria-label="Previous page">
         <ChevronLeft className="h-4 w-4" />
       </Button>
 
@@ -43,8 +41,7 @@ export const Pagination = ({
         size="icon"
         className="min-w-[2rem] bg-gray-100 text-gray-700"
         aria-current="page"
-        disabled
-      >
+        disabled>
         {page}
       </Button>
 
@@ -55,8 +52,7 @@ export const Pagination = ({
         size="icon"
         className="text-gray-600"
         aria-label="Next page"
-        disabled={page >= pageCount}
-      >
+        disabled={page >= pageCount}>
         <ChevronRight className="h-4 w-4" />
       </Button>
 
@@ -68,8 +64,7 @@ export const Pagination = ({
           size="sm"
           className="gap-1 text-gray-700"
           aria-haspopup="listbox"
-          aria-expanded={openPageSize}
-        >
+          aria-expanded={openPageSize}>
           {pageSize} / page
           <ChevronDown className="h-4 w-4" />
         </Button>
@@ -77,8 +72,7 @@ export const Pagination = ({
         {openPageSize && (
           <div
             className="absolute right-0 z-10 mt-1 w-28 overflow-hidden rounded-md border border-gray-200 bg-white shadow"
-            role="listbox"
-          >
+            role="listbox">
             {[5, 10, 20].map((s) => (
               <Button
                 key={s}
@@ -86,16 +80,15 @@ export const Pagination = ({
                 variant="ghost"
                 size="sm"
                 onClick={() => {
-                  setPageSize(s);
-                  setOpenPageSize(false);
-                  setPage(1);
+                  setPageSize(s)
+                  setOpenPageSize(false)
+                  setPage(1)
                 }}
                 className={`w-full justify-start px-3 ${
                   s === pageSize ? "bg-gray-100" : ""
                 }`}
                 role="option"
-                aria-selected={s === pageSize}
-              >
+                aria-selected={s === pageSize}>
                 {s} / page
               </Button>
             ))}
@@ -103,5 +96,5 @@ export const Pagination = ({
         )}
       </div>
     </div>
-  );
+  )
 }

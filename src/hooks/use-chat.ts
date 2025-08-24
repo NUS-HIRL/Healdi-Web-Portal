@@ -1,25 +1,25 @@
-import { useParams } from "next/navigation";
-import { useMemo } from "react";
+import { useParams } from "next/navigation"
+import { useMemo } from "react"
 
 const useChat = () => {
-  const params = useParams();
+  const params = useParams()
   const chatId = useMemo(() => {
     if (!params?.chatId) {
-      return "";
+      return ""
     }
 
-    return params.chatId as string;
-  }, [params?.chatId]);
+    return params.chatId as string
+  }, [params?.chatId])
 
-  const isOpen = useMemo(() => !!chatId, [chatId]);
+  const isOpen = useMemo(() => !!chatId, [chatId])
 
   return useMemo(
     () => ({
       isOpen,
-      chatId,
+      chatId
     }),
     [isOpen, chatId]
-  );
-};
+  )
+}
 
-export default useChat;
+export default useChat
