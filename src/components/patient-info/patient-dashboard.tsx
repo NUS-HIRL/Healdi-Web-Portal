@@ -4,12 +4,12 @@ import { useState } from "react"
 import { Footer } from "../common/footer"
 import { Sidebar } from "../common/sidebar"
 import { GoalsTab } from "./goals/goals-tab"
-import Medications from "./medications/medications"
+import { Medications } from "./medications/medications"
 import { PatientHeader } from "./patient-header"
 import { ReportTab } from "./report/report-tab"
 import { Button } from "../ui/button"
 import { AllergiesDetailsSidebar } from "./allergies/allergies-details.sidebar"
-import AiExerciseRecommendations from "./ai-exercise-recommendations/ai-exercise-recommendations"
+import { AiExerciseRecommendations } from "./ai-exercise-recommendations/ai-exercise-recommendations"
 
 interface PatientDashboardProps {
   patientId: string
