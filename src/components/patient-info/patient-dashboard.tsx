@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Goal, X } from 'lucide-react'
+import { useState } from 'react'
 import { Sidebar } from '../common/sidebar'
 import { PatientHeader } from './patient-header'
 import { ReportTab } from './report/report-tab'
@@ -15,50 +14,7 @@ interface PatientDashboardProps {
   patientId: string
 }
 
-// Lightweight modal for now
-const Modal = ({
-  open,
-  title,
-  onClose,
-  children,
-}: {
-  open: boolean
-  title: string
-  onClose: () => void
-  children: React.ReactNode
-}) => {
-  useEffect(() => {
-    if (!open) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose])
 
-  if (!open) return null
-  return (
-    <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <div className="absolute inset-0 bg-black/30" onClick={onClose} />
-      <div className="absolute inset-0 flex items-start justify-center pt-24">
-        <div className="w-full max-w-md rounded-2xl bg-white shadow-xl ring-1 ring-black/5">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-            <h3 id="modal-title" className="text-sm font-medium text-gray-900">{title}</h3>
-            <button className="p-2 text-gray-400 hover:text-gray-600" aria-label="Close" onClick={onClose}>
-              <X size={16} />
-            </button>
-          </div>
-          <div className="px-4 py-4 text-sm text-gray-600">
-            {children}
-          </div>
-          <div className="px-4 py-3 border-t border-gray-100 text-right">
-            <button onClick={onClose} className="inline-flex items-center rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
   const [activeTab, setActiveTab] = useState('Reports')

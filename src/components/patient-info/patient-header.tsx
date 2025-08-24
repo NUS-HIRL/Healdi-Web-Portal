@@ -33,7 +33,6 @@ export const PatientHeader = ({
   hrvMs = 65,
   healthConditionsCount = 4,
   allergiesCount = 3,
-  onViewHealthConditions,
   onViewAllergies,
 }: PatientHeaderProps) => (
   <header className="bg-white border-b border-gray-200 pt-8 pb-4 px-6">
