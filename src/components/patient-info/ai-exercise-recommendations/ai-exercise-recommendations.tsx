@@ -10,7 +10,6 @@ import { KeyValueRow } from "../../common/key-value-row"
 import { LabeledInput } from "../../common/labeled-input"
 import { Footer } from "@/components/common/footer"
 import { Button } from "@/components/ui/button"
-import { Pagination } from "@/components/common/pagination"
 import { Exercise } from "@/types/exercise"
 
 const INITIAL_DATA: Exercise[] = [
@@ -240,17 +239,6 @@ export default function AiExerciseRecommendations({
                 </tbody>
               </table>
             </div>
-
-            {/* Pagination */}
-            <Pagination
-              page={page}
-              pageCount={pageCount}
-              pageSize={pageSize}
-              openPageSize={openPageSize}
-              setPage={setPage}
-              setPageSize={setPageSize}
-              setOpenPageSize={setOpenPageSize}
-            />
           </div>
         </section>
       </div>

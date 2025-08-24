@@ -3,7 +3,6 @@
 import { Eye, Plus } from "lucide-react"
 import { useMemo, useState } from "react"
 
-import { Pagination } from "@/components/common/pagination"
 import { Button } from "@/components/ui/button"
 import { Med } from "../../../types/medications-types"
 import { KeyValueRow } from "../../common/key-value-row"
@@ -189,17 +188,6 @@ export default function Medications() {
               </tbody>
             </table>
           </div>
-
-          {/* Pagination */}
-          <Pagination
-            page={page}
-            pageCount={pageCount}
-            pageSize={pageSize}
-            openPageSize={openPageSize}
-            setPage={setPage}
-            setPageSize={setPageSize}
-            setOpenPageSize={setOpenPageSize}
-          />
         </div>
       </section>
 

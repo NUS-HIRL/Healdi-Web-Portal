@@ -1,7 +1,6 @@
 "use client"
 
-import CustomDataTable from "@/components/common/custom-data-table"
-import { Pagination } from "@/components/common/pagination"
+import CustomDataTable from "@/components/common/table/custom-data-table"
 import { Button } from "@/components/ui/button"
 import fetcher from "@/lib/fetcher"
 import { ApiGoal, Goal } from "@/types/goal"
@@ -20,7 +19,6 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     pageIndex: 0,
     pageSize: 10
   })
-  const [openPageSize, setOpenPageSize] = useState(false)
 
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isViewOpen, setIsViewOpen] = useState(false)
@@ -185,17 +183,6 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
               isLoading={isLoading}
               setPagination={setPagination}
             />
-
-            {/* Pagination */}
-            {/* <Pagination
-              page={pagination.page}
-              pageCount={Math.ceil(goals.length / pagination.pageSize)}
-              pageSize={pagination.pageSize}
-              openPageSize={openPageSize}
-              setPage={pagination.setPage}
-              setPageSize={setPageSize}
-              setOpenPageSize={setOpenPageSize}
-            /> */}
           </div>
         </div>
       </div>

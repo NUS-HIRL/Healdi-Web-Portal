@@ -9,8 +9,9 @@ import {
   TableHeader,
   TableRow,
   Table as UITable
-} from "../ui/table"
-import { LoadingSpinner } from "./loading-spinner"
+} from "../../ui/table"
+import { LoadingSpinner } from "../loading-spinner"
+import DataTablePagination from "./data-table-pagination"
 
 export interface CustomDataTableProps<T> {
   data: PaginatedResponse<T>
@@ -99,6 +100,11 @@ const CustomDataTable = <T,>({
           </TableBody>
         </UITable>
       </div>
+      <DataTablePagination
+        table={table}
+        pagination={pagination}
+        setPagination={setPagination}
+      />
     </div>
   )
 }
