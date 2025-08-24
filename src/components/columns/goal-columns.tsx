@@ -16,7 +16,7 @@ interface GoalColumnsProps {
   }
 }
 
-export const createGoalColumns = ({
+export const goalColumns = ({
   onSortingChange,
   onViewGoal,
   sorting

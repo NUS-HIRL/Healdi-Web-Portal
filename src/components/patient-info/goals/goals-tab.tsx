@@ -1,129 +1,139 @@
-'use client'
+"use client";
 
-import { useState, useMemo } from 'react'
-import { Plus } from 'lucide-react'
-import { Goal, ApiGoal } from '@/types/goal'
-import { Button } from '@/components/ui/button'
-import { GoalsTable } from './goals-table'
-import { GoalDetailsSidebar } from './goal-details-sidebar'
-import { createGoalColumns } from './columns'
-import { Pagination } from '@/components/common/pagination'
-import React from 'react'
-import useSWR from 'swr'
-import fetcher from '@/lib/fetcher'
+import { useState, useMemo } from "react";
+import { Plus } from "lucide-react";
+import { Goal, ApiGoal } from "@/types/goal";
+import { Button } from "@/components/ui/button";
+import { GoalsTable } from "./goals-table";
+import { GoalDetailsSidebar } from "./goal-details-sidebar";
+import { Pagination } from "@/components/common/pagination";
+import React from "react";
+import useSWR from "swr";
+import fetcher from "@/lib/fetcher";
+import { goalColumns } from "../../columns/goal-columns";
 
 interface GoalsTabProps {
-  patientId: string
+  patientId: string;
 }
 
 export const GoalsTab = ({ patientId }: GoalsTabProps) => {
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [openPageSize, setOpenPageSize] = useState(false)
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [openPageSize, setOpenPageSize] = useState(false);
 
-  const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
-  const [isViewOpen, setIsViewOpen] = useState(false)
+  const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null);
+  const [isViewOpen, setIsViewOpen] = useState(false);
 
-  const { data: response, error, isLoading, mutate } = useSWR<ApiGoal[]>(
+  const {
+    data: response,
+    error,
+    isLoading,
+    mutate,
+  } = useSWR<ApiGoal[]>(
     `v1/users/${encodeURIComponent(patientId)}/goals`,
     fetcher
-  )
+  );
 
   const [sorting, setSorting] = useState<{
-    column: string | null
-    direction: 'asc' | 'desc' | null
+    column: string | null;
+    direction: "asc" | "desc" | null;
   }>({
     column: null,
-    direction: null
-  })
+    direction: null,
+  });
 
   // Transform API data to component data
   const goals: Goal[] = useMemo(() => {
-    let goalsData: ApiGoal[] = []
-    
+    let goalsData: ApiGoal[] = [];
+
     if (response) {
       // The API returns an array directly
       if (Array.isArray(response)) {
-        goalsData = response
+        goalsData = response;
       }
     }
-    
+
     if (goalsData.length === 0) {
-      return []
+      return [];
     }
-    
+
     return goalsData.map((g: ApiGoal) => ({
       id: g.id,
       category: g.goal_category,
-      completionType: g.completion_type === 'short' ? 'Short Term' : 'Long Term',
+      completionType:
+        g.completion_type === "short" ? "Short Term" : "Long Term",
       title: g.title,
       description: g.description,
       coins: g.coin_reward_per_completion,
       bonus: g.completion_bonus,
       progress: `${g.completed_count}/${g.target_count}`,
-    }))
-  }, [response])
+    }));
+  }, [response]);
 
   // Apply sorting to goals
   const sortedGoals = useMemo(() => {
-    const sortedGoals = [...goals]
-    
+    const sortedGoals = [...goals];
+
     if (sorting.column && sorting.direction) {
       sortedGoals.sort((a, b) => {
-        let aValue: string | number = a[sorting.column as keyof Goal] as string | number
-        let bValue: string | number = b[sorting.column as keyof Goal] as string | number
-        
-        if (typeof aValue === 'string' && typeof bValue === 'string') {
-          aValue = aValue.toLowerCase()
-          bValue = bValue.toLowerCase()
+        let aValue: string | number = a[sorting.column as keyof Goal] as
+          | string
+          | number;
+        let bValue: string | number = b[sorting.column as keyof Goal] as
+          | string
+          | number;
+
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          aValue = aValue.toLowerCase();
+          bValue = bValue.toLowerCase();
         }
-        
-        if (sorting.direction === 'asc') {
-          return aValue > bValue ? 1 : -1
+
+        if (sorting.direction === "asc") {
+          return aValue > bValue ? 1 : -1;
         } else {
-          return aValue < bValue ? 1 : -1
+          return aValue < bValue ? 1 : -1;
         }
-      })
+      });
     }
-    return sortedGoals
-  }, [goals, sorting])
+    return sortedGoals;
+  }, [goals, sorting]);
 
   // Handle sorting change
   const handleSortingChange = (column: string) => {
-    setSorting(prev => {
+    setSorting((prev) => {
       if (prev.column === column) {
         // Toggle direction if same column
-        if (prev.direction === 'asc') return { column, direction: 'desc' }
-        if (prev.direction === 'desc') return { column, direction: null }
-        return { column, direction: 'asc' }
+        if (prev.direction === "asc") return { column, direction: "desc" };
+        if (prev.direction === "desc") return { column, direction: null };
+        return { column, direction: "asc" };
       } else {
         // New column, start with ascending
-        return { column, direction: 'asc' }
+        return { column, direction: "asc" };
       }
-    })
-    
+    });
+
     // Reset to first page when sorting changes
-    setPage(1)
-  }
+    setPage(1);
+  };
 
   // Handle view button click
   const handleViewGoal = (goal: Goal) => {
-    setSelectedGoal(goal)
-    setIsViewOpen(true)
-  }
+    setSelectedGoal(goal);
+    setIsViewOpen(true);
+  };
 
   // Create columns using the imported column factory
-  const columns = createGoalColumns({
+  const columns = goalColumns({
     onSortingChange: handleSortingChange,
     onViewGoal: handleViewGoal,
-    sorting: sorting
+    sorting: sorting,
   });
 
   // Handle close view
   const handleCloseView = () => {
-    setIsViewOpen(false)
-    setSelectedGoal(null)
-  }
+    setIsViewOpen(false);
+    setSelectedGoal(null);
+  };
 
   return (
     <div className="bg-gray-100">
@@ -134,17 +144,17 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
           <div className="px-2 py-3 border-b border-gray-200">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-900">Goals</h2>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-blue-300 text-blue-600 hover:bg-blue-50"
-                    onClick={() => {
-                      window.location.href = '/patient-info/goals/add'
-                    }}
-                  >
-                    <Plus size={16} />
-                    Add
-                  </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-blue-300 text-blue-600 hover:bg-blue-50"
+                onClick={() => {
+                  window.location.href = "/patient-info/goals/add";
+                }}
+              >
+                <Plus size={16} />
+                Add
+              </Button>
             </div>
           </div>
 
@@ -159,13 +169,13 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
             {error && (
               <div className="text-sm text-red-600 mb-2">{error.message}</div>
             )}
-            
+
             <GoalsTable
               results={{
                 data: sortedGoals,
                 totalCount: goals.length,
-                page: 1, 
-                totalPages: Math.ceil(goals.length / pageSize)
+                page: 1,
+                totalPages: Math.ceil(goals.length / pageSize),
               }}
               columns={columns}
               pagination={{ pageIndex: 0, pageSize: pageSize }}
@@ -195,4 +205,4 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
       />
     </div>
   );
-}
+};
