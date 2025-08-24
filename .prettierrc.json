@@ -3,7 +3,6 @@
   "semi": false,
   "singleQuote": false,
   "tabWidth": 2,
-  "maxLineLength": 80,
   "trailingComma": "none",
   "bracketSameLine": true,
   "importOrder": [
