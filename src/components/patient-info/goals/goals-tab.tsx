@@ -1,24 +1,19 @@
 "use client"
 
 import CustomDataTable from "@/components/common/table/custom-data-table"
-import { Button } from "@/components/ui/button"
+import { HeaderWithOptions } from "@/components/common/table/header-with-options"
 import fetcher from "@/lib/fetcher"
 import { ApiGoal, Goal } from "@/types/goal"
-import { Plus } from "lucide-react"
 import { useMemo, useState } from "react"
 import useSWR from "swr"
 import { GoalColumns } from "../../columns/goal-columns"
 import { GoalDetailsSidebar } from "./goal-details-sidebar"
-import { useRouter } from "next/navigation"
-import { HeaderWithOptions } from "@/components/common/table/header-with-options"
 
 interface GoalsTabProps {
   patientId: string
 }
 
 export const GoalsTab = ({ patientId }: GoalsTabProps) => {
-  const router = useRouter()
-
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10

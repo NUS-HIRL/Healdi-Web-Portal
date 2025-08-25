@@ -4,4 +4,5 @@ export interface Medication {
   dosage: string
   type: string
   creator: string
+  [key: string]: string | number | boolean
 }

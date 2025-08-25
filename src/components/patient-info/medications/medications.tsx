@@ -1,17 +1,15 @@
 "use client"
 
-import { Eye, Plus } from "lucide-react"
-import { useMemo, useState } from "react"
+import { useState } from "react"
 
+import { MedicationColumns } from "@/components/columns/medication-columns"
+import CustomDataTable from "@/components/common/table/custom-data-table"
 import { Button } from "@/components/ui/button"
+import usePagination from "@/hooks/use-pagination"
+import { Medication } from "@/types/medication"
 import { KeyValueRow } from "../../common/key-value-row"
 import { LabeledInput } from "../../common/labeled-input"
 import { Modal } from "../../common/modal"
-import { TableHeaderCell } from "../../common/table-header-cell"
-import usePagination from "@/hooks/use-pagination"
-import { Medication } from "@/types/medication"
-import { MedicationColumns } from "@/components/columns/medication-columns"
-import CustomDataTable from "@/components/common/table/custom-data-table"
 
 const INITIAL_DATA: Medication[] = [
   {
@@ -106,35 +104,26 @@ export const Medications = () => {
   return (
     <div className="w-full px-4 py-6">
       {/* Title */}
-      <h1 className="text-2xl font-semibold text-gray-800 mb-4 border-b border-gray-200">
-        Medications
-      </h1>
+      {/* <HeaderWithOptions title="Medications" to="/patient/medication/add" /> */}
+      <Button onClick={() => setShowAdd(true)} />
 
-      {/* Card */}
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4">
-        <h2 className="text-gray-800 font-semibold">Medication Plan</h2>
-        <Button
-          type="button"
-          onClick={() => setShowAdd(true)}
-          variant="outline"
-          size="sm"
-          className="gap-2">
-          <Plus className="h-4 w-4" />
-          Add
-        </Button>
-      </div>
+      <div className="py-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          Medication Plans
+        </h3>
 
-      {/* Table */}
-      {/* TODO: Replace isLoading and error hardcodes after integratin medication API */}
-      <MedicationTable
-        columns={columns}
-        data={results}
-        pagination={pagination}
-        setPagination={setPagination}
-        isLoading={false}
-        error={null}
-      />
+        {/* Table */}
+        {/* TODO: Replace isLoading and error hardcodes after integratin medication API */}
+        <MedicationTable
+          columns={columns}
+          data={results}
+          pagination={pagination}
+          setPagination={setPagination}
+          isLoading={false}
+          error={null}
+        />
+      </div>
 
       {/* View Modal (dummy) */}
       {viewing && (
