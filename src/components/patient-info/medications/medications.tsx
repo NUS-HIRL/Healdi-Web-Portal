@@ -4,13 +4,10 @@ import { useState } from "react"
 
 import { MedicationColumns } from "@/components/columns/medication-columns"
 import CustomDataTable from "@/components/common/table/custom-data-table"
-import { Button } from "@/components/ui/button"
+import { HeaderWithOptions } from "@/components/common/table/header-with-options"
 import usePagination from "@/hooks/use-pagination"
 import { Medication } from "@/types/medication"
-import { LabeledInput } from "../../common/labeled-input"
-import { Modal } from "../../common/modal"
 import { MedicationDetailsSidebar } from "./medication-details-sidebar"
-import { HeaderWithOptions } from "@/components/common/table/header-with-options"
 
 const INITIAL_DATA: Medication[] = [
   {
@@ -43,15 +40,9 @@ const INITIAL_DATA: Medication[] = [
   }
 ]
 
-type MedForm = {
-  name: string
-  dosage: string
-  type: "Tablet" | "Capsule" | "Injection"
-  creator: "Patient" | "Doctor"
-}
-
+// TODO: Sai: Fix existing page, it was implemented for Medication Plan but seems like it's for medications instead.
 export const Medications = () => {
-  const [rows, setRows] = useState<Medication[]>(INITIAL_DATA)
+  const [rows] = useState<Medication[]>(INITIAL_DATA)
 
   // pagination
   const { pagination, setPagination } = usePagination()
@@ -60,31 +51,6 @@ export const Medications = () => {
   const [selectedMedication, setSelectedMedication] =
     useState<Medication | null>(null)
   const [showSelectedMedication, setShowSelectedMedication] = useState(false)
-
-  // add form (dummy)
-  const [form, setForm] = useState<MedForm>({
-    name: "",
-    dosage: "",
-    type: "Tablet",
-    creator: "Patient"
-  })
-
-  function handleAdd() {
-    if (!form.name.trim()) {
-      alert("Enter a medication name (dummy validation).")
-      return
-    }
-    const newRow: Medication = {
-      id: String(Date.now()),
-      name: form.name.trim(),
-      dosage: form.dosage.trim() || "N/A",
-      type: form.type,
-      creator: form.creator
-    }
-    setRows((r) => [newRow, ...r])
-    setShowSelectedMedication(false)
-    setForm({ name: "", dosage: "", type: "Tablet", creator: "Patient" })
-  }
 
   const handleViewMedication = (medication: Medication) => {
     setSelectedMedication(medication)
@@ -111,7 +77,7 @@ export const Medications = () => {
   return (
     <div className="w-full px-4 py-6">
       {/* Title */}
-      <HeaderWithOptions title="Medications" to="/patient/medication/add" />
+      <HeaderWithOptions title="Medications" to="/patient-info/medications/add" />
 
       {/* Header */}
       <div className="py-4">

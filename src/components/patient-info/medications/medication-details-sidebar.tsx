@@ -5,7 +5,6 @@ import { Subtitle } from "@/components/common/sidebar/subtitle"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Goal } from "@/types/goal"
 import { Medication } from "@/types/medication"
 import { useRouter } from "next/navigation"
 

@@ -1,13 +1,6 @@
 "use client"
 
-import {
-  Calendar,
-  FileText,
-  Home,
-  MessageCircleMore,
-  Settings,
-  Users
-} from "lucide-react"
+import { Home, MessageCircleMore, Settings, Users } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 
@@ -19,8 +12,6 @@ export const Sidebar = () => {
     { id: "home", icon: Home, href: "#" },
     { id: "users", icon: Users, href: "/patient-info" },
     { id: "chats", icon: MessageCircleMore, href: "/chat" },
-    { id: "reports", icon: FileText, href: "#" },
-    { id: "calendar", icon: Calendar, href: "#" },
     { id: "settings", icon: Settings, href: "#" }
   ]
   return (
