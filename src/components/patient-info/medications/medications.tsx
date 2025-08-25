@@ -7,10 +7,10 @@ import CustomDataTable from "@/components/common/table/custom-data-table"
 import { Button } from "@/components/ui/button"
 import usePagination from "@/hooks/use-pagination"
 import { Medication } from "@/types/medication"
-import { KeyValueRow } from "../../common/key-value-row"
 import { LabeledInput } from "../../common/labeled-input"
 import { Modal } from "../../common/modal"
 import { MedicationDetailsSidebar } from "./medication-details-sidebar"
+import { HeaderWithOptions } from "@/components/common/table/header-with-options"
 
 const INITIAL_DATA: Medication[] = [
   {
@@ -57,8 +57,9 @@ export const Medications = () => {
   const { pagination, setPagination } = usePagination()
 
   // modals
-  const [viewing, setViewing] = useState<Medication | null>(null)
-  const [showAdd, setShowAdd] = useState(false)
+  const [selectedMedication, setSelectedMedication] =
+    useState<Medication | null>(null)
+  const [showSelectedMedication, setShowSelectedMedication] = useState(false)
 
   // add form (dummy)
   const [form, setForm] = useState<MedForm>({
@@ -81,18 +82,18 @@ export const Medications = () => {
       creator: form.creator
     }
     setRows((r) => [newRow, ...r])
-    setShowAdd(false)
+    setShowSelectedMedication(false)
     setForm({ name: "", dosage: "", type: "Tablet", creator: "Patient" })
   }
 
   const handleViewMedication = (medication: Medication) => {
-    setViewing(medication)
-    setShowAdd(true)
+    setSelectedMedication(medication)
+    setShowSelectedMedication(true)
   }
 
   const handleCloseView = () => {
-    setShowAdd(false)
-    setViewing(null)
+    setShowSelectedMedication(false)
+    setSelectedMedication(null)
   }
 
   const columns = MedicationColumns({ onViewMedication: handleViewMedication })
@@ -110,8 +111,7 @@ export const Medications = () => {
   return (
     <div className="w-full px-4 py-6">
       {/* Title */}
-      {/* <HeaderWithOptions title="Medications" to="/patient/medication/add" /> */}
-      <Button onClick={() => setShowAdd(true)} />
+      <HeaderWithOptions title="Medications" to="/patient/medication/add" />
 
       {/* Header */}
       <div className="py-4">
@@ -131,59 +131,12 @@ export const Medications = () => {
         />
       </div>
 
-      {viewing && (
+      {selectedMedication && (
         <MedicationDetailsSidebar
-          medication={viewing}
-          isOpen={showAdd}
+          medication={selectedMedication}
+          isOpen={showSelectedMedication}
           onClose={handleCloseView}
         />
-      )}
-
-      {/* Add Modal (dummy) */}
-      {showAdd && (
-        <Modal onClose={() => setShowAdd(false)} title="Add Medication">
-          <div className="space-y-3">
-            <LabeledInput
-              label="Medication Name"
-              value={form.name}
-              onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              placeholder="e.g. Atorvastatin"
-            />
-            <LabeledInput
-              label="Dosage"
-              value={form.dosage}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, dosage: e.target.value }))
-              }
-              placeholder="e.g. 20 mg"
-            />
-            <LabeledInput
-              label="Type"
-              value={form.type}
-              onChange={(e) => setForm((f) => ({ ...f, type: e.target.value }))}
-              placeholder="e.g. Tablet"
-            />
-            <LabeledInput
-              label="Creator"
-              value={form.creator}
-              onChange={(e) =>
-                setForm((f) => ({ ...f, creator: e.target.value }))
-              }
-              placeholder="e.g. Patient"
-            />
-            <div className="pt-2 flex justify-end gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setShowAdd(false)}>
-                Cancel
-              </Button>
-              <Button type="button" onClick={handleAdd}>
-                Save
-              </Button>
-            </div>
-          </div>
-        </Modal>
       )}
     </div>
   )

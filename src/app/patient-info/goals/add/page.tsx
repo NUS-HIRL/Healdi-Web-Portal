@@ -1,5 +1,5 @@
 import { AddGoalPage } from "@/components/patient-info/goals/add-goal-page"
 
-export default async function AddGoalPageRoute() {
+export const AddGoalPageRoute = () => {
   return <AddGoalPage />
 }
