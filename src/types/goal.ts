@@ -7,7 +7,6 @@ export interface Goal {
   coins: number
   bonus: number
   progress: string
-  [key: string]: string | number | boolean
 }
 
 // API response shape for a goal item returned by

@@ -10,6 +10,7 @@ import { Medication } from "@/types/medication"
 import { KeyValueRow } from "../../common/key-value-row"
 import { LabeledInput } from "../../common/labeled-input"
 import { Modal } from "../../common/modal"
+import { MedicationDetailsSidebar } from "./medication-details-sidebar"
 
 const INITIAL_DATA: Medication[] = [
   {
@@ -89,6 +90,11 @@ export const Medications = () => {
     setShowAdd(true)
   }
 
+  const handleCloseView = () => {
+    setShowAdd(false)
+    setViewing(null)
+  }
+
   const columns = MedicationColumns({ onViewMedication: handleViewMedication })
 
   const MedicationTable = CustomDataTable<Medication>
@@ -125,16 +131,12 @@ export const Medications = () => {
         />
       </div>
 
-      {/* View Modal (dummy) */}
       {viewing && (
-        <Modal onClose={() => setViewing(null)} title="Medication Details">
-          <div className="space-y-2 text-sm">
-            <KeyValueRow label="Medication Name" value={viewing.name} />
-            <KeyValueRow label="Dosage" value={viewing.dosage} />
-            <KeyValueRow label="Type" value={viewing.type} />
-            <KeyValueRow label="Creator" value={viewing.creator} />
-          </div>
-        </Modal>
+        <MedicationDetailsSidebar
+          medication={viewing}
+          isOpen={showAdd}
+          onClose={handleCloseView}
+        />
       )}
 
       {/* Add Modal (dummy) */}
