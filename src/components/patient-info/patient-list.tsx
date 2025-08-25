@@ -1,19 +1,145 @@
 "use client"
 
-import { useMemo, useState, useEffect } from "react"
 import { Patient } from "@/types/patient"
-import { PatientTable, Pagination } from "./table"
+import { useEffect, useMemo, useState } from "react"
+import CustomDataTable from "../common/table/custom-data-table"
+import { PatientInfoColumns } from "../columns/patient-info-columns"
+import { PatientPagination } from "./patient-pagination"
 
-interface PatientListProps {
-  patients: Patient[]
-}
+// TODO: Remove once data from API comes in
+const patients: Patient[] = [
+  {
+    id: "1",
+    patientUid: "RES0001",
+    age: 56,
+    gender: "M",
+    fitnessLevel: "High",
+    hrv: 65,
+    healthConditions: ["Hypertension"],
+    goals: ["Lower BP", "10k steps/day"]
+  },
+  {
+    id: "2",
+    patientUid: "RES0002",
+    age: 50,
+    gender: "F",
+    fitnessLevel: "Moderate",
+    hrv: 42,
+    healthConditions: ["Hypertension", "Obesity"],
+    goals: ["Weight loss", "Improve fitness"]
+  },
+  {
+    id: "3",
+    patientUid: "RES0003",
+    age: 75,
+    gender: "F",
+    fitnessLevel: "Low",
+    hrv: 42,
+    healthConditions: ["Prehypertension"],
+    goals: ["Stress reduction"]
+  },
+  {
+    id: "4",
+    patientUid: "RES0004",
+    age: 45,
+    gender: "M",
+    fitnessLevel: "High",
+    hrv: 78,
+    healthConditions: ["Diabetes"],
+    goals: ["Blood sugar control", "Weight management"]
+  },
+  {
+    id: "5",
+    patientUid: "RES0005",
+    age: 62,
+    gender: "F",
+    fitnessLevel: "Moderate",
+    hrv: 55,
+    healthConditions: ["Hypertension", "Arthritis"],
+    goals: ["Pain management", "Mobility improvement"]
+  },
+  {
+    id: "6",
+    patientUid: "RES0006",
+    age: 38,
+    gender: "M",
+    fitnessLevel: "High",
+    hrv: 82,
+    healthConditions: ["Asthma"],
+    goals: ["Respiratory health", "Endurance building"]
+  },
+  {
+    id: "7",
+    patientUid: "RES0007",
+    age: 55,
+    gender: "F",
+    fitnessLevel: "Low",
+    hrv: 38,
+    healthConditions: ["Heart Disease"],
+    goals: ["Cardiac rehabilitation", "Lifestyle changes"]
+  },
+  {
+    id: "8",
+    patientUid: "RES0008",
+    age: 42,
+    gender: "M",
+    fitnessLevel: "Moderate",
+    hrv: 48,
+    healthConditions: ["Obesity"],
+    goals: ["Weight loss", "Muscle building"]
+  },
+  {
+    id: "9",
+    patientUid: "RES0009",
+    age: 68,
+    gender: "F",
+    fitnessLevel: "Low",
+    hrv: 45,
+    healthConditions: ["Osteoporosis"],
+    goals: ["Bone strength", "Balance improvement"]
+  },
+  {
+    id: "10",
+    patientUid: "RES0010",
+    age: 35,
+    gender: "M",
+    fitnessLevel: "High",
+    hrv: 75,
+    healthConditions: ["Anxiety"],
+    goals: ["Stress management", "Mental wellness"]
+  },
+  {
+    id: "11",
+    patientUid: "RES0011",
+    age: 35,
+    gender: "M",
+    fitnessLevel: "High",
+    hrv: 75,
+    healthConditions: ["Anxiety"],
+    goals: ["Stress management", "Mental wellness"]
+  },
+  {
+    id: "12",
+    patientUid: "RES0012",
+    age: 35,
+    gender: "M",
+    fitnessLevel: "High",
+    hrv: 75,
+    healthConditions: ["Anxiety"],
+    goals: ["Stress management", "Mental wellness"]
+  }
+]
 
-export const PatientList = ({ patients }: PatientListProps) => {
+export const PatientList = () => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10
   })
 
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null)
+  const [showSelectedPatient, setShowSelectedPatient] = useState(false)
+
+  // TODO: Remove once sorting is implemented on API side
   const [sorting, setSorting] = useState<{
     column: string | null
     direction: "asc" | "desc" | null
@@ -25,7 +151,7 @@ export const PatientList = ({ patients }: PatientListProps) => {
   // Reset to first page when patients data changes
   useEffect(() => {
     setPagination((prev) => ({ ...prev, pageIndex: 0 }))
-  }, [patients])
+  }, [])
 
   // Handle page changes
   const handlePageChange = (newPageIndex: number) => {
@@ -35,28 +161,7 @@ export const PatientList = ({ patients }: PatientListProps) => {
     }))
   }
 
-  // Handle sorting
-  const handleSortingChange = (columnKey: string) => {
-    setSorting((prev) => {
-      if (prev.column === columnKey) {
-        // If same column, cycle through: asc -> desc -> null -> asc
-        if (prev.direction === "asc") {
-          return { column: columnKey, direction: "desc" }
-        } else if (prev.direction === "desc") {
-          return { column: columnKey, direction: null }
-        } else {
-          // prev.direction is null, start with asc
-          return { column: columnKey, direction: "asc" }
-        }
-      }
-      // If different column, start with asc
-      return { column: columnKey, direction: "asc" }
-    })
-    // Reset to first page when sorting changes
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }))
-  }
-
-  // Sort patients based on current sorting state
+  // TODO: Remove once sorting is implemented on API side
   const sortedPatients = useMemo(() => {
     if (!sorting.column || !sorting.direction) {
       return [...patients]
@@ -80,6 +185,12 @@ export const PatientList = ({ patients }: PatientListProps) => {
     })
   }, [patients, sorting])
 
+  const handleViewPatientInfo = (patient: Patient) => {
+    setSelectedPatient(patient)
+    setShowSelectedPatient(true)
+  }
+
+  // TODO: Remove once pagination is implemented on API side
   // Calculate pagination data from sorted patients
   const totalCount = sortedPatients.length
   const totalPages = Math.ceil(totalCount / pagination.pageSize)
@@ -87,18 +198,37 @@ export const PatientList = ({ patients }: PatientListProps) => {
   const endIndex = startIndex + pagination.pageSize
   const currentPageData = sortedPatients.slice(startIndex, endIndex)
 
+  const columns = PatientInfoColumns({ onViewPatient: handleViewPatientInfo })
+
+  const PatientTable = CustomDataTable<Patient>
+
+  // TODO: Change this mock data to API fetched data
+  const results = {
+    data: currentPageData,
+    totalCount: currentPageData.length,
+    page: 1,
+    totalPages: Math.ceil(currentPageData.length / pagination.pageSize)
+  }
+
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold text-gray-900">Patient List</h2>
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
-        <PatientTable patients={currentPageData} onSort={handleSortingChange} />
+      {/* TODO: Replace hardcoded isLoading and error once API is done */}
+      <PatientTable
+        data={results}
+        columns={columns}
+        pagination={pagination}
+        setPagination={setPagination}
+        isLoading={false}
+        error={null}
+        hidePagination={true} // Custom pagination layout
+      />
 
-        <Pagination
-          currentPage={pagination.pageIndex}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      <PatientPagination
+        currentPage={pagination.pageIndex}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }

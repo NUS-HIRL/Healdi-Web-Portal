@@ -14,14 +14,7 @@ export const MedicationColumns = ({
 }: MedicationColumnsProps): ColumnDef<Medication>[] => [
   {
     accessorKey: "name",
-    header: () => (
-      <TableHeaderCell
-        label="Medication Name"
-        // active={sortKey === "name"}
-        // dir={sortDir}
-        // onClick={() => toggleSort("name")}
-      />
-    ),
+    header: () => <TableHeaderCell label="Medication Name" />,
     cell: ({ row }) => (
       <Badge
         variant="secondary"
@@ -32,26 +25,12 @@ export const MedicationColumns = ({
   },
   {
     accessorKey: "dosage",
-    header: () => (
-      <TableHeaderCell
-        label="Dosage"
-        // active={sortKey === "name"}
-        // dir={sortDir}
-        // onClick={() => toggleSort("name")}
-      />
-    ),
+    header: () => <TableHeaderCell label="Dosage" />,
     cell: ({ row }) => row.original.dosage
   },
   {
     accessorKey: "type",
-    header: () => (
-      <TableHeaderCell
-        label="Type"
-        // active={sortKey === "name"}
-        // dir={sortDir}
-        // onClick={() => toggleSort("name")}
-      />
-    ),
+    header: () => <TableHeaderCell label="Type" />,
     cell: ({ row }) => (
       <span className="block max-w-[20rem] whitespace-normal break-words">
         {row.original.type}
@@ -60,14 +39,7 @@ export const MedicationColumns = ({
   },
   {
     accessorKey: "creator",
-    header: () => (
-      <TableHeaderCell
-        label="Custom"
-        // active={sortKey === "name"}
-        // dir={sortDir}
-        // onClick={() => toggleSort("name")}
-      />
-    ),
+    header: () => <TableHeaderCell label="Custom" />,
     cell: ({ row }) => (
       <span className="block max-w-[28rem] whitespace-normal break-words leading-relaxed">
         {/* TODO: Parse creator to "Custom" column */}
