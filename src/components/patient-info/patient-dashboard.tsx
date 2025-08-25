@@ -10,6 +10,7 @@ import { ReportTab } from "./report/report-tab"
 import { Button } from "../ui/button"
 import { AllergiesDetailsSidebar } from "./allergies/allergies-details.sidebar"
 import { AiExerciseRecommendations } from "./ai-exercise-recommendations/ai-exercise-recommendations"
+import { ResourcesTab } from "./resources/resources-tab"
 
 interface PatientDashboardProps {
   patientId: string
@@ -21,7 +22,6 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
   const tabs = [
     "Reports",
     "Medications",
-    "Lab Results",
     "Goals",
     "AI Exercise Recommendations",
     "Resources"
@@ -60,25 +60,16 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
 
             {activeTab === "Reports" && <ReportTab />}
             {activeTab === "Medications" && <Medications />}
-            {activeTab === "Lab Results" && (
-              <div className="text-gray-500">
-                Lab Results content coming soon...
-              </div>
-            )}
             {activeTab === "Goals" && <GoalsTab patientId={patientId} />}
             {activeTab === "AI Exercise Recommendations" && (
               <AiExerciseRecommendations patientId={patientId} />
             )}
-            {activeTab === "Resources" && (
-              <div className="text-gray-500">
-                Resources content coming soon...
-              </div>
-            )}
+            {activeTab === "Resources" && <ResourcesTab />}
           </div>
-        </main>
 
-        {/* Footer */}
-        <Footer />
+          {/* Footer */}
+          <Footer />
+        </main>
       </div>
 
       {/* Allergies modal */}

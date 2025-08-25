@@ -228,9 +228,9 @@ export function EditExerciseForm({ exerciseId }: EditExerciseFormProps) {
               </form>
             </div>
           </div>
+          {/* Footer */}
+          <Footer />
         </main>
-        {/* Footer */}
-        <Footer />
       </div>
     </div>
   )

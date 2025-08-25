@@ -10,7 +10,6 @@ import { TableHeaderCell } from "../../common/table-header-cell"
 import { Modal } from "../../common/modal"
 import { KeyValueRow } from "../../common/key-value-row"
 import { LabeledInput } from "../../common/labeled-input"
-import { Footer } from "@/components/common/footer"
 import { Button } from "@/components/ui/button"
 import { Exercise } from "@/types/exercise"
 
@@ -244,9 +243,6 @@ export function AiExerciseRecommendations({
           </div>
         </section>
       </div>
-
-      {/* Footer */}
-      <Footer />
 
       {/* View Modal (dummy) */}
       {viewing && (
