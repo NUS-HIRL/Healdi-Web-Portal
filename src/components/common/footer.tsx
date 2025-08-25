@@ -5,7 +5,7 @@ export const Footer = () => {
     <div className="bg-white pt-0.5">
       {/* Download App Section */}
       <div className="flex mt-3 mb-3 bg-gray-100 rounded-lg p-6 border border-gray-200 mx-6">
-        <div className="flex-1 items-center jus tify-center">
+        <div className="flex-1 items-center justify-center">
           <h2 className="text-xl font-bold text-gray-900">
             Download Healdi App
           </h2>
