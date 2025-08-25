@@ -268,10 +268,9 @@ export const AddGoalPage = () => {
               </form>
             </div>
           </div>
+          {/* Footer */}
+          <Footer />
         </main>
-
-        {/* Footer */}
-        <Footer />
       </div>
     </div>
   )
