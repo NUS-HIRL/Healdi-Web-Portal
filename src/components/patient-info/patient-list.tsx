@@ -2,8 +2,8 @@
 
 import { Patient } from "@/types/patient"
 import { useEffect, useMemo, useState } from "react"
-import CustomDataTable from "../common/table/custom-data-table"
 import { PatientInfoColumns } from "../columns/patient-info-columns"
+import CustomDataTable from "../common/table/custom-data-table"
 import { PatientPagination } from "./patient-pagination"
 
 // TODO: Remove once data from API comes in
@@ -136,11 +136,8 @@ export const PatientList = () => {
     pageSize: 10
   })
 
-  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null)
-  const [showSelectedPatient, setShowSelectedPatient] = useState(false)
-
   // TODO: Remove once sorting is implemented on API side
-  const [sorting, setSorting] = useState<{
+  const [sorting] = useState<{
     column: string | null
     direction: "asc" | "desc" | null
   }>({
@@ -183,12 +180,7 @@ export const PatientList = () => {
 
       return 0
     })
-  }, [patients, sorting])
-
-  const handleViewPatientInfo = (patient: Patient) => {
-    setSelectedPatient(patient)
-    setShowSelectedPatient(true)
-  }
+  }, [sorting])
 
   // TODO: Remove once pagination is implemented on API side
   // Calculate pagination data from sorted patients
@@ -198,7 +190,7 @@ export const PatientList = () => {
   const endIndex = startIndex + pagination.pageSize
   const currentPageData = sortedPatients.slice(startIndex, endIndex)
 
-  const columns = PatientInfoColumns({ onViewPatient: handleViewPatientInfo })
+  const columns = PatientInfoColumns()
 
   const PatientTable = CustomDataTable<Patient>
 

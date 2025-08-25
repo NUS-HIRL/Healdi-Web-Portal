@@ -1,18 +1,10 @@
 import { Patient } from "@/types/patient"
 import { ColumnDef } from "@tanstack/react-table"
-import { Eye } from "lucide-react"
 import { TableHeaderCell } from "../common/table-header-cell"
-import { FitnessLevelBadge } from "../patient-info/fitness-level-badge"
-import { Button } from "../ui/button"
 import { ActionButton } from "../patient-info/action-button"
+import { FitnessLevelBadge } from "../patient-info/fitness-level-badge"
 
-interface PatientInfoColumnsProps {
-  onViewPatient: (patient: Patient) => void
-}
-
-export const PatientInfoColumns = ({
-  onViewPatient
-}: PatientInfoColumnsProps): ColumnDef<Patient>[] => [
+export const PatientInfoColumns = (): ColumnDef<Patient>[] => [
   {
     accessorKey: "patientUid",
     header: () => <TableHeaderCell label="Patient UID" />,
