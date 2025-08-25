@@ -4,13 +4,14 @@ interface PaginationProps {
   onPageChange: (pageIndex: number) => void
 }
 
-export const Pagination = ({
+// TODO: Refactor again using hooks once APIs are settled
+export const PatientPagination = ({
   currentPage,
   totalPages,
   onPageChange
 }: PaginationProps) => {
   return (
-    <div className="px-6 py-3 border-t border-gray-200">
+    <div className="px-6 py-3">
       <div className="flex items-center justify-center">
         <div className="flex items-center space-x-2">
           <button

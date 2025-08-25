@@ -2,11 +2,9 @@
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Table } from "@tanstack/react-table"
+import { PaginationState, Table } from "@tanstack/react-table"
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react"
 import { useState } from "react"
-
-type PaginationState = { pageIndex: number; pageSize: number }
 
 type DataTablePaginationProps<T> = {
   table: Table<T>

@@ -23,6 +23,7 @@ export interface CustomDataTableProps<T> {
     React.SetStateAction<{ pageIndex: number; pageSize: number }>
   >
   isLoading: boolean
+  hidePagination?: boolean | undefined // For pages that have customised pagination layouts
 }
 
 const CustomDataTable = <T,>({
@@ -31,7 +32,8 @@ const CustomDataTable = <T,>({
   columns,
   pagination,
   setPagination,
-  isLoading
+  isLoading,
+  hidePagination
 }: CustomDataTableProps<T>) => {
   const { table } = useDataTable(
     data,
@@ -100,11 +102,15 @@ const CustomDataTable = <T,>({
           </TableBody>
         </UITable>
       </div>
-      <DataTablePagination
-        table={table}
-        pagination={pagination}
-        setPagination={setPagination}
-      />
+      {hidePagination ? (
+        <> </>
+      ) : (
+        <DataTablePagination
+          table={table}
+          pagination={pagination}
+          setPagination={setPagination}
+        />
+      )}
     </div>
   )
 }

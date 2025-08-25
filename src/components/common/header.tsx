@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Search, Bell, User } from "lucide-react"
 
-export function Header() {
+export const Header = () => {
   const [searchQuery, setSearchQuery] = useState("")
 
   return (

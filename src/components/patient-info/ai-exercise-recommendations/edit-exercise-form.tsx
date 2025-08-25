@@ -12,7 +12,7 @@ interface EditExerciseFormProps {
 // TODO: Gerald: Add exerciseId usage once fully fleshing out the form, remove below eslint-disable
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function EditExerciseForm({ exerciseId }: EditExerciseFormProps) {
+export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
