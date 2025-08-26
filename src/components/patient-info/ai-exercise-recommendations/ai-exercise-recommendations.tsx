@@ -6,13 +6,13 @@ import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Plus, Eye } from "lucide-react"
 
-import { TableHeaderCell } from "../../common/table-header-cell"
 import { Modal } from "../../common/modal"
 import { KeyValueRow } from "../../common/key-value-row"
 import { LabeledInput } from "../../common/labeled-input"
-import { Footer } from "@/components/common/footer"
 import { Button } from "@/components/ui/button"
 import { Exercise } from "@/types/exercise"
+import CustomDataTable from "@/components/common/table/custom-data-table"
+import { ExerciseColumns } from "../../columns/exercise-columns"
 
 const INITIAL_DATA: Exercise[] = [
   {
@@ -57,14 +57,11 @@ export const AiExerciseRecommendations = ({
   const router = useRouter()
   const [rows, setRows] = useState<Exercise[]>(INITIAL_DATA)
 
-  // sorting
-  const [sortKey, setSortKey] = useState<keyof Exercise>("activityType")
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc")
-
   // pagination
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [openPageSize, setOpenPageSize] = useState(false)
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10
+  })
 
   // modals
   const [viewing, setViewing] = useState<Exercise | null>(null)
@@ -88,29 +85,22 @@ export const AiExerciseRecommendations = ({
     assignedOrSaved: ""
   })
 
-  const sorted = useMemo(() => {
-    const copy = [...rows]
-    copy.sort((a, b) => {
-      const av = String(a[sortKey] ?? "")
-      const bv = String(b[sortKey] ?? "")
-      return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av)
-    })
-    return copy
-  }, [rows, sortKey, sortDir])
+  const handleViewExercise = (exercise: Exercise) => {
+    setViewing(exercise)
+  }
 
-  const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize))
-  const pageItems = useMemo(() => {
-    const start = (page - 1) * pageSize
-    return sorted.slice(start, start + pageSize)
-  }, [sorted, page, pageSize])
+  const columns = ExerciseColumns({
+    onViewExercise: handleViewExercise
+  })
 
-  function toggleSort(key: keyof Exercise) {
-    if (sortKey === key) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"))
-    } else {
-      setSortKey(key)
-      setSortDir("asc")
-    }
+  const ExerciseTable = CustomDataTable<Exercise>
+
+  // Mock paginated results
+  const results = {
+    data: rows,
+    totalCount: rows.length,
+    page: 1,
+    totalPages: Math.ceil(rows.length / pagination.pageSize)
   }
 
   function handleAdd() {
@@ -151,102 +141,47 @@ export const AiExerciseRecommendations = ({
   }
 
   return (
-    <div className="w-full">
-      <div className="px-4 py-6">
-        {/* Title */}
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-          Exercise Recommendations
-        </h1>
-
-        {/* Card */}
-        <section className="rounded-xl border border-gray-200 bg-gray-50">
-          {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-            <h2 className="text-gray-800 font-semibold">
-              Exercise Recommendation List
-            </h2>
-            <Button
-              type="button"
-              onClick={() => setShowAdd(true)}
-              variant="outline"
-              size="sm"
-              className="gap-2">
-              <Plus className="h-4 w-4" />
-              Add
-            </Button>
-          </div>
-
-          {/* Table */}
-          <div className="px-4 py-4">
-            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
-              <table className="w-full table-fixed border-collapse">
-                <thead className="bg-gray-50 text-left">
-                  <tr className="text-sm text-gray-700">
-                    <TableHeaderCell
-                      label="Activity Type"
-                      active={sortKey === "activityType"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("activityType")}
-                    />
-                    <TableHeaderCell
-                      label="Duration"
-                      active={sortKey === "duration"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("duration")}
-                    />
-                    <TableHeaderCell
-                      label="Frequency"
-                      active={sortKey === "frequency"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("frequency")}
-                    />
-                    <TableHeaderCell
-                      label="Intensity"
-                      active={sortKey === "intensity"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("intensity")}
-                    />
-                    <TableHeaderCell
-                      label="Assigned/Saved"
-                      active={sortKey === "assignedOrSaved"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("assignedOrSaved")}
-                    />
-                    <TableHeaderCell label="Action" noSort />
-                  </tr>
-                </thead>
-
-                <tbody className="divide-y divide-gray-100">
-                  {pageItems.map((m) => (
-                    <tr key={m.id} className="text-gray-700">
-                      <td className="px-4 py-4 truncate">{m.activityType}</td>
-                      <td className="px-4 py-4">{m.duration}</td>
-                      <td className="px-4 py-4">{m.frequency}</td>
-                      <td className="px-4 py-4">{m.intensity}</td>
-                      <td className="px-4 py-4">{m.assignedOrSaved}</td>
-                      <td className="px-4 py-4">
-                        <Button
-                          type="button"
-                          onClick={() => setViewing(m)}
-                          variant="outline"
-                          size="icon"
-                          className="border-blue-200 bg-blue-50 text-blue-600 hover:bg-blue-100"
-                          aria-label={`View ${m.activityType}`}
-                          title="View">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+    <div className="bg-gray-100">
+      {/* AI Exercise Recommendations Section */}
+      <div className="px-6 pb-6">
+        <div className="bg-gray-100">
+          {/* Section Header */}
+          <div className="py-3 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900">
+                AI Exercise Recommendations
+              </h2>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-blue-500 text-blue-500 bg-transparent"
+                onClick={() => setShowAdd(true)}>
+                <Plus size={16} />
+                Add
+              </Button>
             </div>
           </div>
-        </section>
-      </div>
 
-      {/* Footer */}
-      <Footer />
+          {/* Exercise Recommendations Table */}
+          <div className="py-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Exercise Recommendations List
+            </h3>
+
+            <ExerciseTable
+              data={results}
+              columns={columns}
+              pagination={{
+                pageIndex: pagination.pageIndex,
+                pageSize: pagination.pageSize
+              }}
+              error={null}
+              isLoading={false}
+              setPagination={setPagination}
+            />
+          </div>
+        </div>
+      </div>
 
       {/* View Modal (dummy) */}
       {viewing && (

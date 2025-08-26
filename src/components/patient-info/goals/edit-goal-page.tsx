@@ -311,10 +311,9 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
               </form>
             </div>
           </div>
+          {/* Footer */}
+          <Footer />
         </main>
-
-        {/* Footer */}
-        <Footer />
       </div>
     </div>
   )

@@ -77,7 +77,10 @@ export const Medications = () => {
   return (
     <div className="w-full px-4 py-6">
       {/* Title */}
-      <HeaderWithOptions title="Medications" to="/patient-info/medications/add" />
+      <HeaderWithOptions
+        title="Medications"
+        to="/patient-info/medications/add"
+      />
 
       {/* Header */}
       <div className="py-4">

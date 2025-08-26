@@ -96,7 +96,6 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     return sortedGoals
   }, [goals, sorting])
 
-  // Handle sorting change
   const handleSortingChange = (column: string) => {
     setSorting((prev) => {
       if (prev.column === column) {

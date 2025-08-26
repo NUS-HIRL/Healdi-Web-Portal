@@ -12,20 +12,20 @@ const PatientInfoPage = () => {
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <MainHeader />
-
-        <main className="flex-1 p-6 overflow-auto">
-          <nav className="text-sm text-gray-500 mb-4">
-            {/* TODO: Ze Kai: Fix the hardcoded breadcrumbs here to redirect to the pages */}
-            Home / Select Patient
-          </nav>
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            Select Patient
-          </h1>
-          {/* Patient List */}
-          <PatientList />
-        </main>
-        {/* Footer */}
-        <Footer />
+        {/* TODO: Ze Kai: Replace hardcoded breadcrumbs */}
+        <div className="flex-1 overflow-auto">
+          <div className="p-6">
+            <nav className="text-sm text-gray-500 mb-4">
+              Home / Select Patient
+            </nav>
+            <h1 className="text-3xl font-bold text-gray-900 mb-8">
+              Select Patient
+            </h1>
+            {/* Patient List */}
+            <PatientList />
+          </div>
+          <Footer />
+        </div>
       </div>
     </div>
   )

@@ -1,18 +1,18 @@
 "use client"
 
-import { Home, MessageCircleMore, Settings, Users } from "lucide-react"
+import { Home, MessageCircleMore, Users } from "lucide-react"
 import Image from "next/image"
-import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 // TODO: Replace with actual paths to your icons
 export const Sidebar = () => {
-  const [selectedTab, setSelectedTab] = useState("users")
+  const pathname = usePathname()
 
   const navigationItems = [
     { id: "home", icon: Home, href: "#" },
     { id: "users", icon: Users, href: "/patient-info" },
-    { id: "chats", icon: MessageCircleMore, href: "/chat" },
-    { id: "settings", icon: Settings, href: "#" }
+    { id: "chats", icon: MessageCircleMore, href: "/chat" }
   ]
   return (
     <div className="w-20 bg-[#FFD792] border-r border-gray-200 flex flex-col shadow-sm">
@@ -31,20 +31,20 @@ export const Sidebar = () => {
         <ul className="space-y-1">
           {navigationItems.map((item) => {
             const Icon = item.icon
-            const isSelected = selectedTab === item.id
+            const isSelected =
+              item.href !== "#" && pathname.startsWith(item.href)
 
             return (
               <li key={item.id}>
-                <a
+                <Link
                   href={item.href}
-                  onClick={() => setSelectedTab(item.id)}
                   className={`flex items-center space-x-3 px-3 py-3 rounded-lg transition-colors ${
                     isSelected
                       ? "bg-[#B58A4126] font-medium"
                       : "hover:bg-gray-50"
                   }`}>
                   <Icon size={20} />
-                </a>
+                </Link>
               </li>
             )
           })}
