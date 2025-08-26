@@ -12,8 +12,7 @@ export const TableHeaderCell = ({
   dir,
   onClick,
   noSort = false,
-  inline = false,
-  standalone = false
+  inline = false
 }: {
   label: string
   active?: boolean
@@ -21,7 +20,6 @@ export const TableHeaderCell = ({
   onClick?: () => void
   noSort?: boolean
   inline?: boolean
-  standalone?: boolean
 }) => {
   const content = (
     <div className="flex items-center gap-1">
@@ -53,23 +51,17 @@ export const TableHeaderCell = ({
     return buttonContent
   }
 
-  // If standalone is true, return th wrapper (for direct table usage)
-  // Otherwise return just content (for table library column definitions)
-  if (standalone) {
-    return (
-      <th
-        className="px-4 py-3 font-medium text-left"
-        aria-sort={
-          active
-            ? dir === "asc"
-              ? "ascending"
-              : "descending"
-            : ("none" as const)
-        }>
-        {buttonContent}
-      </th>
-    )
-  }
-
-  return buttonContent
+  return (
+    <div
+      className="py-3 font-medium"
+      aria-sort={
+        active
+          ? dir === "asc"
+            ? "ascending"
+            : "descending"
+          : ("none" as const)
+      }>
+      {buttonContent}
+    </div>
+  )
 }

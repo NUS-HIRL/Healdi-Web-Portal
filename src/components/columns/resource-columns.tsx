@@ -4,59 +4,28 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Resource } from "@/types/resource"
 import { Button } from "@/components/ui/button"
 import { Eye } from "lucide-react"
-import { TableHeaderCell, SortDir } from "@/components/common/table-header-cell"
+import { TableHeaderCell } from "@/components/common/table-header-cell"
 
 interface ResourceColumnsProps {
-  onSortingChange: (columnKey: string) => void
   onViewResource: (resource: Resource) => void
-  sorting: {
-    column: string | null
-    direction: SortDir | null
-  }
 }
 
 export const ResourceColumns = ({
-  onSortingChange,
-  onViewResource,
-  sorting
+  onViewResource
 }: ResourceColumnsProps): ColumnDef<Resource>[] => [
   {
     accessorKey: "type",
-    header: () => (
-      <TableHeaderCell
-        label="Type"
-        active={sorting.column === "type"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("type")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Type" />,
     cell: ({ row }) => row.original.type
   },
   {
     accessorKey: "source",
-    header: () => (
-      <TableHeaderCell
-        label="Source"
-        active={sorting.column === "source"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("source")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Source" />,
     cell: ({ row }) => row.original.source
   },
   {
     accessorKey: "title",
-    header: () => (
-      <TableHeaderCell
-        label="Title"
-        active={sorting.column === "title"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("title")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Title" />,
     cell: ({ row }) => (
       <span className="block max-w-[20rem] whitespace-normal break-words">
         {row.original.title}
@@ -65,15 +34,7 @@ export const ResourceColumns = ({
   },
   {
     accessorKey: "assignedOrSaved",
-    header: () => (
-      <TableHeaderCell
-        label="Assigned / Saved"
-        active={sorting.column === "assignedOrSaved"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("assignedOrSaved")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Assigned / Saved" />,
     cell: ({ row }) => row.original.assignedOrSaved
   },
   {

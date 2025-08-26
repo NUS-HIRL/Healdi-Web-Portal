@@ -19,14 +19,6 @@ export const ResourcesTab = () => {
   )
   const [isViewOpen, setIsViewOpen] = useState(false)
 
-  const [sorting, setSorting] = useState<{
-    column: string | null
-    direction: "asc" | "desc" | null
-  }>({
-    column: null,
-    direction: null
-  })
-
   // Mock data for resources - TODO: Replace with API data when available
   const mockResources: Resource[] = useMemo(
     () => [
@@ -80,62 +72,13 @@ export const ResourcesTab = () => {
     []
   )
 
-  // Apply sorting to resources
-  const sortedResources = useMemo(() => {
-    const sorted = [...mockResources]
-
-    if (sorting.column && sorting.direction) {
-      sorted.sort((a, b) => {
-        let aValue: string | number = a[sorting.column as keyof Resource] as
-          | string
-          | number
-        let bValue: string | number = b[sorting.column as keyof Resource] as
-          | string
-          | number
-
-        if (typeof aValue === "string" && typeof bValue === "string") {
-          aValue = aValue.toLowerCase()
-          bValue = bValue.toLowerCase()
-        }
-
-        if (sorting.direction === "asc") {
-          return aValue > bValue ? 1 : -1
-        } else {
-          return aValue < bValue ? 1 : -1
-        }
-      })
-    }
-    return sorted
-  }, [mockResources, sorting])
-
-  const handleSortingChange = (column: string) => {
-    setSorting((prev) => {
-      if (prev.column === column) {
-        // Toggle direction if same column
-        if (prev.direction === "asc") return { column, direction: "desc" }
-        if (prev.direction === "desc") return { column, direction: null }
-        return { column, direction: "asc" }
-      } else {
-        // New column, start with ascending
-        return { column, direction: "asc" }
-      }
-    })
-
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: 0
-    }))
-  }
-
   const handleViewResource = (resource: Resource) => {
     setSelectedResource(resource)
     setIsViewOpen(true)
   }
 
   const columns = ResourceColumns({
-    onSortingChange: handleSortingChange,
-    onViewResource: handleViewResource,
-    sorting: sorting
+    onViewResource: handleViewResource
   })
 
   const handleCloseView = () => {
@@ -147,10 +90,10 @@ export const ResourcesTab = () => {
 
   // Mock paginated results
   const results = {
-    data: sortedResources,
-    totalCount: sortedResources.length,
+    data: mockResources,
+    totalCount: mockResources.length,
     page: 1,
-    totalPages: Math.ceil(sortedResources.length / pagination.pageSize)
+    totalPages: Math.ceil(mockResources.length / pagination.pageSize)
   }
 
   return (

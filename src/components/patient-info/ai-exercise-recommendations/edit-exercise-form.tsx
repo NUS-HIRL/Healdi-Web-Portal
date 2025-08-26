@@ -228,6 +228,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
               </form>
             </div>
           </div>
+          {/* TODO: Kervyn: Create layout.tsx to prevent need for footer in every page */}
           {/* Footer */}
           <Footer />
         </main>

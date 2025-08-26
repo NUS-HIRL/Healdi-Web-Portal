@@ -12,6 +12,7 @@ const PatientInfoPage = () => {
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <MainHeader />
+        {/* TODO: Ze Kai: Replace hardcoded breadcrumbs */}
         <div className="flex-1 overflow-auto">
           <div className="p-6">
             <nav className="text-sm text-gray-500 mb-4">

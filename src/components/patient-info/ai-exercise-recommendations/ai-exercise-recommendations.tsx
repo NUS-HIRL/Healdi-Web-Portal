@@ -181,42 +181,49 @@ export const AiExerciseRecommendations = ({
               <table className="w-full table-fixed border-collapse">
                 <thead className="bg-gray-50 text-left">
                   <tr className="text-sm text-gray-700">
-                    <TableHeaderCell
-                      label="Activity Type"
-                      active={sortKey === "activityType"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("activityType")}
-                      standalone={true}
-                    />
-                    <TableHeaderCell
-                      label="Duration"
-                      active={sortKey === "duration"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("duration")}
-                      standalone={true}
-                    />
-                    <TableHeaderCell
-                      label="Frequency"
-                      active={sortKey === "frequency"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("frequency")}
-                      standalone={true}
-                    />
-                    <TableHeaderCell
-                      label="Intensity"
-                      active={sortKey === "intensity"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("intensity")}
-                      standalone={true}
-                    />
-                    <TableHeaderCell
-                      label="Assigned/Saved"
-                      active={sortKey === "assignedOrSaved"}
-                      dir={sortDir}
-                      onClick={() => toggleSort("assignedOrSaved")}
-                      standalone={true}
-                    />
-                    <TableHeaderCell label="Action" noSort standalone={true} />
+                    <th className="px-4 py-3 font-medium text-left">
+                      <TableHeaderCell
+                        label="Activity Type"
+                        active={sortKey === "activityType"}
+                        dir={sortDir}
+                        onClick={() => toggleSort("activityType")}
+                      />
+                    </th>
+                    <th className="px-4 py-3 font-medium text-left">
+                      <TableHeaderCell
+                        label="Duration"
+                        active={sortKey === "duration"}
+                        dir={sortDir}
+                        onClick={() => toggleSort("duration")}
+                      />
+                    </th>
+                    <th className="px-4 py-3 font-medium text-left">
+                      <TableHeaderCell
+                        label="Frequency"
+                        active={sortKey === "frequency"}
+                        dir={sortDir}
+                        onClick={() => toggleSort("frequency")}
+                      />
+                    </th>
+                    <th className="px-4 py-3 font-medium text-left">
+                      <TableHeaderCell
+                        label="Intensity"
+                        active={sortKey === "intensity"}
+                        dir={sortDir}
+                        onClick={() => toggleSort("intensity")}
+                      />
+                    </th>
+                    <th className="px-4 py-3 font-medium text-left">
+                      <TableHeaderCell
+                        label="Assigned/Saved"
+                        active={sortKey === "assignedOrSaved"}
+                        dir={sortDir}
+                        onClick={() => toggleSort("assignedOrSaved")}
+                      />
+                    </th>
+                    <th className="px-4 py-3 font-medium text-left">
+                      <TableHeaderCell label="Action" noSort />
+                    </th>
                   </tr>
                 </thead>
 
