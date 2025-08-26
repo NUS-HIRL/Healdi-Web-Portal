@@ -5,88 +5,60 @@ import { Subtitle } from "@/components/common/sidebar/subtitle"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Goal } from "@/types/goal"
+import { Medication } from "@/types/medication"
 import { useRouter } from "next/navigation"
 
-interface GoalDetailsSidebarProps {
-  goal: Goal | null
+interface MedicationDetailsSidebarProps {
+  medication: Medication | null
   isOpen: boolean
   onClose: () => void
 }
 
-export const GoalDetailsSidebar = ({
-  goal,
+export const MedicationDetailsSidebar = ({
+  medication,
   isOpen,
   onClose
-}: GoalDetailsSidebarProps) => {
+}: MedicationDetailsSidebarProps) => {
   const router = useRouter()
 
   return (
     <DetailsSidebar isOpen={isOpen} onClose={onClose}>
-      {goal && (
+      {medication && (
         <div className="space-y-4 ml-4 mr-4">
           <Separator className="mt-0" />
 
-          {/* Category */}
           <div className="space-y-2">
-            <Subtitle title="Category" />
+            <Subtitle title="Medication Name" />
             <Badge
               variant="secondary"
               className="bg-orange-50 text-red-400 border-orange-200">
-              {goal.category}
+              {medication.name}
             </Badge>
           </div>
 
           <Separator className="mt-2" />
 
-          {/* Completion Type */}
           <div className="space-y-2">
-            <Subtitle title="Completion Type" />
-            <p className="text-sm text-gray-900">{goal.completionType}</p>
+            <Subtitle title="Dosage" />
+            <p className="text-sm text-gray-900">{medication.dosage}</p>
           </div>
 
           <Separator className="mt-2" />
 
-          {/* Title */}
           <div className="space-y-2">
-            <Subtitle title="Title" />
+            <Subtitle title="Type" />
             <p className="text-sm text-gray-900 leading-relaxed">
-              {goal.title}
+              {medication.type}
             </p>
           </div>
 
           <Separator className="mt-2" />
 
-          {/* How It Works */}
           <div className="space-y-2">
-            <Subtitle title="How It Works" />
+            <Subtitle title="Creator" />
             <p className="text-sm text-gray-900 leading-relaxed">
-              {goal.description}
+              {medication.creator}
             </p>
-          </div>
-
-          <Separator className="mt-2" />
-
-          {/* Coin Reward */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold text-gray-700">Coin Reward</h3>
-            <p className="text-sm text-gray-900 font-medium">{goal.coins}</p>
-          </div>
-
-          <Separator className="mt-2" />
-
-          {/* Coin Bonus */}
-          <div className="space-y-2">
-            <Subtitle title="Coin Bonus on Goal Completion" />
-            <p className="text-sm text-gray-900 font-medium">{goal.bonus}</p>
-          </div>
-
-          <Separator className="mt-2" />
-
-          {/* Progress */}
-          <div className="space-y-2">
-            <Subtitle title="Progress" />
-            <p className="text-sm text-gray-900 font-medium">{goal.progress}</p>
           </div>
 
           <Separator className="mt-2" />
@@ -97,8 +69,8 @@ export const GoalDetailsSidebar = ({
               variant="outline"
               className="flex-1 bg-black text-white border-gray-700 hover:bg-gray-800 hover:border-gray-800"
               onClick={() => {
-                // Navigate to edit page
-                router.push(`/patient-info/goals/${goal.id}/edit`)
+                // Fix/create this route
+                router.push(`/patient-info/medication/${medication.id}/edit`)
               }}>
               Edit
             </Button>

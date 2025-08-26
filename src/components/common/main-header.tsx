@@ -1,7 +1,7 @@
 import { Bell, Search, User } from "lucide-react"
 import { useState } from "react"
 
-export function MainHeader() {
+export const MainHeader = () => {
   const [searchQuery, setSearchQuery] = useState("")
 
   return (

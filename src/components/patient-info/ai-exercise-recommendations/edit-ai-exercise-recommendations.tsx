@@ -11,7 +11,7 @@ interface PatientDashboardProps {
   patientId: string
 }
 
-export function EditExerciseForm({ patientId }: PatientDashboardProps) {
+export const EditExerciseForm = ({ patientId }: PatientDashboardProps) => {
   const [activeTab, setActiveTab] = useState("Reports")
 
   return (

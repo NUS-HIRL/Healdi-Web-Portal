@@ -1,13 +1,12 @@
 "use client"
 
 import CustomDataTable from "@/components/common/table/custom-data-table"
-import { Button } from "@/components/ui/button"
+import { HeaderWithOptions } from "@/components/common/table/header-with-options"
 import fetcher from "@/lib/fetcher"
 import { ApiGoal, Goal } from "@/types/goal"
-import { Plus } from "lucide-react"
 import { useMemo, useState } from "react"
 import useSWR from "swr"
-import { goalColumns } from "../../columns/goal-columns"
+import { GoalColumns } from "../../columns/goal-columns"
 import { GoalDetailsSidebar } from "./goal-details-sidebar"
 
 interface GoalsTabProps {
@@ -40,6 +39,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     direction: null
   })
 
+  // TODO: Ze Kai: Modify once API data comes through, no longer need useMemo as useSWR handles it
   // Transform API data to component data
   const goals: Goal[] = useMemo(() => {
     let goalsData: ApiGoal[] = []
@@ -68,7 +68,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     }))
   }, [response])
 
-  // Apply sorting to goals
+  // TODO: Ze Kai: Remove once API data comes through
   const sortedGoals = useMemo(() => {
     const sortedGoals = [...goals]
 
@@ -124,7 +124,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
   }
 
   // Create columns using the imported column factory
-  const columns = goalColumns({
+  const columns = GoalColumns({
     onSortingChange: handleSortingChange,
     onViewGoal: handleViewGoal,
     sorting: sorting
@@ -152,22 +152,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
       <div className="px-6 pb-6">
         <div className="bg-gray-100">
           {/* Section Header */}
-          <div className="py-3 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900">Goals</h2>
-              {/* TODO: Abstract this to a separate data table options component */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-blue-500 text-blue-500 bg-transparent"
-                onClick={() => {
-                  window.location.href = "/patient-info/goals/add"
-                }}>
-                <Plus size={16} />
-                Add
-              </Button>
-            </div>
-          </div>
+          <HeaderWithOptions title="Goals" to="/patient-info/goals/add" />
 
           {/* Goals Table */}
           <div className="py-4">
