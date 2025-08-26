@@ -14,6 +14,7 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { Footer } from "../../common/footer"
 import { Sidebar } from "../../common/sidebar"
+import { SubmitSection } from "../../common/submit-section"
 import { Search, Bell, User } from "lucide-react"
 
 export const AddGoalPage = () => {
@@ -247,24 +248,9 @@ export const AddGoalPage = () => {
                   </div>
                 </div>
 
-                {/* Ready to Submit Section */}
-                <div className="bg-gray-100 rounded-lg p-6 mt-8">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                    Ready to Submit?
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Review your filled form details and make sure everything is
-                    accurate. Once you are ready, click the Submit button to add
-                    the new goal.
-                  </p>
-                  <div className="flex justify-end">
-                    <Button
-                      type="submit"
-                      className="bg-black text-white hover:bg-gray-800">
-                      Submit
-                    </Button>
-                  </div>
-                </div>
+                <SubmitSection 
+                  description="Review your filled form details and make sure everything is accurate. Once you are ready, click the Submit button to add the new goal."
+                />
               </form>
             </div>
           </div>

@@ -4,11 +4,17 @@ import CustomDataTable from "@/components/common/table/custom-data-table"
 import { Button } from "@/components/ui/button"
 import { Resource } from "@/types/resource"
 import { Plus } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
 import { ResourceColumns } from "../../columns/resource-columns"
 import { ResourceDetailsSidebar } from "./resource-details-sidebar"
 
-export const ResourcesTab = () => {
+interface ResourcesTabProps {
+  patientId?: string
+}
+
+export const ResourcesTab = ({ patientId }: ResourcesTabProps) => {
+  const router = useRouter()
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10
@@ -110,8 +116,9 @@ export const ResourcesTab = () => {
                 size="sm"
                 className="border-blue-500 text-blue-500 bg-transparent"
                 onClick={() => {
-                  // TODO: Implement add resource functionality
-                  console.log("Add resource clicked")
+                  if (patientId) {
+                    router.push(`/patient-info/${patientId}/resources/select`)
+                  }
                 }}>
                 <Plus size={16} />
                 Add

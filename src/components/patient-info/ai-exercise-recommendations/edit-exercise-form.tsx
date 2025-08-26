@@ -3,6 +3,7 @@
 import { Sidebar } from "../../common/sidebar"
 import { Footer } from "@/components/common/footer"
 import { MainHeader } from "@/components/common/main-header"
+import { SubmitSection } from "../../common/submit-section"
 import Image from "next/image"
 
 interface EditExerciseFormProps {
@@ -205,26 +206,9 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                     <option value="Saved">Saved</option>
                   </select>
                 </div>
-                <div className="bg-gray-100 rounded-lg p-6 mt-8">
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      Ready to Submit?
-                    </h3>
-                    <p className="text-gray-600 text-sm">
-                      Review your filled form details and make sure everything
-                      is accurate. Once you&apos;re ready, click the
-                      &apos;Submit&apos; button to add the new exercise
-                      recommendation.
-                    </p>
-                  </div>
-                  <div className="flex justify-end border-t border-gray-200 pt-4">
-                    <button
-                      type="submit"
-                      className="px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">
-                      Submit
-                    </button>
-                  </div>
-                </div>
+                <SubmitSection 
+                  description="Review your filled form details and make sure everything is accurate. Once you're ready, click the 'Submit' button to add the new exercise recommendation."
+                />
               </form>
             </div>
           </div>
