@@ -21,7 +21,7 @@ const PatientInfoPage = () => {
               Select Patient
             </h1>
             {/* Patient List */}
-            <PatientList patients={placeholderPatients} />
+            <PatientList />
           </div>
           <Footer />
         </div>

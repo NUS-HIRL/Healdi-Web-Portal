@@ -54,7 +54,9 @@ export const ResourceDetailsSidebar = ({
                 {resource.type}
               </Badge>
               <p className="text-sm text-gray-900">{resource.source}</p>
-              <h3 className="text-m font-bold text-gray-700">{resource.title}</h3>
+              <h3 className="text-m font-bold text-gray-700">
+                {resource.title}
+              </h3>
             </div>
 
             <div className="space-y-2">
@@ -71,13 +73,17 @@ export const ResourceDetailsSidebar = ({
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <h3 className="text-sm font-semibold text-gray-700">Category</h3>
+                <h3 className="text-sm font-semibold text-gray-700">
+                  Category
+                </h3>
                 <p className="text-sm text-gray-900">
                   {resource.category || "-"}
                 </p>
               </div>
               <div className="space-y-2">
-                <h3 className="text-sm font-semibold text-gray-700">Sub Category</h3>
+                <h3 className="text-sm font-semibold text-gray-700">
+                  Sub Category
+                </h3>
                 <p className="text-sm text-gray-900">
                   {resource.subCategory || "-"}
                 </p>

@@ -158,28 +158,7 @@ export const PatientList = () => {
     }))
   }
 
-  const handleSortingChange = (columnKey: string) => {
-    setSorting((prev) => {
-      if (prev.column === columnKey) {
-        // If same column, cycle through: asc -> desc -> null -> asc
-        if (prev.direction === "asc") {
-          return { column: columnKey, direction: "desc" }
-        } else if (prev.direction === "desc") {
-          return { column: columnKey, direction: null }
-        } else {
-          // prev.direction is null, start with asc
-          return { column: columnKey, direction: "asc" }
-        }
-      }
-      // If different column, start with asc
-      return { column: columnKey, direction: "asc" }
-    })
-    // Reset to first page when sorting changes
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }))
-  }
-
-  // Sort patients based on current sorting state
-
+  // TODO: Remove once sorting is implemented on API side
   const sortedPatients = useMemo(() => {
     if (!sorting.column || !sorting.direction) {
       return [...patients]

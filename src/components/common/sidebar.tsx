@@ -12,7 +12,7 @@ export const Sidebar = () => {
   const navigationItems = [
     { id: "home", icon: Home, href: "#" },
     { id: "users", icon: Users, href: "/patient-info" },
-    { id: "chats", icon: MessageCircleMore, href: "/chat" },
+    { id: "chats", icon: MessageCircleMore, href: "/chat" }
   ]
   return (
     <div className="w-20 bg-[#FFD792] border-r border-gray-200 flex flex-col shadow-sm">

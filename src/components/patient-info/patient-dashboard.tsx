@@ -59,8 +59,8 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
                       activeTab === tab.name
                         ? "text-cyan-600 border-b-2 border-cyan-600"
                         : tab.disabled
-                        ? "text-gray-400 cursor-not-allowed"
-                        : "text-gray-500 hover:text-gray-700"
+                          ? "text-gray-400 cursor-not-allowed"
+                          : "text-gray-500 hover:text-gray-700"
                     }`}>
                     {tab.name}
                   </Button>

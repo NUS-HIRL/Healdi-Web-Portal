@@ -14,7 +14,9 @@ export const ResourcesTab = () => {
     pageSize: 10
   })
 
-  const [selectedResource, setSelectedResource] = useState<Resource | null>(null)
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(
+    null
+  )
   const [isViewOpen, setIsViewOpen] = useState(false)
 
   const [sorting, setSorting] = useState<{
