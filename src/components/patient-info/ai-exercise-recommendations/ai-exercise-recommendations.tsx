@@ -141,18 +141,6 @@ export const AiExerciseRecommendations = ({
   }
 
   return (
-          Exercise Recommendations
-        </h1>
-
-        {/* Card */}
-        <section className="rounded-xl border border-gray-200 bg-gray-50">
-          {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-            <h2 className="text-gray-800 font-semibold">
-              Exercise Recommendation List
-            </h2>
-            <Button
-              type="button"
     <div className="bg-gray-100">
       {/* AI Exercise Recommendations Section */}
       <div className="px-6 pb-6">
