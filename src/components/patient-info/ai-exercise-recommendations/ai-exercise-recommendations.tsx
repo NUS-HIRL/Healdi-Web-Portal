@@ -48,11 +48,11 @@ const INITIAL_DATA: Exercise[] = [
   }
 ]
 
-export function AiExerciseRecommendations({
+export const AiExerciseRecommendations = ({
   patientId
 }: {
   patientId: string
-}) {
+}) => {
   const router = useRouter()
   const [rows, setRows] = useState<Exercise[]>(INITIAL_DATA)
 

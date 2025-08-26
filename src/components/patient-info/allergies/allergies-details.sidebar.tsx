@@ -1,11 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import {
-  Sheet,
-  SheetContent,
-  SheetTitle,
-} from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 
 // Types
 export type ReactionTone = "warning" | "info"
@@ -47,7 +43,7 @@ const DEFAULT_ALLERGIES: Allergy[] = [
 export const AllergiesDetailsSidebar = ({
   allergies = DEFAULT_ALLERGIES,
   isOpen,
-  onClose,
+  onClose
 }: AllergiesDetailsSidebarProps) => {
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>

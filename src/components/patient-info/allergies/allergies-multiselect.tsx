@@ -19,7 +19,7 @@ const REACTION_OPTIONS: Reaction[] = [
   "Others"
 ]
 
-export function MultiSelect({
+export const MultiSelect = ({
   value,
   onChange,
   placeholder = "Select reactions"
@@ -27,7 +27,7 @@ export function MultiSelect({
   value: Reaction[]
   onChange: (next: Reaction[]) => void
   placeholder?: string
-}) {
+}) => {
   const [open, setOpen] = useState(false)
   const toggle = (opt: Reaction) => {
     const has = value.includes(opt)
