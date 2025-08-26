@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Copy, Search, Bell, User, Check } from "lucide-react"
@@ -101,6 +101,7 @@ interface SelectResourcesPageProps {
 
 export const SelectResourcesPage = ({ patientId }: SelectResourcesPageProps) => {
     const router = useRouter()
+    const searchParams = useSearchParams()
     const [selectedResources, setSelectedResources] = useState<Set<string>>(
         new Set()
     )
@@ -108,6 +109,12 @@ export const SelectResourcesPage = ({ patientId }: SelectResourcesPageProps) => 
         pageIndex: 0,
         pageSize: 10
     })
+
+    // Initialize selected resources from URL parameters
+    useEffect(() => {
+        const selectedIds = searchParams.get('selected')?.split(',').filter(Boolean) || []
+        setSelectedResources(new Set(selectedIds))
+    }, [searchParams])
 
     const handleSelectResource = (resourceId: string, checked: boolean) => {
         const newSelected = new Set(selectedResources)
