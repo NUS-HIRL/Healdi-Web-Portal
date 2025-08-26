@@ -7,19 +7,21 @@ import { useRouter } from "next/navigation"
 import { Plus, Eye } from "lucide-react"
 
 import { Modal } from "../../common/modal"
-import { KeyValueRow } from "../../common/key-value-row"
 import { LabeledInput } from "../../common/labeled-input"
 import { Button } from "@/components/ui/button"
 import { Exercise } from "@/types/exercise"
 import CustomDataTable from "@/components/common/table/custom-data-table"
 import { ExerciseColumns } from "../../columns/exercise-columns"
+import { ExerciseDetailsSidebar } from "./exercise-details-sidebar"
 
 const INITIAL_DATA: Exercise[] = [
   {
     id: "1",
     activityType: "Brisk Walking",
     duration: 30,
+    durationUnit: "minutes",
     frequency: 1,
+    frequencyUnit: "daily",
     intensity: "Moderate",
     assignedOrSaved: "Assigned"
   },
@@ -27,7 +29,9 @@ const INITIAL_DATA: Exercise[] = [
     id: "2",
     activityType: "Swimming",
     duration: 45,
+    durationUnit: "minutes",
     frequency: 3,
+    frequencyUnit: "per week",
     intensity: "High",
     assignedOrSaved: "Saved"
   },
@@ -35,15 +39,19 @@ const INITIAL_DATA: Exercise[] = [
     id: "3",
     activityType: "Strength Training",
     duration: 20,
+    durationUnit: "minutes",
     frequency: 2,
+    frequencyUnit: "per week",
     intensity: "High",
     assignedOrSaved: "Assigned"
   },
   {
     id: "4",
     activityType: "Yoga",
-    duration: 60,
+    duration: 1,
+    durationUnit: "hours",
     frequency: 1,
+    frequencyUnit: "weekly",
     intensity: "Low",
     assignedOrSaved: "Saved"
   }
@@ -64,7 +72,8 @@ export const AiExerciseRecommendations = ({
   })
 
   // modals
-  const [viewing, setViewing] = useState<Exercise | null>(null)
+  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null)
+  const [isViewOpen, setIsViewOpen] = useState(false)
   const [showAdd, setShowAdd] = useState(false)
 
   // add form (dummy)
@@ -73,20 +82,25 @@ export const AiExerciseRecommendations = ({
       Exercise,
       | "activityType"
       | "duration"
+      | "durationUnit"
       | "frequency"
+      | "frequencyUnit"
       | "intensity"
       | "assignedOrSaved"
     >
   >({
     activityType: "",
     duration: 0,
+    durationUnit: "minutes",
     frequency: 0,
+    frequencyUnit: "per week",
     intensity: "",
     assignedOrSaved: ""
   })
 
   const handleViewExercise = (exercise: Exercise) => {
-    setViewing(exercise)
+    setSelectedExercise(exercise)
+    setIsViewOpen(true)
   }
 
   const columns = ExerciseColumns({
@@ -112,7 +126,9 @@ export const AiExerciseRecommendations = ({
       id: String(Date.now()),
       activityType: form.activityType.trim(),
       duration: form.duration || 0,
+      durationUnit: form.durationUnit || "minutes",
       frequency: form.frequency || 0,
+      frequencyUnit: form.frequencyUnit || "per week",
       intensity: form.intensity || "Low",
       assignedOrSaved: form.assignedOrSaved || "Saved"
     }
@@ -121,7 +137,9 @@ export const AiExerciseRecommendations = ({
     setForm({
       activityType: "",
       duration: 0,
+      durationUnit: "minutes",
       frequency: 0,
+      frequencyUnit: "per week",
       intensity: "",
       assignedOrSaved: ""
     })
@@ -130,7 +148,8 @@ export const AiExerciseRecommendations = ({
   function handleDelete(exerciseId: string) {
     if (confirm("Are you sure you want to delete this exercise?")) {
       setRows((r) => r.filter((row) => row.id !== exerciseId))
-      setViewing(null)
+      setIsViewOpen(false)
+      setSelectedExercise(null)
     }
   }
 
@@ -138,6 +157,12 @@ export const AiExerciseRecommendations = ({
     router.push(
       `/patient-info/${patientId}/ai-exercise-recommendation/edit/${exerciseId}`
     )
+  }
+
+  // Handle close view
+  const handleCloseView = () => {
+    setIsViewOpen(false)
+    setSelectedExercise(null)
   }
 
   return (
@@ -183,38 +208,14 @@ export const AiExerciseRecommendations = ({
         </div>
       </div>
 
-      {/* View Modal (dummy) */}
-      {viewing && (
-        <Modal onClose={() => setViewing(null)} title="Exercise Details">
-          <div className="flex flex-col gap-4">
-            <div className="space-y-2 text-sm">
-              <KeyValueRow label="Activity Type" value={viewing.activityType} />
-              <KeyValueRow label="Duration" value={viewing.duration} />
-              <KeyValueRow label="Frequency" value={viewing.frequency} />
-              <KeyValueRow label="Intensity" value={viewing.intensity} />
-              <KeyValueRow
-                label="Assigned/Saved"
-                value={viewing.assignedOrSaved}
-              />
-            </div>
-            <div className="flex gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => handleDelete(viewing.id)}
-                className="flex-1 border-red-200 bg-red-50 text-red-600 hover:bg-red-100">
-                Delete
-              </Button>
-              <Button
-                type="button"
-                onClick={() => handleEdit(viewing.id)}
-                className="flex-1">
-                Edit
-              </Button>
-            </div>
-          </div>
-        </Modal>
-      )}
+      {/* Exercise Details Sidebar */}
+      <ExerciseDetailsSidebar
+        exercise={selectedExercise}
+        isOpen={isViewOpen}
+        onClose={handleCloseView}
+        patientId={patientId}
+        onDelete={handleDelete}
+      />
 
       {/* Add Modal (dummy) */}
       {showAdd && (
@@ -240,6 +241,23 @@ export const AiExerciseRecommendations = ({
               }
               placeholder="e.g. 30"
             />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Duration Unit
+              </label>
+              <select
+                value={form.durationUnit}
+                onChange={(e) =>
+                  setForm((f) => ({
+                    ...f,
+                    durationUnit: e.target.value as "minutes" | "hours"
+                  }))
+                }
+                className="w-full border border-gray-300 rounded-lg p-2">
+                <option value="minutes">Minutes</option>
+                <option value="hours">Hours</option>
+              </select>
+            </div>
             <LabeledInput
               label="Frequency"
               type="number"
@@ -252,6 +270,27 @@ export const AiExerciseRecommendations = ({
               }
               placeholder="e.g. 3"
             />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Frequency Unit
+              </label>
+              <select
+                value={form.frequencyUnit}
+                onChange={(e) =>
+                  setForm((f) => ({
+                    ...f,
+                    frequencyUnit: e.target.value as Exercise["frequencyUnit"]
+                  }))
+                }
+                className="w-full border border-gray-300 rounded-lg p-2">
+                <option value="per day">Per Day</option>
+                <option value="per week">Per Week</option>
+                <option value="per month">Per Month</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
             <LabeledInput
               label="Intensity"
               value={form.intensity}
