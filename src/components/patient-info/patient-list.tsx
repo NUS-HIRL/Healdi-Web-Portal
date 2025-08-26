@@ -35,7 +35,6 @@ export const PatientList = ({ patients }: PatientListProps) => {
     }))
   }
 
-  // Handle sorting
   const handleSortingChange = (columnKey: string) => {
     setSorting((prev) => {
       if (prev.column === columnKey) {

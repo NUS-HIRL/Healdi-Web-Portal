@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Resource } from "@/types/resource"
 import { Plus } from "lucide-react"
 import { useMemo, useState } from "react"
-import { resourceColumns } from "../../columns/resource-columns"
+import { ResourceColumns } from "../../columns/resource-columns"
 import { ResourceDetailsSidebar } from "./resource-details-sidebar"
 
 export const ResourcesTab = () => {
@@ -106,7 +106,6 @@ export const ResourcesTab = () => {
     return sorted
   }, [mockResources, sorting])
 
-  // Handle sorting change
   const handleSortingChange = (column: string) => {
     setSorting((prev) => {
       if (prev.column === column) {
@@ -120,27 +119,23 @@ export const ResourcesTab = () => {
       }
     })
 
-    // Reset to first page when sorting changes
     setPagination((prev) => ({
       ...prev,
       pageIndex: 0
     }))
   }
 
-  // Handle view button click
   const handleViewResource = (resource: Resource) => {
     setSelectedResource(resource)
     setIsViewOpen(true)
   }
 
-  // Create columns using the imported column factory
-  const columns = resourceColumns({
+  const columns = ResourceColumns({
     onSortingChange: handleSortingChange,
     onViewResource: handleViewResource,
     sorting: sorting
   })
 
-  // Handle close view
   const handleCloseView = () => {
     setIsViewOpen(false)
     setSelectedResource(null)

@@ -47,7 +47,6 @@ export const ResourceDetailsSidebar = ({
           <div className="space-y-4 ml-4 mr-4">
             <Separator className="mt-0" />
 
-            {/* Type */}
             <div className="space-y-2">
               <Badge
                 variant="secondary"
@@ -58,7 +57,6 @@ export const ResourceDetailsSidebar = ({
               <h3 className="text-m font-bold text-gray-700">{resource.title}</h3>
             </div>
 
-            {/* Preview Image */}
             <div className="space-y-2">
               <Image
                 src={resource.imageUrl || image_placeholder}
@@ -71,7 +69,6 @@ export const ResourceDetailsSidebar = ({
 
             <Separator className="mt-2" />
 
-            {/* Category and Sub Category Side-by-Side */}
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
                 <h3 className="text-sm font-semibold text-gray-700">Category</h3>
@@ -89,7 +86,6 @@ export const ResourceDetailsSidebar = ({
 
             <Separator className="mt-2" />
 
-            {/* Assigned / Saved */}
             <div className="space-y-2">
               <h3 className="text-sm font-semibold text-gray-700">
                 Assigned / Saved
@@ -101,7 +97,6 @@ export const ResourceDetailsSidebar = ({
 
             <Separator className="mt-2" />
 
-            {/* Action Buttons */}
             <div className="flex space-x-3 pt-2">
               <Button
                 variant="outline"

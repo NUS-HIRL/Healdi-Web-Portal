@@ -15,7 +15,7 @@ interface ResourceColumnsProps {
   }
 }
 
-export const resourceColumns = ({
+export const ResourceColumns = ({
   onSortingChange,
   onViewResource,
   sorting
