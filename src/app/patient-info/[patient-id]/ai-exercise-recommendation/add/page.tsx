@@ -6,10 +6,12 @@ interface AddExercisePageProps {
   }>
 }
 
-export default async function AddExercisePage({
+const AddExercisePage = async ({
   params
-}: AddExercisePageProps) {
+}: AddExercisePageProps) => {
   const { "patient-id": patientId } = await params
 
   return <AddExerciseForm patientId={patientId} />
 }
+
+export default AddExercisePage

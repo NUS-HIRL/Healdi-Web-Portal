@@ -1,11 +1,14 @@
 import { ConfirmResourceSelectionPage } from "@/components/patient-info/resources/confirm-resource-selection-page"
 
 interface ConfirmResourceSelectionProps {
-  params: {
+  params: Promise<{
     "patient-id": string
-  }
+  }>
 }
 
-export default function ConfirmResourceSelection({ params }: ConfirmResourceSelectionProps) {
-  return <ConfirmResourceSelectionPage patientId={params["patient-id"]} />
+const ConfirmResourceSelection = async ({ params }: ConfirmResourceSelectionProps) => {
+  const { "patient-id": patientId } = await params
+  return <ConfirmResourceSelectionPage patientId={patientId} />
 }
+
+export default ConfirmResourceSelection

@@ -1,11 +1,14 @@
 import { SelectResourcesPage } from "@/components/patient-info/resources/select-resources-page"
 
 interface SelectResourcesProps {
-  params: {
+  params: Promise<{
     "patient-id": string
-  }
+  }>
 }
 
-export default function SelectResources({ params }: SelectResourcesProps) {
-  return <SelectResourcesPage patientId={params["patient-id"]} />
+const SelectResources = async ({ params }: SelectResourcesProps) => {
+  const { "patient-id": patientId } = await params
+  return <SelectResourcesPage patientId={patientId} />
 }
+
+export default SelectResources
