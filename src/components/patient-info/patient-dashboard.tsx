@@ -9,7 +9,7 @@ import { PatientHeader } from "./patient-header"
 import { ReportTab } from "./report/report-tab"
 import { Button } from "../ui/button"
 import { AllergiesDetailsSidebar } from "./allergies/allergies-details.sidebar"
-import { AiExerciseRecommendations } from "./ai-exercise-recommendations/ai-exercise-recommendations"
+import { AiExerciseRecommendations } from "./ai-exercise-recommendations/ai-exercise-recommendations-tab"
 import { ResourcesTab } from "./resources/resources-tab"
 
 interface PatientDashboardProps {
