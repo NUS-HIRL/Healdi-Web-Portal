@@ -102,7 +102,6 @@ export const PatientHeader = ({
         </div>
       </header>
 
-      {/* Health Conditions Sidebar */}
       <HealthConditionsSidebar
         isOpen={isHealthConditionsOpen}
         onClose={handleCloseHealthConditions}

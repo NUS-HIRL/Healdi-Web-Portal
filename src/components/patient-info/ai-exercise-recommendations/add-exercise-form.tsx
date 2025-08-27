@@ -24,7 +24,6 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
       <div className="flex-1 flex flex-col">
-        {/* Header */}
         <MainHeader />
 
         <main className="flex-1 overflow-auto flex flex-col">

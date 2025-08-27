@@ -3,12 +3,10 @@
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ExternalLink, Search, Bell, User, Check } from "lucide-react"
+import { Search, Bell, User, Check } from "lucide-react"
 import CustomDataTable from "@/components/common/table/custom-data-table"
 import { Resource } from "@/types/resource"
-import { ColumnDef } from "@tanstack/react-table"
-import { TableHeaderCell } from "@/components/common/table-header-cell"
+import { SelectResourceColumns } from "../../columns/select-resource-columns"
 import { Footer } from "../../common/footer"
 import { Sidebar } from "../../common/sidebar"
 
@@ -154,71 +152,11 @@ export const SelectResourcesPage = ({ patientId }: SelectResourcesPageProps) => 
         }
     }
 
-    const columns: ColumnDef<Resource>[] = [
-        {
-            id: "select",
-            header: ({ table }) => (
-                <Checkbox
-                    checked={
-                        table.getIsAllPageRowsSelected() ||
-                        (table.getIsSomePageRowsSelected() && "indeterminate")
-                    }
-                    onCheckedChange={(value) => {
-                        table.toggleAllPageRowsSelected(!!value)
-                        handleSelectAll(!!value)
-                    }}
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    checked={selectedResources.has(row.original.id)}
-                    onCheckedChange={(value) =>
-                        handleSelectResource(row.original.id, !!value)
-                    }
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false
-        },
-        {
-            accessorKey: "type",
-            header: () => <TableHeaderCell label="Type" />,
-            cell: ({ row }) => row.original.type
-        },
-        {
-            accessorKey: "category",
-            header: () => <TableHeaderCell label="Category" />,
-            cell: ({ row }) => row.original.category
-        },
-        {
-            accessorKey: "source",
-            header: () => <TableHeaderCell label="Source" />,
-            cell: ({ row }) => row.original.source
-        },
-        {
-            accessorKey: "title",
-            header: () => <TableHeaderCell label="Title" />,
-            cell: ({ row }) => row.original.title
-        },
-        {
-            id: "actions",
-            header: () => <TableHeaderCell label="Action" noSort inline={true} />,
-            cell: ({ row }) => (
-                <Button
-                    variant="outline"
-                    size="icon"
-                    className="w-8 h-8 border-blue-300 hover:bg-blue-200"
-                    onClick={() => {
-                        // Open resource link in new tab
-                        window.open(row.original.url || '#', '_blank')
-                    }}>
-                    <ExternalLink size={16} className="text-blue-600" />
-                </Button>
-            )
-        }
-    ]
+    const columns = SelectResourceColumns({
+        selectedResources,
+        onSelectResource: handleSelectResource,
+        onSelectAll: handleSelectAll
+    })
 
     const ResourcesTable = CustomDataTable<Resource>
 

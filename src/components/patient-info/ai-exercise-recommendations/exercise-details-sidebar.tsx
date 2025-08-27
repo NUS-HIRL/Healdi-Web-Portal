@@ -44,7 +44,6 @@ export const ExerciseDetailsSidebar = ({
         <div className="space-y-4 ml-4 mr-4">
           <Separator className="mt-0" />
 
-          {/* Activity Type */}
           <div className="space-y-2">
             <Subtitle title="Activity Type" />
             <p className="text-sm text-gray-900">{exercise.activityType}</p>
@@ -52,7 +51,6 @@ export const ExerciseDetailsSidebar = ({
 
           <Separator className="mt-2" />
 
-          {/* Duration */}
           <div className="space-y-2">
             <Subtitle title="Duration" />
             <p className="text-sm text-gray-900 font-medium">
@@ -62,7 +60,6 @@ export const ExerciseDetailsSidebar = ({
 
           <Separator className="mt-2" />
 
-          {/* Frequency */}
           <div className="space-y-2">
             <Subtitle title="Frequency" />
             <p className="text-sm text-gray-900 font-medium">
@@ -72,7 +69,6 @@ export const ExerciseDetailsSidebar = ({
 
           <Separator className="mt-2" />
 
-          {/* Intensity */}
           <div className="space-y-2">
             <Subtitle title="Intensity" />
             <p className="text-sm text-gray-900">{exercise.intensity}</p>
@@ -80,7 +76,6 @@ export const ExerciseDetailsSidebar = ({
 
           <Separator className="mt-2" />
 
-          {/* Assigned/Saved */}
           <div className="space-y-2">
             <Subtitle title="Status" />
             <p className="text-sm text-gray-900">{exercise.assignedOrSaved}</p>
@@ -88,7 +83,6 @@ export const ExerciseDetailsSidebar = ({
 
           <Separator className="mt-2" />
 
-          {/* Action Buttons */}
           <div className="flex space-x-3 pt-2">
             <Button
               variant="outline"

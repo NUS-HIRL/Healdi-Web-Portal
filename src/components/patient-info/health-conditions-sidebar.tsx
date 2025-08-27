@@ -61,23 +61,19 @@ export const HealthConditionsSidebar = ({
       <div className="space-y-4 ml-4 mr-4">
         <Separator className="mt-0" />
 
-        {/* Health Conditions List */}
         <div className="space-y-4">
           {healthConditions.map((condition, index) => (
             <div key={condition.id}>
               <div className="space-y-2">
-                {/* Condition Title */}
                 <h4 className="text-sm font-semibold text-gray-900">
                   {condition.title}
                 </h4>
 
-                {/* Condition Description */}
                 <p className="text-sm text-gray-600">
                   {condition.description}
                 </p>
               </div>
               
-              {/* Add separator between conditions except for the last one */}
               {index < healthConditions.length - 1 && (
                 <Separator className="mt-4" />
               )}
