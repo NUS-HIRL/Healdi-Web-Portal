@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Copy, Search, Bell, User, Check } from "lucide-react"
+import { ExternalLink, Search, Bell, User, Check } from "lucide-react"
 import CustomDataTable from "@/components/common/table/custom-data-table"
 import { Resource } from "@/types/resource"
 import { ColumnDef } from "@tanstack/react-table"
@@ -19,7 +19,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Hypertension & HHD",
         source: "National Heart Centre Singapore",
         title: "Understanding Blood Pressure & Hypertension",
-        assignedOrSaved: "Saved"
+        assignedOrSaved: "Saved",
+        url: "https://example.com/understanding-blood-pressure"
     },
     {
         id: "res-2",
@@ -27,7 +28,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Physical Activity",
         source: "HealthHub",
         title: "Physical Activity is Key to Active Aging",
-        assignedOrSaved: "Assigned"
+        assignedOrSaved: "Assigned",
+        url: "https://example.com/physical-activity-active-aging"
     },
     {
         id: "res-3",
@@ -35,7 +37,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Lifestyle Modifications",
         source: "Own Source",
         title: "Your Guide to Stress Management",
-        assignedOrSaved: "Saved"
+        assignedOrSaved: "Saved",
+        url: "https://example.com/stress-management"
     },
     {
         id: "res-4",
@@ -43,7 +46,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Physical Activity",
         source: "Health Promotion Board",
         title: "Physical Activity is Key to Active Aging",
-        assignedOrSaved: "Assigned"
+        assignedOrSaved: "Assigned",
+        url: "https://example.com/physical-activity-active-aging"
     },
     {
         id: "res-5",
@@ -51,7 +55,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Hypertension & HHD",
         source: "National Heart Centre Singapore",
         title: "How Does High Blood Pressure Affect Men and Women Differently?",
-        assignedOrSaved: "Saved"
+        assignedOrSaved: "Saved",
+        url: "https://example.com/blood-pressure"
     },
     {
         id: "res-6",
@@ -59,7 +64,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Physical Activity",
         source: "HealthHub",
         title: "Physical Activity is Key to Active Aging",
-        assignedOrSaved: "Assigned"
+        assignedOrSaved: "Assigned",
+        url: "https://example.com/physical-activity-active-aging"
     },
     {
         id: "res-7",
@@ -67,7 +73,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Hypertension & HHD",
         source: "Own Source",
         title: "Hypertension & Health Behaviours",
-        assignedOrSaved: "Saved"
+        assignedOrSaved: "Saved",
+        url: "https://example.com/hypertension-health-behaviours"
     },
     {
         id: "res-8",
@@ -75,7 +82,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Lifestyle Modifications",
         source: "Health Promotion Board",
         title: "Your Guide to Stress Management",
-        assignedOrSaved: "Assigned"
+        assignedOrSaved: "Assigned",
+        url: "https://example.com/stress-management"
     },
     {
         id: "res-9",
@@ -83,7 +91,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Hypertension & HHD",
         source: "National Heart Centre Singapore",
         title: "Hypertension & Health Behaviours",
-        assignedOrSaved: "Saved"
+        assignedOrSaved: "Saved",
+        url: "https://example.com/hypertension-health-behaviours"
     },
     {
         id: "res-10",
@@ -91,7 +100,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
         category: "Lifestyle Modifications",
         source: "HealthHub",
         title: "Your Guide to Stress Management",
-        assignedOrSaved: "Assigned"
+        assignedOrSaved: "Assigned",
+        url: "https://example.com/stress-management"
     }
 ]
 
@@ -201,10 +211,10 @@ export const SelectResourcesPage = ({ patientId }: SelectResourcesPageProps) => 
                     size="icon"
                     className="w-8 h-8 border-blue-300 hover:bg-blue-200"
                     onClick={() => {
-                        // Copy resource link or details
-                        navigator.clipboard.writeText(row.original.title)
+                        // Open resource link in new tab
+                        window.open(row.original.url || '#', '_blank')
                     }}>
-                    <Copy size={16} className="text-blue-600" />
+                    <ExternalLink size={16} className="text-blue-600" />
                 </Button>
             )
         }

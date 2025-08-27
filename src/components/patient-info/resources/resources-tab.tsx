@@ -45,7 +45,8 @@ export const ResourcesTab = ({ patientId }: ResourcesTabProps) => {
         title: "Understanding Blood Pressure Management",
         assignedOrSaved: "Assigned",
         category: "Cardiovascular Health",
-        subCategory: "Hypertension"
+        subCategory: "Hypertension",
+        url: "https://example.com/blood-pressure-management"
       },
       {
         id: "3",
@@ -54,7 +55,8 @@ export const ResourcesTab = ({ patientId }: ResourcesTabProps) => {
         title: "Exercise Guidelines for Heart Health",
         assignedOrSaved: "Assigned",
         category: "Physical Activity",
-        subCategory: "Cardio Exercise"
+        subCategory: "Cardio Exercise",
+        url: "https://example.com/exercise-guidelines"
       },
       {
         id: "4",
@@ -63,7 +65,8 @@ export const ResourcesTab = ({ patientId }: ResourcesTabProps) => {
         title: "Nutrition Tips for Better Health",
         assignedOrSaved: "Saved",
         category: "Nutrition",
-        subCategory: "Healthy Eating"
+        subCategory: "Healthy Eating",
+        url: "https://example.com/nutrition-tips"
       },
       {
         id: "5",
@@ -72,7 +75,8 @@ export const ResourcesTab = ({ patientId }: ResourcesTabProps) => {
         title: "Stress Management Techniques",
         assignedOrSaved: "Assigned",
         category: "Mental Health",
-        subCategory: "Stress Relief"
+        subCategory: "Stress Relief",
+        url: "https://example.com/stress-management"
       }
     ],
     []
