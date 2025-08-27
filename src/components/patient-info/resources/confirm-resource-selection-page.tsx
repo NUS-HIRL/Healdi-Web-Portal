@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Search, Bell, User, Check, Trash2, ExternalLink, Plus } from "lucide-react"
+import { Search, Bell, User, Trash2, ExternalLink, Plus } from "lucide-react"
 import { Resource } from "@/types/resource"
 import { Footer } from "../../common/footer"
 import { Sidebar } from "../../common/sidebar"

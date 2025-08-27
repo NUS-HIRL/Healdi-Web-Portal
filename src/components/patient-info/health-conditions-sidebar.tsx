@@ -1,7 +1,6 @@
 "use client"
 
 import { DetailsSidebar } from "@/components/common/sidebar/details-sidebar"
-import { Subtitle } from "@/components/common/sidebar/subtitle"
 import { Separator } from "@/components/ui/separator"
 import { HealthCondition } from "@/types/health-condition"
 
