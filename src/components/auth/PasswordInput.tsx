@@ -68,7 +68,7 @@ export const PasswordInput = <TValues extends FieldValues>({
           type={visible ? "text" : "password"}
           disabled={disabled}
           className={[
-            "pr-10 rounded-full",
+            "rounded-full h-11 px-4",
             error ? "border-red-500" : "",
             className
           ]
