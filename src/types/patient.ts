@@ -1,6 +1,6 @@
 export interface Patient {
   id: string
-  username: string
+  username?: string
   patientUid: string // TODO: Remove after confirming w Ethan if needed
   age: number
   gender: "M" | "F"
