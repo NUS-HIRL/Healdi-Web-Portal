@@ -5,7 +5,7 @@ export enum DurationUnit {
 
 export enum FrequencyUnit {
   PER_DAY = "per day",
-  PER_WEEK = "per week", 
+  PER_WEEK = "per week",
   PER_MONTH = "per month",
   DAILY = "daily",
   WEEKLY = "weekly",
