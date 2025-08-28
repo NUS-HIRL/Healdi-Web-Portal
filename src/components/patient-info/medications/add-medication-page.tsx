@@ -6,23 +6,19 @@ import { MedicationList } from "./medications-list"
 import { MainHeader } from "../../common/main-header"
 import { ArrowLeft } from "lucide-react"
 
-interface PatientDashboardProps {
-  patientId: string
-}
 const onBack = () => {
-    if (typeof window !== "undefined") {
-      if (window.history.length > 1) {
-        window.history.back()
-      } else {
-        window.location.href = "/patients/medication" // fallback route
-      }
+  if (typeof window !== "undefined") {
+    if (window.history.length > 1) {
+      window.history.back()
+    } else {
+      window.location.href = "/patients/medication" // fallback route
     }
+  }
 }
 
-export const AddMedicationPage = ({ patientId }: PatientDashboardProps) => {
-
-
-    return (<div className="flex h-screen bg-gray-50">
+export const AddMedicationPage = () => {
+  return (
+    <div className="flex h-screen bg-gray-50">
       <Sidebar />
       <div className="flex-1 flex flex-col">
         {/* Header */}
@@ -34,7 +30,7 @@ export const AddMedicationPage = ({ patientId }: PatientDashboardProps) => {
               Home / Select Patient / View Patient / Select Medication
             </nav>
             <h1 className="text-3xl font-bold text-gray-900 mb-8">
-            <button
+              <button
                 type="button"
                 onClick={onBack}
                 aria-label="Go back"
@@ -49,6 +45,5 @@ export const AddMedicationPage = ({ patientId }: PatientDashboardProps) => {
         </div>
       </div>
     </div>
-    )
-  
+  )
 }

@@ -8,22 +8,119 @@ import { MedicationColumns } from "@/components/columns/medication-columns"
 
 // TODO: Remove once data from API comes in
 export const medications: MedicationTableValue[] = [
-  { id: "m1",  name: "Captopril",                          dosage: "25 mg",             type: "Tablet",    custom: false, selected: true  },
-  { id: "m2",  name: "Lisinopril",                         dosage: "40 mg",             type: "Tablet",    custom: false, selected: true  },
-  { id: "m3",  name: "Metformin",                          dosage: "500 mg",            type: "Tablet",    custom: false, selected: false },
-  { id: "m4",  name: "Gliclazide MR",                      dosage: "30 mg",             type: "Tablet",    custom: false, selected: true  },
-  { id: "m5",  name: "Pioglitazone",                       dosage: "30 mg",             type: "Tablet",    custom: false, selected: false },
-  { id: "m6",  name: "Glucovance [Metformin/Glibenclamide]", dosage: "500 mg / 2.5 mg", type: "Tablet",    custom: false, selected: true  },
-  { id: "m7",  name: "Clopidogrel",                        dosage: "75 mg",             type: "Tablet",    custom: false, selected: true  },
-  { id: "m8",  name: "Ticlopidine HCl",                    dosage: "250 mg",            type: "Tablet",    custom: false, selected: false },
-  { id: "m9",  name: "Amoxicillin",                        dosage: "500 mg",            type: "Capsule",   custom: false, selected: false },
-  { id: "m10", name: "Paracetamol Syrup",                  dosage: "250 mg/5 mL",       type: "Syrup",     custom: true,  selected: true  },
-  { id: "m11", name: "Insulin Glargine",                   dosage: "10 units",          type: "Injection", custom: false, selected: false },
-  { id: "m12", name: "Timolol Eye Drops",                  dosage: "0.5%",              type: "Drops",     custom: false, selected: true  },
-  { id: "m13", name: "Nitroglycerin Patch",                dosage: "0.2 mg/hr",         type: "Patch",     custom: false, selected: false },
-  { id: "m14", name: "Salbutamol Inhaler",                 dosage: "100 mcg/puff",      type: "Other",     custom: true,  selected: false }
+  {
+    id: "m1",
+    name: "Captopril",
+    dosage: "25 mg",
+    type: "Tablet",
+    custom: false,
+    selected: true
+  },
+  {
+    id: "m2",
+    name: "Lisinopril",
+    dosage: "40 mg",
+    type: "Tablet",
+    custom: false,
+    selected: true
+  },
+  {
+    id: "m3",
+    name: "Metformin",
+    dosage: "500 mg",
+    type: "Tablet",
+    custom: false,
+    selected: false
+  },
+  {
+    id: "m4",
+    name: "Gliclazide MR",
+    dosage: "30 mg",
+    type: "Tablet",
+    custom: false,
+    selected: true
+  },
+  {
+    id: "m5",
+    name: "Pioglitazone",
+    dosage: "30 mg",
+    type: "Tablet",
+    custom: false,
+    selected: false
+  },
+  {
+    id: "m6",
+    name: "Glucovance [Metformin/Glibenclamide]",
+    dosage: "500 mg / 2.5 mg",
+    type: "Tablet",
+    custom: false,
+    selected: true
+  },
+  {
+    id: "m7",
+    name: "Clopidogrel",
+    dosage: "75 mg",
+    type: "Tablet",
+    custom: false,
+    selected: true
+  },
+  {
+    id: "m8",
+    name: "Ticlopidine HCl",
+    dosage: "250 mg",
+    type: "Tablet",
+    custom: false,
+    selected: false
+  },
+  {
+    id: "m9",
+    name: "Amoxicillin",
+    dosage: "500 mg",
+    type: "Capsule",
+    custom: false,
+    selected: false
+  },
+  {
+    id: "m10",
+    name: "Paracetamol Syrup",
+    dosage: "250 mg/5 mL",
+    type: "Syrup",
+    custom: true,
+    selected: true
+  },
+  {
+    id: "m11",
+    name: "Insulin Glargine",
+    dosage: "10 units",
+    type: "Injection",
+    custom: false,
+    selected: false
+  },
+  {
+    id: "m12",
+    name: "Timolol Eye Drops",
+    dosage: "0.5%",
+    type: "Drops",
+    custom: false,
+    selected: true
+  },
+  {
+    id: "m13",
+    name: "Nitroglycerin Patch",
+    dosage: "0.2 mg/hr",
+    type: "Patch",
+    custom: false,
+    selected: false
+  },
+  {
+    id: "m14",
+    name: "Salbutamol Inhaler",
+    dosage: "100 mcg/puff",
+    type: "Other",
+    custom: true,
+    selected: false
+  }
 ]
-
 
 export const MedicationList = () => {
   const [pagination, setPagination] = useState({
@@ -57,26 +154,27 @@ export const MedicationList = () => {
   }
 
   // TODO: Remove once sorting is implemented on API side
-const sortedMedications = useMemo(() => {
-  const list: MedicationTableValue[] = Array.isArray(medications)
-    ? medications
-    : (medications as { data?: MedicationTableValue[] } | undefined)?.data ?? []
+  const sortedMedications = useMemo(() => {
+    const list: MedicationTableValue[] = Array.isArray(medications)
+      ? medications
+      : ((medications as { data?: MedicationTableValue[] } | undefined)?.data ??
+        [])
 
-  if (!sorting.column || !sorting.direction) return list.slice()
+    if (!sorting.column || !sorting.direction) return list.slice()
 
-  const col = sorting.column as keyof MedicationTableValue
-  const dir = sorting.direction === "asc" ? 1 : -1
+    const col = sorting.column as keyof MedicationTableValue
+    const dir = sorting.direction === "asc" ? 1 : -1
 
-  return [...list].sort((a, b) => {
-    const av = a[col]
-    const bv = b[col]
+    return [...list].sort((a, b) => {
+      const av = a[col]
+      const bv = b[col]
 
-    if (typeof av === "number" && typeof bv === "number") {
-      return (av - bv) * dir
-    }
-    return String(av ?? "").localeCompare(String(bv ?? "")) * dir
-  })
-}, [medications, sorting])
+      if (typeof av === "number" && typeof bv === "number") {
+        return (av - bv) * dir
+      }
+      return String(av ?? "").localeCompare(String(bv ?? "")) * dir
+    })
+  }, [medications, sorting])
 
   // TODO: Remove once pagination is implemented on API side
   // Calculate pagination data from sorted patients
@@ -85,7 +183,6 @@ const sortedMedications = useMemo(() => {
   const startIndex = pagination.pageIndex * pagination.pageSize
   const endIndex = startIndex + pagination.pageSize
   const currentPageData = sortedMedications.slice(startIndex, endIndex)
-
 
   const MedicationTable = CustomDataTable<MedicationTableValue>
 
@@ -101,7 +198,6 @@ const sortedMedications = useMemo(() => {
     () => MedicationColumns({ onViewMedication: handleViewMedication }),
     [handleViewMedication]
   )
-
 
   return (
     <div className="space-y-4">

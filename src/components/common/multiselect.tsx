@@ -37,8 +37,7 @@ export const MultiSelect = <T extends StringLike = Reaction>({
   options?: readonly T[]
 }) => {
   const [open, setOpen] = useState(false)
-  const opts = (options ??
-    (DEFAULT_REACTION_OPTIONS as unknown as readonly T[]))
+  const opts = options ?? (DEFAULT_REACTION_OPTIONS as unknown as readonly T[])
 
   const toggle = (opt: T) => {
     const has = value.includes(opt)
@@ -106,7 +105,10 @@ export const MultiSelect = <T extends StringLike = Reaction>({
                 onKeyDown={(e) => onKeyActivate(e, () => toggle(opt))}
                 className="flex items-center justify-between rounded px-2 py-2 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pink-500">
                 <span className="text-sm">{opt}</span>
-                <Checkbox checked={checked} onCheckedChange={() => toggle(opt)} />
+                <Checkbox
+                  checked={checked}
+                  onCheckedChange={() => toggle(opt)}
+                />
               </div>
             )
           })}

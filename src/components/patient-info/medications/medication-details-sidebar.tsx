@@ -9,7 +9,7 @@ import { Medication, MedicationTableValue } from "@/types/medication"
 import { useRouter } from "next/navigation"
 
 interface MedicationDetailsSidebarProps {
-  medication: MedicationTableValue | null
+  medication: Medication | MedicationTableValue | null
   isOpen: boolean
   onClose: () => void
 }
