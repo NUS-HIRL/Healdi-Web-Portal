@@ -42,7 +42,7 @@ export const GoalDetailsSidebar = ({
           {/* Completion Type */}
           <div className="space-y-2">
             <Subtitle title="Completion Type" />
-            <p className="text-sm text-gray-900">{goal.completionType}</p>
+            <p className="text-sm text-gray-900">{goal.completion_type}</p>
           </div>
 
           <Separator className="mt-2" />
@@ -70,7 +70,9 @@ export const GoalDetailsSidebar = ({
           {/* Coin Reward */}
           <div className="space-y-2">
             <h3 className="text-sm font-semibold text-gray-700">Coin Reward</h3>
-            <p className="text-sm text-gray-900 font-medium">{goal.coins}</p>
+            <p className="text-sm text-gray-900 font-medium">
+              {goal.coin_reward}
+            </p>
           </div>
 
           <Separator className="mt-2" />
@@ -78,15 +80,20 @@ export const GoalDetailsSidebar = ({
           {/* Coin Bonus */}
           <div className="space-y-2">
             <Subtitle title="Coin Bonus on Goal Completion" />
-            <p className="text-sm text-gray-900 font-medium">{goal.bonus}</p>
+            <p className="text-sm text-gray-900 font-medium">
+              {goal.completion_bonus_reward}
+            </p>
           </div>
 
           <Separator className="mt-2" />
 
           {/* Progress */}
           <div className="space-y-2">
-            <Subtitle title="Progress" />
-            <p className="text-sm text-gray-900 font-medium">{goal.progress}</p>
+            <Subtitle title="Type" />{" "}
+            {/* Change back to progress after API is done */}
+            <p className="text-sm text-gray-900 font-medium">
+              {goal.completion_type}
+            </p>
           </div>
 
           <Separator className="mt-2" />
@@ -98,7 +105,7 @@ export const GoalDetailsSidebar = ({
               className="flex-1 bg-black text-white border-gray-700 hover:bg-gray-800 hover:border-gray-800"
               onClick={() => {
                 // Navigate to edit page
-                router.push(`/patient-info/goals/${goal.id}/edit`)
+                router.push(`/patient-info/goals/${goal.goal_id}/edit`)
               }}>
               Edit
             </Button>
