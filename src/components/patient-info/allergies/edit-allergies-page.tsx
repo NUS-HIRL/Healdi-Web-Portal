@@ -1,12 +1,4 @@
 "use client"
-import { useMemo, useState } from "react"
-import { Sidebar } from "../../common/sidebar"
-import { Footer } from "../../common/footer"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Plus, Trash2, ArrowLeft } from "lucide-react"
-import { MultiSelect } from "./allergies-multiselect"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,8 +9,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from "@/components/ui/alert-dialog"
-import { AlertTriangle } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { AllergyItem, Reaction } from "@/types/reaction"
+import { AlertTriangle, ArrowLeft, Plus, Trash2 } from "lucide-react"
+import { useMemo, useState } from "react"
+import { MultiSelect } from "./allergies-multiselect"
 
 export const EditAllergiesPage = () => {
   const [items, setItems] = useState<AllergyItem[]>([

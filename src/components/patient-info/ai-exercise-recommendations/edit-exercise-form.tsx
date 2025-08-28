@@ -1,16 +1,14 @@
 "use client"
 
-import { Sidebar } from "../../common/sidebar"
-import { Footer } from "@/components/common/footer"
 import { MainHeader } from "@/components/common/main-header"
-import { SubmitSection } from "../../common/submit-section"
 import {
+  AssignmentStatus,
   DurationUnit,
   FrequencyUnit,
-  IntensityLevel,
-  AssignmentStatus
+  IntensityLevel
 } from "@/types/exercise"
 import Image from "next/image"
+import { SubmitSection } from "../../common/submit-section"
 
 interface EditExerciseFormProps {
   exerciseId: string

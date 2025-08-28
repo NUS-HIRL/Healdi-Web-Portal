@@ -1,15 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Search, Bell, User, Trash2, ExternalLink, Plus } from "lucide-react"
-import { Resource } from "@/types/resource"
-import { Footer } from "../../common/footer"
-import { Sidebar } from "../../common/sidebar"
-import { SubmitSection } from "../../common/submit-section"
-import Image from "next/image"
 import ImagePlaceholder from "@/../public/common/image-placeholder.png"
+import { Button } from "@/components/ui/button"
+import { Resource } from "@/types/resource"
+import { Bell, ExternalLink, Plus, Search, Trash2, User } from "lucide-react"
+import Image from "next/image"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { SubmitSection } from "../../common/submit-section"
 
 const AVAILABLE_RESOURCES: Resource[] = [
   {

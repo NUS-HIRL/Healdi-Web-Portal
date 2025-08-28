@@ -1,6 +1,5 @@
 "use client"
 
-import { useForm, Controller } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -11,10 +10,9 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { Footer } from "../../common/footer"
-import { Sidebar } from "../../common/sidebar"
+import { Bell, Search, User } from "lucide-react"
+import { Controller, useForm } from "react-hook-form"
 import { SubmitSection } from "../../common/submit-section"
-import { Search, Bell, User } from "lucide-react"
 
 export const AddGoalPage = () => {
   type AddGoalForm = {

@@ -1,17 +1,15 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { Sidebar } from "../../common/sidebar"
-import { Footer } from "@/components/common/footer"
 import { MainHeader } from "@/components/common/main-header"
-import { SubmitSection } from "../../common/submit-section"
 import {
+  AssignmentStatus,
   DurationUnit,
   FrequencyUnit,
-  IntensityLevel,
-  AssignmentStatus
+  IntensityLevel
 } from "@/types/exercise"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { SubmitSection } from "../../common/submit-section"
 
 interface AddExerciseFormProps {
   patientId: string

@@ -2,12 +2,6 @@
 
 import { Footer } from "@/components/common/footer"
 import { Sidebar } from "@/components/common/sidebar"
-import { Inter } from "next/font/google"
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"]
-})
 
 const PatientInfoLayout = ({
   children
