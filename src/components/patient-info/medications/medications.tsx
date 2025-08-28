@@ -2,11 +2,11 @@
 
 import { useState } from "react"
 
-import { MedicationColumns } from "@/components/columns/medication-columns"
+import { MedicationColumns } from "@/components/columns/medication-plan-columns"
 import CustomDataTable from "@/components/common/table/custom-data-table"
 import { HeaderWithOptions } from "@/components/common/table/header-with-options"
 import usePagination from "@/hooks/use-pagination"
-import { Medication } from "@/types/medication"
+import { Medication, MedicationTableValue } from "@/types/medication"
 import { MedicationDetailsSidebar } from "./medication-details-sidebar"
 
 const INITIAL_DATA: Medication[] = [
@@ -79,7 +79,7 @@ export const Medications = () => {
       {/* Title */}
       <HeaderWithOptions
         title="Medications"
-        to="/patient-info/medications/add"
+        to="/patient-info/medication/add"
       />
 
       {/* Header */}

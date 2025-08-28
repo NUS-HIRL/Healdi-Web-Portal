@@ -5,11 +5,11 @@ import { Subtitle } from "@/components/common/sidebar/subtitle"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Medication } from "@/types/medication"
+import { Medication, MedicationTableValue } from "@/types/medication"
 import { useRouter } from "next/navigation"
 
 interface MedicationDetailsSidebarProps {
-  medication: Medication | null
+  medication: MedicationTableValue | null
   isOpen: boolean
   onClose: () => void
 }
