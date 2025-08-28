@@ -4,7 +4,13 @@ type Exercise = {
   duration: number
   durationUnit: "minutes" | "hours"
   frequency: number
-  frequencyUnit: "per day" | "per week" | "per month" | "daily" | "weekly" | "monthly"
+  frequencyUnit:
+    | "per day"
+    | "per week"
+    | "per month"
+    | "daily"
+    | "weekly"
+    | "monthly"
   intensity: string
   assignedOrSaved: string
 }

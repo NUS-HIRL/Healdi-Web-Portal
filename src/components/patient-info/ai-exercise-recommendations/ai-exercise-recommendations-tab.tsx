@@ -70,7 +70,9 @@ export const AiExerciseRecommendations = ({
   })
 
   // modals
-  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null)
+  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
+    null
+  )
   const [isViewOpen, setIsViewOpen] = useState(false)
 
   const handleViewExercise = (exercise: Exercise) => {

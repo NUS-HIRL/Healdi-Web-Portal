@@ -75,7 +75,9 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
             {activeTab === "AI Exercise Recommendations" && (
               <AiExerciseRecommendations patientId={patientId} />
             )}
-            {activeTab === "Resources" && <ResourcesTab patientId={patientId} />}
+            {activeTab === "Resources" && (
+              <ResourcesTab patientId={patientId} />
+            )}
           </div>
 
           {/* Footer */}

@@ -16,32 +16,38 @@ const generateHealthConditions = (count: number): HealthCondition[] => {
     {
       id: "1",
       title: "Hypertension",
-      description: "High blood pressure condition requiring regular monitoring and medication management."
+      description:
+        "High blood pressure condition requiring regular monitoring and medication management."
     },
     {
       id: "2",
       title: "Type 2 Diabetes",
-      description: "Metabolic disorder characterized by high blood sugar levels, managed through diet and medication."
+      description:
+        "Metabolic disorder characterized by high blood sugar levels, managed through diet and medication."
     },
     {
       id: "3",
       title: "High Cholesterol",
-      description: "Elevated cholesterol levels in the blood that may increase risk of heart disease."
+      description:
+        "Elevated cholesterol levels in the blood that may increase risk of heart disease."
     },
     {
       id: "4",
       title: "Asthma",
-      description: "Respiratory condition causing difficulty breathing, wheezing, and shortness of breath."
+      description:
+        "Respiratory condition causing difficulty breathing, wheezing, and shortness of breath."
     },
     {
       id: "5",
       title: "Arthritis",
-      description: "Joint inflammation causing pain, stiffness, and reduced range of motion."
+      description:
+        "Joint inflammation causing pain, stiffness, and reduced range of motion."
     },
     {
       id: "6",
       title: "Sleep Apnea",
-      description: "Sleep disorder characterized by breathing interruptions during sleep."
+      description:
+        "Sleep disorder characterized by breathing interruptions during sleep."
     }
   ]
 
@@ -68,11 +74,9 @@ export const HealthConditionsSidebar = ({
                   {condition.title}
                 </h4>
 
-                <p className="text-sm text-gray-600">
-                  {condition.description}
-                </p>
+                <p className="text-sm text-gray-600">{condition.description}</p>
               </div>
-              
+
               {index < healthConditions.length - 1 && (
                 <Separator className="mt-4" />
               )}

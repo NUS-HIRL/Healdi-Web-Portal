@@ -247,9 +247,7 @@ export const AddGoalPage = () => {
                   </div>
                 </div>
 
-                <SubmitSection 
-                  description="Review your filled form details and make sure everything is accurate. Once you are ready, click the Submit button to add the new goal."
-                />
+                <SubmitSection description="Review your filled form details and make sure everything is accurate. Once you are ready, click the Submit button to add the new goal." />
               </form>
             </div>
           </div>

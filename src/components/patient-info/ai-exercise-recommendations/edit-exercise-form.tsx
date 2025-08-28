@@ -206,9 +206,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                     <option value="Saved">Saved</option>
                   </select>
                 </div>
-                <SubmitSection 
-                  description="Review your filled form details and make sure everything is accurate. Once you're ready, click the 'Submit' button to add the new exercise recommendation."
-                />
+                <SubmitSection description="Review your filled form details and make sure everything is accurate. Once you're ready, click the 'Submit' button to add the new exercise recommendation." />
               </form>
             </div>
           </div>

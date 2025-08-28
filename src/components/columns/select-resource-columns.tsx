@@ -34,9 +34,7 @@ export const SelectResourceColumns = ({
     cell: ({ row }) => (
       <Checkbox
         checked={selectedResources.has(row.original.id)}
-        onCheckedChange={(value) =>
-          onSelectResource(row.original.id, !!value)
-        }
+        onCheckedChange={(value) => onSelectResource(row.original.id, !!value)}
         aria-label="Select row"
       />
     ),
@@ -73,7 +71,7 @@ export const SelectResourceColumns = ({
         className="w-8 h-8 border-blue-300 hover:bg-blue-200"
         onClick={() => {
           // Open resource link in new tab
-          window.open(row.original.url || '#', '_blank')
+          window.open(row.original.url || "#", "_blank")
         }}>
         <ExternalLink size={16} className="text-blue-600" />
       </Button>

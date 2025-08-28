@@ -6,7 +6,9 @@ interface ConfirmResourceSelectionProps {
   }>
 }
 
-const ConfirmResourceSelection = async ({ params }: ConfirmResourceSelectionProps) => {
+const ConfirmResourceSelection = async ({
+  params
+}: ConfirmResourceSelectionProps) => {
   const { "patient-id": patientId } = await params
   return <ConfirmResourceSelectionPage patientId={patientId} />
 }

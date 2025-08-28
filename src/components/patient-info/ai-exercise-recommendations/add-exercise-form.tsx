@@ -16,7 +16,7 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
 
   const handleSubmit = () => {
     console.log("Adding new exercise...")
-    
+
     router.push(`/patient-info/${patientId}`)
   }
 
@@ -138,9 +138,7 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                       className="flex-1 border border-gray-300 rounded-lg p-2"
                     />
                     <select className="flex-1 border border-gray-300 rounded-lg p-2">
-                      <option value="">
-                        Unit
-                      </option>
+                      <option value="">Unit</option>
                       <option value="minutes">Minutes</option>
                       <option value="hours">Hours</option>
                     </select>
@@ -162,9 +160,7 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                       className="flex-1 border border-gray-300 rounded-lg p-2"
                     />
                     <select className="flex-1 border border-gray-300 rounded-lg p-2">
-                      <option value="">
-                        Unit
-                      </option>
+                      <option value="">Unit</option>
                       <option value="per day">Per Day</option>
                       <option value="per week">Per Week</option>
                       <option value="per month">Per Month</option>
@@ -184,9 +180,7 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                     </label>
                   </div>
                   <select className="w-full border border-gray-300 rounded-lg p-2">
-                    <option value="">
-                      Select intensity
-                    </option>
+                    <option value="">Select intensity</option>
                     <option value="Low">Low</option>
                     <option value="Moderate">Moderate</option>
                     <option value="High">High</option>
@@ -202,14 +196,12 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                     </label>
                   </div>
                   <select className="w-full border border-gray-300 rounded-lg p-2">
-                    <option value="">
-                      Select status
-                    </option>
+                    <option value="">Select status</option>
                     <option value="Assigned">Assigned</option>
                     <option value="Saved">Saved</option>
                   </select>
                 </div>
-                <SubmitSection 
+                <SubmitSection
                   description="Review your filled form details and make sure everything is accurate. Once you're ready, click the 'Submit' button to add the new exercise recommendation."
                   onSubmit={handleSubmit}
                   isForm={false}

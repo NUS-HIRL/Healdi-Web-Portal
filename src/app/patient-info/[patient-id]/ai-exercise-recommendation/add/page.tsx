@@ -6,9 +6,7 @@ interface AddExercisePageProps {
   }>
 }
 
-const AddExercisePage = async ({
-  params
-}: AddExercisePageProps) => {
+const AddExercisePage = async ({ params }: AddExercisePageProps) => {
   const { "patient-id": patientId } = await params
 
   return <AddExerciseForm patientId={patientId} />

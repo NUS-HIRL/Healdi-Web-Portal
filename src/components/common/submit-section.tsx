@@ -18,12 +18,8 @@ export const SubmitSection = ({
   return (
     <div className="bg-gray-100 rounded-lg p-6 mt-8">
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">
-          {title}
-        </h3>
-        <p className="text-gray-600 text-sm">
-          {description}
-        </p>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
+        <p className="text-gray-600 text-sm">{description}</p>
       </div>
       <div className="flex justify-end border-t border-gray-200 pt-4">
         <button
