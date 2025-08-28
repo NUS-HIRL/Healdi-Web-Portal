@@ -7,7 +7,13 @@ import { useRouter } from "next/navigation"
 import { Plus, Eye } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Exercise, DurationUnit, FrequencyUnit, IntensityLevel, AssignmentStatus } from "@/types/exercise"
+import {
+  Exercise,
+  DurationUnit,
+  FrequencyUnit,
+  IntensityLevel,
+  AssignmentStatus
+} from "@/types/exercise"
 import CustomDataTable from "@/components/common/table/custom-data-table"
 import { ExerciseColumns } from "../../columns/exercise-columns"
 import { ExerciseDetailsSidebar } from "./exercise-details-sidebar"

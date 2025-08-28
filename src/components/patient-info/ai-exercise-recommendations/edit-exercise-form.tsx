@@ -4,7 +4,12 @@ import { Sidebar } from "../../common/sidebar"
 import { Footer } from "@/components/common/footer"
 import { MainHeader } from "@/components/common/main-header"
 import { SubmitSection } from "../../common/submit-section"
-import { DurationUnit, FrequencyUnit, IntensityLevel, AssignmentStatus } from "@/types/exercise"
+import {
+  DurationUnit,
+  FrequencyUnit,
+  IntensityLevel,
+  AssignmentStatus
+} from "@/types/exercise"
 import Image from "next/image"
 
 interface EditExerciseFormProps {

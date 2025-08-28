@@ -19,7 +19,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
     title: "Hypertension",
     assignedOrSaved: "Saved",
     url: "https://www.nhcs.com.sg/patient-care/conditions-treatments/hypertension",
-    imageUrl: "https://ch-api.healthhub.sg/api/public/content/babc7f0c61234a10b91237a2c2377e55?v=9267a3d7&t=livehealthyheaderimage"
+    imageUrl:
+      "https://ch-api.healthhub.sg/api/public/content/babc7f0c61234a10b91237a2c2377e55?v=9267a3d7&t=livehealthyheaderimage"
   },
   {
     id: "6c6a909b8f5d1f3364ff330cea70fa640da31d47",
@@ -29,7 +30,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
     title: "Understanding Blood Pressure & Hypertension",
     assignedOrSaved: "Assigned",
     url: "https://www.nhcs.com.sg/news/murmurs/understanding-blood-pressure-and-hypertension",
-    imageUrl: "https://ch-api.healthhub.sg/api/public/content/93bd7d00dbb94235aa8ce372f3afea2f?v=a53fbe4d&t=azheaderimage"
+    imageUrl:
+      "https://ch-api.healthhub.sg/api/public/content/93bd7d00dbb94235aa8ce372f3afea2f?v=a53fbe4d&t=azheaderimage"
   },
   {
     id: "7f1e741f0739e0563b77466b9fa6f2791407fc9f",
@@ -39,7 +41,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
     title: "Health Benefits of Exercise and Exercise",
     assignedOrSaved: "Assigned",
     url: "https://www.healthhub.sg/live-healthy/physical-activity-benefits",
-    imageUrl: "https://ch-api.healthhub.sg/api/public/content/5dcef3a720b74f8c966c1da19eecef83?v=731fd106&t=livehealthyheaderimage"
+    imageUrl:
+      "https://ch-api.healthhub.sg/api/public/content/5dcef3a720b74f8c966c1da19eecef83?v=731fd106&t=livehealthyheaderimage"
   },
   {
     id: "45fec694bf5a1c5ee071ddb8e97f23d8e8e028c6",
@@ -49,7 +52,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
     title: "Exercise Is Key to Active Ageing",
     assignedOrSaved: "Saved",
     url: "https://www.healthhub.sg/live-healthy/physicalactivity_akeytohealthyageing_pdf",
-    imageUrl: "https://ch-api.healthhub.sg/api/public/content/c45fde36812e4da8922cae348f1688a7?v=a96fcdca&t=livehealthyheaderimage"
+    imageUrl:
+      "https://ch-api.healthhub.sg/api/public/content/c45fde36812e4da8922cae348f1688a7?v=a96fcdca&t=livehealthyheaderimage"
   },
   {
     id: "35349984acdd6d7deb87669c519bdc2ce8ccc86c",
@@ -59,7 +63,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
     title: "Here's How To Exercise When You Have No Time",
     assignedOrSaved: "Assigned",
     url: "https://www.healthhub.sg/live-healthy/squeezing-in-time-to-get-fit",
-    imageUrl: "https://ch-api.healthhub.sg/api/public/content/5dcef3a720b74f8c966c1da19eecef83?v=731fd106&t=livehealthyheaderimage"
+    imageUrl:
+      "https://ch-api.healthhub.sg/api/public/content/5dcef3a720b74f8c966c1da19eecef83?v=731fd106&t=livehealthyheaderimage"
   },
   {
     id: "3873dedcfd1aa953c0c4cd3e43fa82654a0d8548",
@@ -69,7 +74,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
     title: "High Blood Pressure: Healthy Eating Guide",
     assignedOrSaved: "Saved",
     url: "https://www.healthhub.sg/a-z/diseases-and-conditions/high-blood-pressure-healthy-eating-guide",
-    imageUrl: "https://ch-api.healthhub.sg/api/public/content/93bd7d00dbb94235aa8ce372f3afea2f?v=a53fbe4d&t=azheaderimage"
+    imageUrl:
+      "https://ch-api.healthhub.sg/api/public/content/93bd7d00dbb94235aa8ce372f3afea2f?v=a53fbe4d&t=azheaderimage"
   },
   {
     id: "38c415d6f35873f969ed085bacdbf996da3410b3",
@@ -79,7 +85,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
     title: "Your Guide to Stress Management",
     assignedOrSaved: "Assigned",
     url: "https://www.healthhub.sg/live-healthy/beatstressguide",
-    imageUrl: "https://ch-api.healthhub.sg/api/public/content/babc7f0c61234a10b91237a2c2377e55?v=9267a3d7&t=livehealthyheaderimage"
+    imageUrl:
+      "https://ch-api.healthhub.sg/api/public/content/babc7f0c61234a10b91237a2c2377e55?v=9267a3d7&t=livehealthyheaderimage"
   },
   {
     id: "b843d6b2e87d4524a40acc7d793a6d37a3606eef",
@@ -89,7 +96,8 @@ const AVAILABLE_RESOURCES: Resource[] = [
     title: "The Importance of Sleep",
     assignedOrSaved: "Saved",
     url: "https://www.healthhub.sg/live-healthy/sleep",
-    imageUrl: "https://ch-api.healthhub.sg/api/public/content/df3f71c2a39448ce802f55a4c271b8f8?v=4938464f&t=livehealthyheaderimage"
+    imageUrl:
+      "https://ch-api.healthhub.sg/api/public/content/df3f71c2a39448ce802f55a4c271b8f8?v=4938464f&t=livehealthyheaderimage"
   },
   {
     id: "011bcf8d6af48e9497baec7ba6d12e8856163081",
