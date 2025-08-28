@@ -7,7 +7,8 @@ export enum GoalCompletionTypeEnum {
 export enum GoalCategoryEnum {
   MEDICAL_SELF_MANAGEMENT = "MEDICAL_SELF_MANAGEMENT",
   SMOKING = "SMOKING",
-  SLEEP = "SLEEP"
+  SLEEP = "SLEEP",
+  PHYSICAL_ACTIVITY = "PHYSICAL_ACTIVITY"
 }
 export interface Goal {
   goal_id: string

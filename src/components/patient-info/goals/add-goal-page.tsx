@@ -44,8 +44,6 @@ export const AddGoalPage = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
-
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
         <header className="bg-white border-b border-gray-200 px-6 py-4">
@@ -251,8 +249,6 @@ export const AddGoalPage = () => {
               </form>
             </div>
           </div>
-          {/* Footer */}
-          <Footer />
         </main>
       </div>
     </div>

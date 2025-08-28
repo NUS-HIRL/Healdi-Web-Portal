@@ -1,8 +1,5 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useForm, Controller } from "react-hook-form"
-import { Goal } from "@/types/goal"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -14,9 +11,10 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { Footer } from "../../common/footer"
-import { Sidebar } from "../../common/sidebar"
-import { Search, Bell, User } from "lucide-react"
+import { Goal, GoalCategoryEnum, GoalCompletionTypeEnum } from "@/types/goal"
+import { Bell, Search, User } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Controller, useForm } from "react-hook-form"
 
 interface EditGoalPageProps {
   goalId: string
@@ -33,15 +31,16 @@ type EditGoalForm = {
 
 // Mock goal data - in a real app, this would be fetched from an API
 const mockGoal: Goal = {
-  id: "1",
-  category: "Physical Activity",
-  completionType: "Short Term",
+  goal_id: "1",
+  category: GoalCategoryEnum.PHYSICAL_ACTIVITY,
+  completion_type: GoalCompletionTypeEnum.SHORT_TERM,
   title: "I will jog for 15 minutes three times a week.",
   description:
     "Jog for at least 15 minutes three times a week to complete this goal. Whether you're at the park, on a running track, treadmill, or around your neighbourhood, it all counts. Come back to Healdi to mark it as complete. You can only complete this goal once per day.",
-  coins: 50,
-  bonus: 500,
-  progress: "1/3"
+  coin_reward: 50,
+  completion_bonus_reward: 500,
+  username: "RES0001"
+  // Add progress
 }
 
 export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
@@ -87,8 +86,6 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
-
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
         <header className="bg-white border-b border-gray-200 px-6 py-4">
@@ -311,8 +308,6 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
               </form>
             </div>
           </div>
-          {/* Footer */}
-          <Footer />
         </main>
       </div>
     </div>

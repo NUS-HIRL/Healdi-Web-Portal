@@ -93,7 +93,6 @@ export const EditAllergiesPage = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
       <div className="flex-1 flex flex-col">
         {/* TODO: Gerald: Update breadcrumb navigation */}
         <main className="flex-1 overflow-auto">
@@ -259,8 +258,6 @@ export const EditAllergiesPage = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-
-        <Footer />
       </div>
     </div>
   )

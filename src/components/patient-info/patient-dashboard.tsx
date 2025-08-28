@@ -37,8 +37,6 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
-
       <div className="flex-1 flex flex-col">
         <PatientHeader
           patientId={patientId}
@@ -79,9 +77,6 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
               <ResourcesTab patientId={patientId} />
             )}
           </div>
-
-          {/* Footer */}
-          <Footer />
         </main>
       </div>
 

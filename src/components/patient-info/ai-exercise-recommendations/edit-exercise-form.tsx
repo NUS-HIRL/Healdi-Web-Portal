@@ -22,7 +22,6 @@ interface EditExerciseFormProps {
 export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <MainHeader />
@@ -224,9 +223,6 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
               </form>
             </div>
           </div>
-          {/* TODO: Kervyn: Create layout.tsx to prevent need for footer in every page */}
-          {/* Footer */}
-          <Footer />
         </main>
       </div>
     </div>

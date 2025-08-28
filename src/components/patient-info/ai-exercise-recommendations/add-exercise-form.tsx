@@ -26,7 +26,6 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
       <div className="flex-1 flex flex-col">
         <MainHeader />
 
@@ -221,9 +220,6 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
               </form>
             </div>
           </div>
-          {/* TODO: Kervyn: Create layout.tsx to prevent need for footer in every page */}
-          {/* Footer */}
-          <Footer />
         </main>
       </div>
     </div>
