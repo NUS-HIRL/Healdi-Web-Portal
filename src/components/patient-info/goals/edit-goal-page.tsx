@@ -66,11 +66,11 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
     if (goal) {
       reset({
         category: goal.category,
-        completionType: goal.completionType,
+        completionType: goal.completion_type,
         title: goal.title,
         description: goal.description,
-        coins: goal.coins,
-        bonus: goal.bonus
+        coins: goal.coin_reward,
+        bonus: goal.completion_bonus_reward
       })
     }
   }, [goal, reset])

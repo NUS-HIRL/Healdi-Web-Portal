@@ -19,7 +19,7 @@ interface GoalsTabProps {
 export const GoalsTab = ({ patientId }: GoalsTabProps) => {
   const [pagination, setPagination] = useState({
     pageIndex: 1,
-    pageSize: 1
+    pageSize: 10
   })
 
   const {

@@ -1,14 +1,14 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Search, Bell, User, Check } from "lucide-react"
 import CustomDataTable from "@/components/common/table/custom-data-table"
+import { Button } from "@/components/ui/button"
+import usePagination from "@/hooks/use-pagination"
 import { Resource } from "@/types/resource"
+import { PaginatedResponse } from "@/types/response"
+import { Bell, Check, Search, User } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
 import { SelectResourceColumns } from "../../columns/select-resource-columns"
-import { Footer } from "../../common/footer"
-import { Sidebar } from "../../common/sidebar"
 
 const AVAILABLE_RESOURCES: Resource[] = [
   {
@@ -124,9 +124,13 @@ export const SelectResourcesPage = ({
     new Set()
   )
   const [pagination, setPagination] = useState({
-    pageIndex: 0,
+    pageIndex: 1,
     pageSize: 10
   })
+
+  // TODO: Copy goals-tab way of calling the API once ready
+  const { setCurrentPaginationTokenAndPageIndex, paginationToken } =
+    usePagination(pagination, setPagination)
 
   // Initialize selected resources from URL parameters
   useEffect(() => {
@@ -173,11 +177,13 @@ export const SelectResourcesPage = ({
 
   const ResourcesTable = CustomDataTable<Resource>
 
-  const results = {
+  const results: PaginatedResponse<Resource> = {
     data: AVAILABLE_RESOURCES,
-    totalCount: AVAILABLE_RESOURCES.length,
-    page: Math.floor(pagination.pageIndex / pagination.pageSize) + 1,
-    totalPages: Math.ceil(AVAILABLE_RESOURCES.length / pagination.pageSize)
+    count: AVAILABLE_RESOURCES.length,
+    pagination: {
+      next_page_key: null,
+      previous_page_key: null
+    }
   }
 
   return (
@@ -257,13 +263,14 @@ export const SelectResourcesPage = ({
                 <ResourcesTable
                   data={results}
                   columns={columns}
-                  pagination={{
-                    pageIndex: pagination.pageIndex,
-                    pageSize: pagination.pageSize
-                  }}
+                  pagination={pagination}
                   error={null}
                   isLoading={false}
                   setPagination={setPagination}
+                  paginationToken={paginationToken}
+                  setCurrentPaginationTokenAndPageIndex={
+                    setCurrentPaginationTokenAndPageIndex
+                  }
                 />
               </div>
             </div>

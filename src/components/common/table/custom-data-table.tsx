@@ -42,6 +42,7 @@ const CustomDataTable = <T,>({
   isLoading,
   hidePagination
 }: CustomDataTableProps<T>) => {
+  // TODO: Kervyn: Relook at the use of this table init
   const { table } = useDataTable(
     data,
     columns,
