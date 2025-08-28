@@ -14,6 +14,7 @@ type FormValues = {
   terms: boolean
 }
 
+// TODO: Kervyn: Remove the use of TextInput and PasswordInput
 const SignUpPage = () => {
   const router = useRouter()
 
@@ -26,7 +27,9 @@ const SignUpPage = () => {
       await login(data.username, data.password)
       router.push("/patient-info")
     } catch (e) {
-      alert((e as Error).message)
+      console.error(e)
+      // TODO: Kervyn: Create a proper alert
+      alert("Username or Password is incorrect.")
     }
   }
 
