@@ -139,7 +139,7 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                     />
                     <select className="flex-1 border border-gray-300 rounded-lg p-2">
                       <option value="">Unit</option>
-                      {Object.entries(DurationUnit).map(([key, value]) => (
+                      {Object.entries(DurationUnit).map(([_, value]) => (
                         <option key={value} value={value}>
                           {value.charAt(0).toUpperCase() + value.slice(1)}
                         </option>
@@ -164,7 +164,7 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                     />
                     <select className="flex-1 border border-gray-300 rounded-lg p-2">
                       <option value="">Unit</option>
-                      {Object.entries(FrequencyUnit).map(([key, value]) => (
+                      {Object.entries(FrequencyUnit).map(([_, value]) => (
                         <option key={value} value={value}>
                           {value.charAt(0).toUpperCase() + value.slice(1)}
                         </option>
@@ -183,7 +183,7 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                   </div>
                   <select className="w-full border border-gray-300 rounded-lg p-2">
                     <option value="">Select intensity</option>
-                    {Object.entries(IntensityLevel).map(([key, value]) => (
+                    {Object.entries(IntensityLevel).map(([_, value]) => (
                       <option key={value} value={value}>
                         {value}
                       </option>
@@ -201,7 +201,7 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                   </div>
                   <select className="w-full border border-gray-300 rounded-lg p-2">
                     <option value="">Select status</option>
-                    {Object.entries(AssignmentStatus).map(([key, value]) => (
+                    {Object.entries(AssignmentStatus).map(([_, value]) => (
                       <option key={value} value={value}>
                         {value}
                       </option>
