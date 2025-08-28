@@ -127,9 +127,8 @@ export const MedicationList = () => {
     pageIndex: 0,
     pageSize: 10
   })
-  const [selected, setSelected] = useState<MedicationTableValue | null>(null)
-
-  const handleViewMedication = (m: MedicationTableValue) => setSelected(m)
+  
+  // TODO: Replace with actual view handler when API integration is done
 
   // TODO: Remove once sorting is implemented on API side
   const [sorting] = useState<{
@@ -174,7 +173,7 @@ export const MedicationList = () => {
       }
       return String(av ?? "").localeCompare(String(bv ?? "")) * dir
     })
-  }, [medications, sorting])
+  }, [sorting])
 
   // TODO: Remove once pagination is implemented on API side
   // Calculate pagination data from sorted patients
@@ -195,8 +194,8 @@ export const MedicationList = () => {
   }
 
   const columns = useMemo(
-    () => MedicationColumns({ onViewMedication: handleViewMedication }),
-    [handleViewMedication]
+    () => MedicationColumns({ onViewMedication: () => null }),
+    []
   )
 
   return (
