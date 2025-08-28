@@ -67,6 +67,69 @@ Once your emergency situation is resolved, you can enter /emergencyoff in the in
         senderId: "u1",
         sender: users[1],
         seen: [{ userId: "u1", seenAt: new Date("2025-02-18T09:46:00Z") }]
+      },
+      {
+        id: "m3",
+        body: `Welcome to Healdi Chat! 
+We're here to help you with any queries you may have. Our intelligent Chatbot is ready to assist you.
+In case of an emergency and you need immediate assistance from our healthcare team, simply enter /emergencyon in the input field to activate the emergency message function.
+Once your emergency situation is resolved, you can enter /emergencyoff in the input field to deactivate the emergency message function. Alternatively, the emergency message function will automatically deactivate if no messages are received within 1 hour of activating it.`,
+        createdAt: new Date("2025-02-18T09:30:00Z"),
+        chatId: "c1",
+        senderId: "u0",
+        sender: users[0],
+        seen: [{ userId: "u2", seenAt: new Date("2025-02-18T09:35:00Z") }]
+      },
+      {
+        id: "m4",
+        body: "Hello, I am feeling great.",
+        createdAt: new Date("2025-02-18T09:45:00Z"),
+        chatId: "c1",
+        senderId: "u1",
+        sender: users[1],
+        seen: [{ userId: "u1", seenAt: new Date("2025-02-18T09:46:00Z") }]
+      },
+      {
+        id: "m5",
+        body: `Welcome to Healdi Chat! 
+We're here to help you with any queries you may have. Our intelligent Chatbot is ready to assist you.
+In case of an emergency and you need immediate assistance from our healthcare team, simply enter /emergencyon in the input field to activate the emergency message function.
+Once your emergency situation is resolved, you can enter /emergencyoff in the input field to deactivate the emergency message function. Alternatively, the emergency message function will automatically deactivate if no messages are received within 1 hour of activating it.`,
+        createdAt: new Date("2025-02-18T09:30:00Z"),
+        chatId: "c1",
+        senderId: "u0",
+        sender: users[0],
+        seen: [{ userId: "u2", seenAt: new Date("2025-02-18T09:35:00Z") }]
+      },
+      {
+        id: "m6",
+        body: "Hello, I am feeling great.",
+        createdAt: new Date("2025-02-18T09:45:00Z"),
+        chatId: "c1",
+        senderId: "u1",
+        sender: users[1],
+        seen: [{ userId: "u1", seenAt: new Date("2025-02-18T09:46:00Z") }]
+      },
+      {
+        id: "m7",
+        body: `Welcome to Healdi Chat! 
+We're here to help you with any queries you may have. Our intelligent Chatbot is ready to assist you.
+In case of an emergency and you need immediate assistance from our healthcare team, simply enter /emergencyon in the input field to activate the emergency message function.
+Once your emergency situation is resolved, you can enter /emergencyoff in the input field to deactivate the emergency message function. Alternatively, the emergency message function will automatically deactivate if no messages are received within 1 hour of activating it.`,
+        createdAt: new Date("2025-02-18T09:30:00Z"),
+        chatId: "c1",
+        senderId: "u0",
+        sender: users[0],
+        seen: [{ userId: "u2", seenAt: new Date("2025-02-18T09:35:00Z") }]
+      },
+      {
+        id: "m8",
+        body: "Hello, I am feeling great.",
+        createdAt: new Date("2025-02-18T09:45:00Z"),
+        chatId: "c1",
+        senderId: "u1",
+        sender: users[1],
+        seen: [{ userId: "u1", seenAt: new Date("2025-02-18T09:46:00Z") }]
       }
     ]
   },
