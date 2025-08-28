@@ -1,11 +1,12 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
-import { Goal } from "@/types/goal"
-import { Button } from "@/components/ui/button"
+import { SortDir, TableHeaderCell } from "@/components/common/table-header-cell"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { toTitleCase } from "@/lib/utils"
+import { Goal } from "@/types/goal"
+import { ColumnDef } from "@tanstack/react-table"
 import { Eye } from "lucide-react"
-import { TableHeaderCell, SortDir } from "@/components/common/table-header-cell"
 
 interface GoalColumnsProps {
   onSortingChange: (columnKey: string) => void
@@ -36,12 +37,12 @@ export const GoalColumns = ({
       <Badge
         variant="secondary"
         className="bg-orange-100 text-red-500 border-pink-200 whitespace-nowrap">
-        {row.original.category}
+        {toTitleCase(row.original.category)}
       </Badge>
     )
   },
   {
-    accessorKey: "completionType",
+    accessorKey: "completion_type",
     header: () => (
       <TableHeaderCell
         label="Completion Type"
@@ -51,7 +52,7 @@ export const GoalColumns = ({
         inline={true}
       />
     ),
-    cell: ({ row }) => row.original.completionType
+    cell: ({ row }) => row.original.completion_type
   },
   {
     accessorKey: "title",
@@ -88,7 +89,7 @@ export const GoalColumns = ({
     )
   },
   {
-    accessorKey: "coins",
+    accessorKey: "coin_reward",
     header: () => (
       <TableHeaderCell
         label="Coins"
@@ -98,10 +99,10 @@ export const GoalColumns = ({
         inline={true}
       />
     ),
-    cell: ({ row }) => row.original.coins
+    cell: ({ row }) => row.original.coin_reward
   },
   {
-    accessorKey: "bonus",
+    accessorKey: "completion_bonus_reward",
     header: () => (
       <TableHeaderCell
         label="Bonus"
@@ -111,20 +112,20 @@ export const GoalColumns = ({
         inline={true}
       />
     ),
-    cell: ({ row }) => row.original.bonus
+    cell: ({ row }) => row.original.completion_bonus_reward
   },
   {
-    accessorKey: "progress",
+    accessorKey: "progress", // TODO: Kervyn: Change this back to progress once DynamoDB reflects the data
     header: () => (
       <TableHeaderCell
-        label="Progress"
+        label="Type" // TODO: Kervyn: Change this back to progress once DynamoDB reflects the data
         active={sorting.column === "progress"}
         dir={sorting.direction || undefined}
         onClick={() => onSortingChange("progress")}
         inline={true}
       />
     ),
-    cell: ({ row }) => row.original.progress
+    cell: ({ row }) => row.original.completion_type
   },
   {
     id: "actions",

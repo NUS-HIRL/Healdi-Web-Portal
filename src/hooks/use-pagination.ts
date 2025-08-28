@@ -1,12 +1,8 @@
-import { PaginationState } from "@tanstack/react-table"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 
 const usePagination = () => {
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10
-  })
+  const [paginationToken, setPaginationToken] = useState<string | null>(null)
 
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -52,8 +48,8 @@ const usePagination = () => {
   }
 
   return {
-    pagination,
-    setPagination,
+    paginationToken,
+    setPaginationToken,
     sortBy,
     sortOrder,
     filterBy,

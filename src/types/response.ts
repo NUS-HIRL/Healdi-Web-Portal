@@ -10,10 +10,12 @@ export type ErrorResponse = {
   data: null
 }
 
-// TODO: Change to fit SQL usage instead of noSQL
+export interface PaginationKeys {
+  next_page_key: string | null;
+  previous_page_key: string | null;
+}
 export interface PaginatedResponse<T> {
   data: T[]
-  totalCount: number
-  page: number
-  totalPages: number
+  count: number
+  pagination: PaginationKeys
 }
