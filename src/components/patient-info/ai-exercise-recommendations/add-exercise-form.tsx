@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { Sidebar } from "../../common/sidebar"
 import { Footer } from "@/components/common/footer"
 import { MainHeader } from "@/components/common/main-header"
@@ -7,19 +8,21 @@ import { SubmitSection } from "../../common/submit-section"
 import { DurationUnit, FrequencyUnit, IntensityLevel, AssignmentStatus } from "@/types/exercise"
 import Image from "next/image"
 
-interface EditExerciseFormProps {
-  exerciseId: string
+interface AddExerciseFormProps {
+  patientId: string
 }
 
-// TODO: Gerald: Add exerciseId usage once fully fleshing out the form, remove below eslint-disable
+export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
+  const router = useRouter()
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
+  const handleSubmit = () => {
+    router.push(`/patient-info/${patientId}`)
+  }
+
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
       <div className="flex-1 flex flex-col">
-        {/* Header */}
         <MainHeader />
 
         <main className="flex-1 overflow-auto flex flex-col">
@@ -36,10 +39,9 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
           <div className="bg-white flex-1">
             <div className="p-6">
               <h2 className="text-xl font-semibold mb-6">
-                Edit Exercise Recommendation
+                Add Exercise Recommendation
               </h2>
 
-              {/* AI Recommended Summary Section */}
               <div className="grid grid-cols-2 gap-6 mb-8 items-start">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded flex items-center justify-center p-1">
@@ -104,9 +106,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                 </div>
               </div>
 
-              {/* Form for editing exercise recommendation */}
               <form>
-                {/* Form fields go here */}
                 <div className="grid grid-cols-2 gap-6 mb-8 items-center">
                   <div className="flex flex-col gap-1">
                     <label className="text-md font-bold text-black-700">
@@ -118,6 +118,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                   </div>
                   <input
                     type="text"
+                    placeholder="e.g. Brisk Walking"
                     className="w-full border border-gray-300 rounded-lg p-2"
                   />
                 </div>
@@ -137,9 +138,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                       className="flex-1 border border-gray-300 rounded-lg p-2"
                     />
                     <select className="flex-1 border border-gray-300 rounded-lg p-2">
-                      <option value="" disabled>
-                        Unit
-                      </option>
+                      <option value="">Unit</option>
                       {Object.entries(DurationUnit).map(([, value]) => (
                         <option key={value} value={value}>
                           {value.charAt(0).toUpperCase() + value.slice(1)}
@@ -164,9 +163,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                       className="flex-1 border border-gray-300 rounded-lg p-2"
                     />
                     <select className="flex-1 border border-gray-300 rounded-lg p-2">
-                      <option value="" disabled>
-                        Unit
-                      </option>
+                      <option value="">Unit</option>
                       {Object.entries(FrequencyUnit).map(([, value]) => (
                         <option key={value} value={value}>
                           {value.charAt(0).toUpperCase() + value.slice(1)}
@@ -185,9 +182,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                     </label>
                   </div>
                   <select className="w-full border border-gray-300 rounded-lg p-2">
-                    <option value="" disabled>
-                      Select intensity
-                    </option>
+                    <option value="">Select intensity</option>
                     {Object.entries(IntensityLevel).map(([, value]) => (
                       <option key={value} value={value}>
                         {value}
@@ -205,9 +200,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                     </label>
                   </div>
                   <select className="w-full border border-gray-300 rounded-lg p-2">
-                    <option value="" disabled>
-                      Select status
-                    </option>
+                    <option value="">Select status</option>
                     {Object.entries(AssignmentStatus).map(([, value]) => (
                       <option key={value} value={value}>
                         {value}
@@ -215,7 +208,11 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                     ))}
                   </select>
                 </div>
-                <SubmitSection description="Review your filled form details and make sure everything is accurate. Once you're ready, click the 'Submit' button to add the new exercise recommendation." />
+                <SubmitSection
+                  description="Review your filled form details and make sure everything is accurate. Once you're ready, click the 'Submit' button to add the new exercise recommendation."
+                  onSubmit={handleSubmit}
+                  isForm={false}
+                />
               </form>
             </div>
           </div>

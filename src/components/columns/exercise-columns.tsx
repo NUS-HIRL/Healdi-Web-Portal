@@ -19,12 +19,12 @@ export const ExerciseColumns = ({
   {
     accessorKey: "duration",
     header: () => <TableHeaderCell label="Duration" />,
-    cell: ({ row }) => row.original.duration
+    cell: ({ row }) => `${row.original.duration} ${row.original.durationUnit}`
   },
   {
     accessorKey: "frequency",
     header: () => <TableHeaderCell label="Frequency" />,
-    cell: ({ row }) => row.original.frequency
+    cell: ({ row }) => `${row.original.frequency} ${row.original.frequencyUnit}`
   },
   {
     accessorKey: "intensity",
