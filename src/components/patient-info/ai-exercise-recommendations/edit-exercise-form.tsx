@@ -140,7 +140,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                       <option value="" disabled>
                         Unit
                       </option>
-                      {Object.entries(DurationUnit).map(([_, value]) => (
+                      {Object.entries(DurationUnit).map(([, value]) => (
                         <option key={value} value={value}>
                           {value.charAt(0).toUpperCase() + value.slice(1)}
                         </option>
@@ -167,7 +167,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                       <option value="" disabled>
                         Unit
                       </option>
-                      {Object.entries(FrequencyUnit).map(([_, value]) => (
+                      {Object.entries(FrequencyUnit).map(([, value]) => (
                         <option key={value} value={value}>
                           {value.charAt(0).toUpperCase() + value.slice(1)}
                         </option>
@@ -188,7 +188,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                     <option value="" disabled>
                       Select intensity
                     </option>
-                    {Object.entries(IntensityLevel).map(([_, value]) => (
+                    {Object.entries(IntensityLevel).map(([, value]) => (
                       <option key={value} value={value}>
                         {value}
                       </option>
@@ -208,7 +208,7 @@ export const EditExerciseForm = ({ exerciseId }: EditExerciseFormProps) => {
                     <option value="" disabled>
                       Select status
                     </option>
-                    {Object.entries(AssignmentStatus).map(([_, value]) => (
+                    {Object.entries(AssignmentStatus).map(([, value]) => (
                       <option key={value} value={value}>
                         {value}
                       </option>
