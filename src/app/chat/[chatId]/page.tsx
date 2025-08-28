@@ -5,7 +5,7 @@ import EmptyState from "@/components/chat/empty-state"
 import Header from "@/components/chat/chat-header"
 import Body from "@/components/chat/body"
 import Form from "@/components/chat/form"
-import Search from "@/components/chat/search-message-box"
+import SearchMessageBox from "@/components/chat/search-message-box"
 import { useEffect, useState, useCallback } from "react"
 import { Message, Chat, UserType } from "@/types/chat"
 import { conversations } from "@/app/chat/layout"
@@ -77,7 +77,7 @@ const ChatId = ({ params }: { params: Promise<IParams> }) => {
         <Header chat={chat} onToggleSearch={toggleSearch} />
 
         {searchBarOpen && (
-          <Search
+          <SearchMessageBox
             searchBarOpen={searchBarOpen}
             onClose={() => setSearchBarOpen(false)}
             messages={messages}

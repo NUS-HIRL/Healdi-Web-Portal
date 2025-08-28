@@ -19,7 +19,7 @@ interface SearchProps {
 
 type FormData = { searchQuery: string }
 
-const Search: React.FC<SearchProps> = ({
+const SearchMessageBox: React.FC<SearchProps> = ({
   onClose,
   messages,
   setSearchTargetId,
@@ -104,4 +104,4 @@ const Search: React.FC<SearchProps> = ({
   )
 }
 
-export default Search
+export default SearchMessageBox
