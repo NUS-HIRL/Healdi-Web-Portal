@@ -1,6 +1,6 @@
 "use client"
 
-import { SortDir, TableHeaderCell } from "@/components/common/table-header-cell"
+import { TableHeaderCell } from "@/components/common/table-header-cell"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { toTitleCase } from "@/lib/utils"
@@ -9,30 +9,15 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Eye } from "lucide-react"
 
 interface GoalColumnsProps {
-  onSortingChange: (columnKey: string) => void
   onViewGoal: (goal: Goal) => void
-  sorting: {
-    column: string | null
-    direction: SortDir | null
-  }
 }
 
 export const GoalColumns = ({
-  onSortingChange,
-  onViewGoal,
-  sorting
+  onViewGoal
 }: GoalColumnsProps): ColumnDef<Goal>[] => [
   {
     accessorKey: "category",
-    header: () => (
-      <TableHeaderCell
-        label="Category"
-        active={sorting.column === "category"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("category")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Category" inline={true} />,
     cell: ({ row }) => (
       <Badge
         variant="secondary"
@@ -43,28 +28,12 @@ export const GoalColumns = ({
   },
   {
     accessorKey: "completion_type",
-    header: () => (
-      <TableHeaderCell
-        label="Completion Type"
-        active={sorting.column === "completionType"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("completionType")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Completion Type" inline={true} />,
     cell: ({ row }) => row.original.completion_type
   },
   {
     accessorKey: "title",
-    header: () => (
-      <TableHeaderCell
-        label="Title"
-        active={sorting.column === "title"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("title")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Title" inline={true} />,
     cell: ({ row }) => (
       <span className="block max-w-[20rem] whitespace-normal break-words">
         {row.original.title}
@@ -73,15 +42,7 @@ export const GoalColumns = ({
   },
   {
     accessorKey: "description",
-    header: () => (
-      <TableHeaderCell
-        label="Description"
-        active={sorting.column === "description"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("description")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Description" inline={true} />,
     cell: ({ row }) => (
       <span className="block max-w-[28rem] whitespace-normal break-words leading-relaxed">
         {row.original.description}
@@ -90,28 +51,12 @@ export const GoalColumns = ({
   },
   {
     accessorKey: "coin_reward",
-    header: () => (
-      <TableHeaderCell
-        label="Coins"
-        active={sorting.column === "coins"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("coins")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Coins" inline={true} />,
     cell: ({ row }) => row.original.coin_reward
   },
   {
     accessorKey: "completion_bonus_reward",
-    header: () => (
-      <TableHeaderCell
-        label="Bonus"
-        active={sorting.column === "bonus"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("bonus")}
-        inline={true}
-      />
-    ),
+    header: () => <TableHeaderCell label="Bonus" inline={true} />,
     cell: ({ row }) => row.original.completion_bonus_reward
   },
   {
@@ -119,9 +64,6 @@ export const GoalColumns = ({
     header: () => (
       <TableHeaderCell
         label="Type" // TODO: Kervyn: Change this back to progress once DynamoDB reflects the data
-        active={sorting.column === "progress"}
-        dir={sorting.direction || undefined}
-        onClick={() => onSortingChange("progress")}
         inline={true}
       />
     ),

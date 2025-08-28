@@ -7,7 +7,7 @@ import fetcher from "@/lib/fetcher"
 import { buildDefaultPaginatedData } from "@/lib/utils"
 import { Goal } from "@/types/goal"
 import { PaginatedResponse } from "@/types/response"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useSWR from "swr"
 import { GoalColumns } from "../../columns/goal-columns"
 import { GoalDetailsSidebar } from "./goal-details-sidebar"
@@ -18,11 +18,16 @@ interface GoalsTabProps {
 
 export const GoalsTab = ({ patientId }: GoalsTabProps) => {
   const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10
+    pageIndex: 1,
+    pageSize: 1
   })
 
-  const { paginationToken, setPaginationToken } = usePagination()
+  const {
+    currentPaginationToken,
+    setCurrentPaginationTokenAndPageIndex,
+    paginationToken,
+    setPaginationToken
+  } = usePagination(pagination, setPagination)
 
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null)
   const [isViewOpen, setIsViewOpen] = useState(false)
@@ -32,37 +37,15 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     error,
     isLoading
   } = useSWR<PaginatedResponse<Goal>>(
-    `v1/users/${encodeURIComponent(patientId)}/goals?limit=${pagination.pageSize}&token=${paginationToken}`,
+    `v1/users/${encodeURIComponent(patientId)}/goals?limit=${pagination.pageSize}&token=${currentPaginationToken}`,
     fetcher
   )
 
-  const [sorting, setSorting] = useState<{
-    column: string | null
-    direction: "asc" | "desc" | null
-  }>({
-    column: null,
-    direction: null
-  })
-
-  const handleSortingChange = (column: string) => {
-    setSorting((prev) => {
-      if (prev.column === column) {
-        // Toggle direction if same column
-        if (prev.direction === "asc") return { column, direction: "desc" }
-        if (prev.direction === "desc") return { column, direction: null }
-        return { column, direction: "asc" }
-      } else {
-        // New column, start with ascending
-        return { column, direction: "asc" }
-      }
-    })
-
-    // Reset to first page when sorting changes
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: 1
-    }))
-  }
+  useEffect(() => {
+    setPaginationToken(response.pagination)
+    // disable to prevent constant re-rendering due to extra dependency
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response.pagination])
 
   // Handle view button click
   const handleViewGoal = (goal: Goal) => {
@@ -72,9 +55,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
 
   // Create columns using the imported column factory
   const columns = GoalColumns({
-    onSortingChange: handleSortingChange,
-    onViewGoal: handleViewGoal,
-    sorting: sorting
+    onViewGoal: handleViewGoal
   })
 
   // Handle close view
@@ -102,10 +83,14 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
             <GoalsTable
               data={response}
               columns={columns}
-              pagination={{ pageIndex: 0, pageSize: pagination.pageSize }}
+              pagination={pagination}
               error={error}
               isLoading={isLoading}
               setPagination={setPagination}
+              paginationToken={paginationToken}
+              setCurrentPaginationTokenAndPageIndex={
+                setCurrentPaginationTokenAndPageIndex
+              }
             />
           </div>
         </div>

@@ -1,18 +1,30 @@
+import { PaginationState } from "@tanstack/react-table"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 
-const usePagination = () => {
-  const [paginationToken, setPaginationToken] = useState<string | null>(null)
+import { PaginationKeys } from "@/types/response"
+
+const usePagination = (
+  pagination: PaginationState,
+  setPagination: React.Dispatch<React.SetStateAction<PaginationState>>
+) => {
+  // Current Last Evaluated Key for DynamoDB, to display current page results
+  // null for first page
+  const [currentPaginationToken, setCurrentPaginationToken] = useState<
+    string | null
+  >(null)
+
+  // Store next_page_key/prev_page_key for forward + backward pagination
+  const [paginationToken, setPaginationToken] = useState<PaginationKeys>({
+    next_page_key: null,
+    previous_page_key: null
+  })
 
   const searchParams = useSearchParams()
   const router = useRouter()
 
   const sortBy = searchParams.get("sortBy")
   const sortOrder = searchParams.get("sortOrder")
-  const filterBy = searchParams.get("filterBy")
-  const filterValue = searchParams.get("filterValue")
-  const searchBy = searchParams.get("searchBy")
-  const searchTerm = searchParams.get("searchTerm")
   const startDate = searchParams.get("startDate")
   const endDate = searchParams.get("endDate")
 
@@ -26,20 +38,6 @@ const usePagination = () => {
     router.push(`?${newParams.toString()}`)
   }
 
-  const handleFilter = (filterBy: string, filterValue: string) => {
-    const newParams = new URLSearchParams(searchParams)
-    newParams.set("filterBy", filterBy)
-    newParams.set("filterValue", filterValue)
-    router.push(`?${newParams.toString()}`)
-  }
-
-  const handleSearch = (searchBy: string, searchTerm: string) => {
-    const params = new URLSearchParams(searchParams.toString())
-    params.set("searchBy", searchBy)
-    params.set("searchTerm", searchTerm)
-    router.replace(`?${params.toString()}`)
-  }
-
   const clearSearchParams = (byKey: string, valueKey: string) => {
     const newParams = new URLSearchParams(searchParams)
     newParams.delete(byKey)
@@ -47,20 +45,32 @@ const usePagination = () => {
     router.push(`?${newParams.toString()}`)
   }
 
+  const setCurrentPaginationTokenAndPageIndex = (
+    isNextPage: boolean,
+    newCurrentPaginationToken: string
+  ) => {
+    setCurrentPaginationToken(newCurrentPaginationToken)
+    if (isNextPage) {
+      setPagination((prev) => ({ ...prev, pageIndex: prev.pageIndex + 1 }))
+    } else {
+      // Prev page
+      setPagination((prev) => ({ ...prev, pageIndex: prev.pageIndex - 1 }))
+    }
+  }
+
   return {
+    currentPaginationToken,
+    setCurrentPaginationToken,
     paginationToken,
     setPaginationToken,
+    pagination,
+    setPagination,
+    setCurrentPaginationTokenAndPageIndex,
     sortBy,
     sortOrder,
-    filterBy,
-    filterValue,
-    searchBy,
-    searchTerm,
     startDate,
     endDate,
     handleSort,
-    handleFilter,
-    handleSearch,
     clearSearchParams
   }
 }
