@@ -17,6 +17,8 @@ import {
 import CustomDataTable from "@/components/common/table/custom-data-table"
 import { ExerciseColumns } from "../../columns/exercise-columns"
 import { ExerciseDetailsSidebar } from "./exercise-details-sidebar"
+import usePagination from "@/hooks/use-pagination"
+import { PaginatedResponse } from "@/types/response"
 
 const INITIAL_DATA: Exercise[] = [
   {
@@ -69,11 +71,14 @@ export const AiExerciseRecommendations = ({
   const router = useRouter()
   const [rows, setRows] = useState<Exercise[]>(INITIAL_DATA)
 
-  // pagination
   const [pagination, setPagination] = useState({
-    pageIndex: 0,
+    pageIndex: 1,
     pageSize: 10
   })
+
+  // TODO: Copy goals-tab way of calling the API once ready
+  const { setCurrentPaginationTokenAndPageIndex, paginationToken } =
+    usePagination(pagination, setPagination)
 
   // modals
   const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(
@@ -93,11 +98,13 @@ export const AiExerciseRecommendations = ({
   const ExerciseTable = CustomDataTable<Exercise>
 
   // Mock paginated results
-  const results = {
+  const results: PaginatedResponse<Exercise> = {
     data: rows,
-    totalCount: rows.length,
-    page: 1,
-    totalPages: Math.ceil(rows.length / pagination.pageSize)
+    count: rows.length,
+    pagination: {
+      next_page_key: null,
+      previous_page_key: null
+    }
   }
 
   function handleAdd() {
@@ -110,12 +117,6 @@ export const AiExerciseRecommendations = ({
       setIsViewOpen(false)
       setSelectedExercise(null)
     }
-  }
-
-  function handleEdit(exerciseId: string) {
-    router.push(
-      `/patient-info/${patientId}/ai-exercise-recommendation/edit/${exerciseId}`
-    )
   }
 
   // Handle close view
@@ -152,13 +153,14 @@ export const AiExerciseRecommendations = ({
             <ExerciseTable
               data={results}
               columns={columns}
-              pagination={{
-                pageIndex: pagination.pageIndex,
-                pageSize: pagination.pageSize
-              }}
+              pagination={pagination}
               error={null}
               isLoading={false}
               setPagination={setPagination}
+              paginationToken={paginationToken}
+              setCurrentPaginationTokenAndPageIndex={
+                setCurrentPaginationTokenAndPageIndex
+              }
             />
           </div>
         </div>

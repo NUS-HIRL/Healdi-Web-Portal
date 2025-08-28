@@ -55,8 +55,6 @@ const useDataTable = <T>(
     onRowSelectionChange: setRowSelection,
     manualSorting: true,
     manualPagination: true,
-    rowCount: typeSafeResults.totalCount,
-    pageCount: typeSafeResults.totalPages,
     state: {
       sorting,
       columnFilters,
