@@ -23,50 +23,44 @@ export const ResourcesTab = () => {
   const mockResources: Resource[] = useMemo(
     () => [
       {
-        id: "1",
+        id: "bd226a7143f21901baa9a9e416f4e6f426af3441",
         type: "Article",
-        source: "HealthXChange",
-        title: "Annual Screening for Diabetes Complications",
+        source: "National Heart Centre Singapore",
+        title: "Hypertension",
         assignedOrSaved: "Saved",
-        category: "Complications & Prevention",
-        subCategory: "Protective Measures",
-        url: "https://example.com/diabetes-screening"
+        category: "Cardiovascular Health",
+        subCategory: "Hypertension",
+        url: "https://www.nhcs.com.sg/patient-care/conditions-treatments/hypertension"
       },
       {
-        id: "2",
-        type: "Video",
-        source: "MedEd",
-        title: "Understanding Blood Pressure Management",
+        id: "6c6a909b8f5d1f3364ff330cea70fa640da31d47",
+        type: "Article",
+        source: "National Heart Centre Singapore",
+        title: "Understanding Blood Pressure & Hypertension",
         assignedOrSaved: "Assigned",
         category: "Cardiovascular Health",
-        subCategory: "Hypertension"
+        subCategory: "Hypertension",
+        url: "https://www.nhcs.com.sg/news/murmurs/understanding-blood-pressure-and-hypertension"
       },
       {
-        id: "3",
-        type: "Document",
-        source: "PatientCare",
-        title: "Exercise Guidelines for Heart Health",
-        assignedOrSaved: "Assigned",
-        category: "Physical Activity",
-        subCategory: "Cardio Exercise"
-      },
-      {
-        id: "4",
-        type: "Article",
-        source: "HealthXChange",
-        title: "Nutrition Tips for Better Health",
-        assignedOrSaved: "Saved",
-        category: "Nutrition",
-        subCategory: "Healthy Eating"
-      },
-      {
-        id: "5",
+        id: "011bcf8d6af48e9497baec7ba6d12e8856163081",
         type: "Video",
-        source: "MedEd",
-        title: "Stress Management Techniques",
+        source: "MOH Singapore",
+        title: "Know About Medication Label",
         assignedOrSaved: "Assigned",
-        category: "Mental Health",
-        subCategory: "Stress Relief"
+        category: "Medication",
+        subCategory: "Adherence",
+        url: "https://www.youtube.com/watch?v=X3k2zj9AzUU"
+      },
+      {
+        id: "6c6811ef041d33aefbd6a79b7d077c3398d89085",
+        type: "Video",
+        source: "MOH Singapore",
+        title: "Know How to Remember to Take Your Meds",
+        assignedOrSaved: "Saved",
+        category: "Medication",
+        subCategory: "Adherence",
+        url: "https://www.youtube.com/watch?v=io1442LpcM8"
       }
     ],
     []
