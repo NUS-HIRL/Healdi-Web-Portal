@@ -6,6 +6,7 @@ import { TextInput } from "@/components/auth/TextInput"
 import { PasswordInput } from "@/components/auth/PasswordInput"
 import { Button } from "@/components/ui/button"
 import { login } from "@/lib/auth"
+import { useRouter } from "next/navigation"
 
 type FormValues = {
   username: string
@@ -13,7 +14,10 @@ type FormValues = {
   terms: boolean
 }
 
-export default function SignUpPage() {
+// TODO: Kervyn: Remove the use of TextInput and PasswordInput
+const SignUpPage = () => {
+  const router = useRouter()
+
   const methods = useForm<FormValues>({
     defaultValues: { username: "", password: "", terms: false }
   })
@@ -21,9 +25,11 @@ export default function SignUpPage() {
   const onSubmit = async (data: FormValues) => {
     try {
       await login(data.username, data.password)
-      window.location.href = "/patient-info"
+      router.push("/patient-info")
     } catch (e) {
-      alert((e as Error).message)
+      console.error(e)
+      // TODO: Kervyn: Create a proper alert
+      alert("Username or Password is incorrect.")
     }
   }
 
@@ -101,3 +107,5 @@ export default function SignUpPage() {
     </div>
   )
 }
+
+export default SignUpPage
