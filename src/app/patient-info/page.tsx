@@ -2,10 +2,11 @@
 
 import { MainHeader } from "@/components/common/main-header"
 import { PatientList } from "@/components/patient-info/patient-list"
+import { Suspense } from "react"
 
 const PatientInfoPage = () => {
   return (
-    <>
+    <Suspense>
       {/* Header */}
       <MainHeader />
       {/* TODO: Ze Kai: Replace hardcoded breadcrumbs */}
@@ -21,7 +22,7 @@ const PatientInfoPage = () => {
           <PatientList />
         </div>
       </div>
-    </>
+    </Suspense>
   )
 }
 
