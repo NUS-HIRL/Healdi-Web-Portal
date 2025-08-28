@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button"
+
 interface SubmitSectionProps {
   title?: string
   description?: string
@@ -22,13 +24,13 @@ export const SubmitSection = ({
         <p className="text-gray-600 text-sm">{description}</p>
       </div>
       <div className="flex justify-end border-t border-gray-200 pt-4">
-        <button
+        <Button
           type={isForm ? "submit" : "button"}
           onClick={!isForm ? onSubmit : undefined}
           disabled={disabled}
-          className="px-6 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed">
+          className="bg-gray-800 hover:bg-gray-900">
           {buttonText}
-        </button>
+        </Button>
       </div>
     </div>
   )

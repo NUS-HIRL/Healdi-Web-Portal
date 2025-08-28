@@ -206,6 +206,7 @@ export const SelectResourcesPage = ({
 
         <main className="flex-1 overflow-auto">
           <div className="px-6 py-4">
+            {/* TODO: Gerald: Update breadcrumb navigation */}
             <nav className="text-sm text-gray-500">
               Home / Select Patient / View Patient / Select Resources
             </nav>

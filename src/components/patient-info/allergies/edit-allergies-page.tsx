@@ -95,7 +95,7 @@ export const EditAllergiesPage = () => {
     <div className="flex h-screen bg-gray-100">
       <Sidebar />
       <div className="flex-1 flex flex-col">
-        {/* Main Content */}
+        {/* TODO: Gerald: Update breadcrumb navigation */}
         <main className="flex-1 overflow-auto">
           <div className="px-6 py-4">
             <nav className="text-sm text-gray-500">
@@ -103,7 +103,6 @@ export const EditAllergiesPage = () => {
             </nav>
           </div>
 
-          {/* Page Title Row */}
           <div className="px-6 pb-4 flex items-center justify-between">
             <div className="flex col gap-5">
               <button

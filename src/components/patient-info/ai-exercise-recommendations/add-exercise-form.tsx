@@ -5,6 +5,7 @@ import { Sidebar } from "../../common/sidebar"
 import { Footer } from "@/components/common/footer"
 import { MainHeader } from "@/components/common/main-header"
 import { SubmitSection } from "../../common/submit-section"
+import { DurationUnit, FrequencyUnit, IntensityLevel, AssignmentStatus } from "@/types/exercise"
 import Image from "next/image"
 
 interface AddExerciseFormProps {
@@ -15,8 +16,6 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
   const router = useRouter()
 
   const handleSubmit = () => {
-    console.log("Adding new exercise...")
-
     router.push(`/patient-info/${patientId}`)
   }
 
@@ -28,6 +27,7 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
 
         <main className="flex-1 overflow-auto flex flex-col">
           <div className="p-6">
+            {/* TODO: Gerald: Update breadcrumb navigation */}
             <nav className="text-sm text-gray-500 mb-4">
               Home / Select Patient /{" "}
               <span className="text-gray-900">View Patient</span>
@@ -139,8 +139,11 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                     />
                     <select className="flex-1 border border-gray-300 rounded-lg p-2">
                       <option value="">Unit</option>
-                      <option value="minutes">Minutes</option>
-                      <option value="hours">Hours</option>
+                      {Object.entries(DurationUnit).map(([key, value]) => (
+                        <option key={value} value={value}>
+                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -161,12 +164,11 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                     />
                     <select className="flex-1 border border-gray-300 rounded-lg p-2">
                       <option value="">Unit</option>
-                      <option value="per day">Per Day</option>
-                      <option value="per week">Per Week</option>
-                      <option value="per month">Per Month</option>
-                      <option value="daily">Daily</option>
-                      <option value="weekly">Weekly</option>
-                      <option value="monthly">Monthly</option>
+                      {Object.entries(FrequencyUnit).map(([key, value]) => (
+                        <option key={value} value={value}>
+                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -181,9 +183,11 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                   </div>
                   <select className="w-full border border-gray-300 rounded-lg p-2">
                     <option value="">Select intensity</option>
-                    <option value="Low">Low</option>
-                    <option value="Moderate">Moderate</option>
-                    <option value="High">High</option>
+                    {Object.entries(IntensityLevel).map(([key, value]) => (
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-6 mb-8 items-center">
@@ -197,8 +201,11 @@ export const AddExerciseForm = ({ patientId }: AddExerciseFormProps) => {
                   </div>
                   <select className="w-full border border-gray-300 rounded-lg p-2">
                     <option value="">Select status</option>
-                    <option value="Assigned">Assigned</option>
-                    <option value="Saved">Saved</option>
+                    {Object.entries(AssignmentStatus).map(([key, value]) => (
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <SubmitSection
