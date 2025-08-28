@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { Plus, Eye } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Exercise } from "@/types/exercise"
+import { Exercise, DurationUnit, FrequencyUnit, IntensityLevel, AssignmentStatus } from "@/types/exercise"
 import CustomDataTable from "@/components/common/table/custom-data-table"
 import { ExerciseColumns } from "../../columns/exercise-columns"
 import { ExerciseDetailsSidebar } from "./exercise-details-sidebar"
@@ -17,41 +17,41 @@ const INITIAL_DATA: Exercise[] = [
     id: "1",
     activityType: "Brisk Walking",
     duration: 30,
-    durationUnit: "minutes",
+    durationUnit: DurationUnit.MINUTES,
     frequency: 1,
-    frequencyUnit: "daily",
-    intensity: "Moderate",
-    assignedOrSaved: "Assigned"
+    frequencyUnit: FrequencyUnit.DAILY,
+    intensity: IntensityLevel.MODERATE,
+    assignedOrSaved: AssignmentStatus.ASSIGNED
   },
   {
     id: "2",
     activityType: "Swimming",
     duration: 45,
-    durationUnit: "minutes",
+    durationUnit: DurationUnit.MINUTES,
     frequency: 3,
-    frequencyUnit: "per week",
-    intensity: "High",
-    assignedOrSaved: "Saved"
+    frequencyUnit: FrequencyUnit.PER_WEEK,
+    intensity: IntensityLevel.HIGH,
+    assignedOrSaved: AssignmentStatus.SAVED
   },
   {
     id: "3",
     activityType: "Strength Training",
     duration: 20,
-    durationUnit: "minutes",
+    durationUnit: DurationUnit.MINUTES,
     frequency: 2,
-    frequencyUnit: "per week",
-    intensity: "High",
-    assignedOrSaved: "Assigned"
+    frequencyUnit: FrequencyUnit.PER_WEEK,
+    intensity: IntensityLevel.HIGH,
+    assignedOrSaved: AssignmentStatus.ASSIGNED
   },
   {
     id: "4",
     activityType: "Yoga",
     duration: 1,
-    durationUnit: "hours",
+    durationUnit: DurationUnit.HOURS,
     frequency: 1,
-    frequencyUnit: "weekly",
-    intensity: "Low",
-    assignedOrSaved: "Saved"
+    frequencyUnit: FrequencyUnit.WEEKLY,
+    intensity: IntensityLevel.LOW,
+    assignedOrSaved: AssignmentStatus.SAVED
   }
 ]
 
