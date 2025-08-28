@@ -2,7 +2,7 @@
 
 import { Message } from "@/types/chat"
 import { IoChevronUp, IoChevronDown, IoSearch } from "react-icons/io5"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { computeHitIds } from "@/lib/chat"
 
@@ -20,6 +20,7 @@ interface SearchProps {
 type FormData = { searchQuery: string }
 
 const SearchMessageBox: React.FC<SearchProps> = ({
+  searchBarOpen,
   onClose,
   messages,
   setSearchTargetId,
@@ -28,13 +29,23 @@ const SearchMessageBox: React.FC<SearchProps> = ({
   hitIndex,
   setHitIndex
 }) => {
-  const { register, handleSubmit } = useForm<FormData>({
+  const { register, handleSubmit, watch } = useForm<FormData>({
     defaultValues: { searchQuery: "" }
   })
+
+  const rawQuery = watch("searchQuery")
+  const hasQuery = !!rawQuery?.trim()
+
+  const [committedThisOpen, setCommittedThisOpen] = useState(false)
+
+  useEffect(() => {
+    if (searchBarOpen) setCommittedThisOpen(false)
+  }, [searchBarOpen])
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const q = data.searchQuery?.trim() ?? ""
     setHighlightQuery(q)
+    setCommittedThisOpen(true)
 
     const ids = computeHitIds(messages, q)
     if (!ids.length) {
@@ -47,7 +58,7 @@ const SearchMessageBox: React.FC<SearchProps> = ({
 
   const goTo = (index: number) => {
     if (!hitIds.length) return
-    const normalized = ((index % hitIds.length) + hitIds.length) % hitIds.length // wrap
+    const normalized = ((index % hitIds.length) + hitIds.length) % hitIds.length
     setHitIndex(normalized)
     setSearchTargetId(hitIds[normalized])
   }
@@ -74,21 +85,23 @@ const SearchMessageBox: React.FC<SearchProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-black text-sm w-12 text-center">
-            {hitIds.length ? `${hitIndex + 1} of ${hitIds.length}` : "0 of 0"}
-          </span>
+          {committedThisOpen && hasQuery && hitIds.length > 0 && (
+            <span className="text-black text-sm w-20 text-center">
+              {hitIndex + 1} of {hitIds.length}
+            </span>
+          )}
           <button
             type="button"
             onClick={prev}
             disabled={!hitIds.length}
-            className="w-8 h-8 flex items-center justify-center rounded-sm bg-gray-100 disabled:opacity-40 cursor-pointer">
+            className="w-8 h-8 flex items-center justify-center rounded-sm bg-gray-100 cursor-pointer">
             <IoChevronUp size={24} color="gray" />
           </button>
           <button
             type="button"
             onClick={next}
             disabled={!hitIds.length}
-            className="w-8 h-8 flex items-center justify-center rounded-sm bg-gray-100 disabled:opacity-40 cursor-pointer">
+            className="w-8 h-8 flex items-center justify-center rounded-sm bg-gray-100 cursor-pointer">
             <IoChevronDown size={24} color="gray" />
           </button>
         </div>
