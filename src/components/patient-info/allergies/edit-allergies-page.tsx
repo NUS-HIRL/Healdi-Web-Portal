@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Plus, Trash2, ArrowLeft } from "lucide-react"
-import { MultiSelect } from "./allergies-multiselect"
+import { MultiSelect } from "@/components/common/multiselect"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -86,7 +86,7 @@ export const EditAllergiesPage = () => {
       if (window.history.length > 1) {
         window.history.back()
       } else {
-        window.location.href = "/patients" // fallback route
+        window.location.href = "/patients/medication" // fallback route
       }
     }
   }
