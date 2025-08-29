@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label"
 import { AllergyItem, Reaction } from "@/types/reaction"
 import { AlertTriangle, ArrowLeft, Plus, Trash2 } from "lucide-react"
 import { useMemo, useState } from "react"
-import { MultiSelect } from "./allergies-multiselect"
+import { MultiSelect } from "@/components/common/multiselect"
 
 export const EditAllergiesPage = () => {
   const [items, setItems] = useState<AllergyItem[]>([
@@ -83,7 +83,7 @@ export const EditAllergiesPage = () => {
       if (window.history.length > 1) {
         window.history.back()
       } else {
-        window.location.href = "/patients" // fallback route
+        window.location.href = "/patients/medication" // fallback route
       }
     }
   }
