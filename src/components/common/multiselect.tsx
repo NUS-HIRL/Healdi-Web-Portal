@@ -8,11 +8,11 @@ import {
   PopoverContent
 } from "@/components/ui/popover"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useState } from "react"
+import React, { useState } from "react"
 import type { Reaction } from "@/types/reaction"
 import { ChevronDown, X } from "lucide-react"
 
-const DEFAULT_REACTION_OPTIONS = [
+const DEFAULT_REACTION_OPTIONS: Reaction[] = [
   "Skin Rash",
   "Fever",
   "Dizziness",
@@ -20,11 +20,9 @@ const DEFAULT_REACTION_OPTIONS = [
   "Itching",
   "Nausea",
   "Others"
-] as const satisfies readonly Reaction[]
+]
 
-type StringLike = string
-
-export const MultiSelect = <T extends StringLike = Reaction>({
+export const MultiSelect = <T extends string = Reaction>({
   value,
   onChange,
   placeholder = "Select reactions",

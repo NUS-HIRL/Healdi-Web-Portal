@@ -127,7 +127,7 @@ export const MedicationList = () => {
     pageIndex: 0,
     pageSize: 10
   })
-  
+
   // TODO: Replace with actual view handler when API integration is done
 
   // TODO: Remove once sorting is implemented on API side
