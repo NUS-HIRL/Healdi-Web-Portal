@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 
 export type SortDir = "asc" | "desc"
 
+// TODO: Kervyn: Modify/Remove the usage entirely once sorting is handled by API
 export const TableHeaderCell = ({
   label,
   active,
@@ -50,10 +51,9 @@ export const TableHeaderCell = ({
     return buttonContent
   }
 
-  // Otherwise return the full th element (for standalone tables)
   return (
-    <th
-      className="px-4 py-3 font-medium"
+    <div
+      className="py-3 font-medium"
       aria-sort={
         active
           ? dir === "asc"
@@ -62,6 +62,6 @@ export const TableHeaderCell = ({
           : ("none" as const)
       }>
       {buttonContent}
-    </th>
+    </div>
   )
 }
