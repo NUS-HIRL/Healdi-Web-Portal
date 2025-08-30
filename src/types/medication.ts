@@ -26,3 +26,13 @@ export type MedicationTableValue = {
 }
 
 export type Medications = Medication[]
+
+export enum DayAbbr {
+  Mon = "Mon",
+  Tue = "Tue",
+  Wed = "Wed",
+  Thu = "Thu",
+  Fri = "Fri",
+  Sat = "Sat",
+  Sun = "Sun"
+}

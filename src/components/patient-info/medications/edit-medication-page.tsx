@@ -12,23 +12,14 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
-import { Footer } from "../../common/footer"
-import { Sidebar } from "../../common/sidebar"
 import { Search, Bell, User, Trash } from "lucide-react"
 import { MultiSelect } from "@/components/common/multiselect"
 import { useRouter } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
+import { DayAbbr } from "@/types/medication"
 
-type DayAbbr = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun"
-const DAYS = [
-  "Mon",
-  "Tue",
-  "Wed",
-  "Thu",
-  "Fri",
-  "Sat",
-  "Sun"
-] as const satisfies readonly DayAbbr[]
+const DAYS: DayAbbr[] = Object.values(DayAbbr)
+
 const DAY_FULL: Record<DayAbbr, string> = {
   Mon: "Monday",
   Tue: "Tuesday",
@@ -173,9 +164,9 @@ export const EditMedicationPage = ({
   const onBack = () => {
     if (typeof window !== "undefined") {
       if (window.history.length > 1) {
-        window.history.back()
+        router.back()
       } else {
-        window.location.href = "/patients/medication" // fallback route
+        router.push("/patients/medication") // fallback route
       }
     }
   }
@@ -184,7 +175,7 @@ export const EditMedicationPage = ({
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
+      {/* <Sidebar /> */}
 
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
@@ -444,7 +435,7 @@ export const EditMedicationPage = ({
             )}
           </div>
 
-          <Footer />
+          {/* <Footer /> */}
         </main>
       </div>
     </div>
