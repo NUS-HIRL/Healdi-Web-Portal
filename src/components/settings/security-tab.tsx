@@ -228,7 +228,7 @@ export const SecurityTab = () => {
                         </div>
                         <div className="flex justify-end space-x-4">
                             <Button
-                                onClick={() => setIsChangePasswordModalOpen(true)}
+                                onClick={() => setIsChangeEmailModalOpen(true)}
                                 variant="outline"
                                 size="sm"
                             >
