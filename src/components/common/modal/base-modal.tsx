@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react"
 import { X } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 interface BaseModalProps {
   isOpen: boolean
@@ -53,9 +54,7 @@ export const BaseModal = ({
           </button>
         </div>
         
-        {/* Content */}
         <div className="px-6 pt-2">
-          {/* Error Display */}
           {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md flex items-center space-x-2">
               <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
@@ -65,26 +64,24 @@ export const BaseModal = ({
             </div>
           )}
           
-          {/* Modal Content */}
           {children}
         </div>
         
-        {/* Footer */}
         <div className="flex justify-end space-x-3 p-6">
-          <button
+          <Button
             onClick={onCancel}
             disabled={isLoading}
             className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
           >
             {cancelText}
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={onSave}
             disabled={isLoading || isSaveDisabled}
             className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 disabled:opacity-50"
           >
             {isLoading ? "Saving..." : saveText}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import { EditModal } from "@/components/common/modal/edit-modal"
 import { AvatarUploadModal } from "@/components/common/modal/avatar-upload-modal"
+import { Button } from "@/components/ui/button"
 import { Toast } from "@/components/common/toast"
 
 export const ProfileTab = () => {
@@ -118,12 +119,13 @@ export const ProfileTab = () => {
                             <span className="text-gray-900 font-medium">{firstName}</span>
                         </div>
                         <div className="text-right">
-                            <button
+                            <Button
                                 onClick={() => setIsEditModalOpen(true)}
-                                className="bg-white text-black border border-gray-300 rounded-sm px-4 py-2 hover:bg-gray-50 text-sm"
+                                variant="outline"
+                                size="sm"
                             >
                                 Edit
-                            </button>
+                            </Button>
                         </div>
                     </div>
 
@@ -161,15 +163,16 @@ export const ProfileTab = () => {
                             </div>
                         </div>
                         <div className="flex justify-end space-x-4">
-                            <button
+                            <Button
                                 onClick={() => setIsAvatarModalOpen(true)}
-                                className="bg-white text-black border border-gray-300 rounded-sm px-4 py-2 hover:bg-gray-50 text-sm"
+                                variant="outline"
+                                size="sm"
                             >
                                 Change
-                            </button>
-                            <button className="bg-white text-black border border-gray-300 rounded-sm px-4 py-2 hover:bg-gray-50 text-sm">
+                            </Button>
+                            <Button variant="outline" size="sm">
                                 Remove
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>
