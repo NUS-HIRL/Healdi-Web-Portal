@@ -11,8 +11,8 @@ export type ErrorResponse = {
 }
 
 export interface PaginationKeys {
-  next_page_key: string | null;
-  previous_page_key: string | null;
+  next_page_key: string | null
+  previous_page_key: string | null
 }
 export interface PaginatedResponse<T> {
   data: T[]
