@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
 import { ResourceColumns } from "../../columns/resource-columns"
 import { ResourceDetailsSidebar } from "./resource-details-sidebar"
+import usePagination from "@/hooks/use-pagination"
+import { PaginatedResponse } from "@/types/response"
 
 interface ResourcesTabProps {
   patientId?: string
@@ -16,9 +18,13 @@ interface ResourcesTabProps {
 export const ResourcesTab = ({ patientId }: ResourcesTabProps) => {
   const router = useRouter()
   const [pagination, setPagination] = useState({
-    pageIndex: 0,
+    pageIndex: 1,
     pageSize: 10
   })
+
+  // TODO: Copy goals-tab way of calling the API once ready
+  const { setCurrentPaginationTokenAndPageIndex, paginationToken } =
+    usePagination(pagination, setPagination)
 
   const [selectedResource, setSelectedResource] = useState<Resource | null>(
     null
@@ -108,11 +114,13 @@ export const ResourcesTab = ({ patientId }: ResourcesTabProps) => {
   const ResourcesTable = CustomDataTable<Resource>
 
   // Mock paginated results
-  const results = {
+  const results: PaginatedResponse<Resource> = {
     data: mockResources,
-    totalCount: mockResources.length,
-    page: 1,
-    totalPages: Math.ceil(mockResources.length / pagination.pageSize)
+    count: mockResources.length,
+    pagination: {
+      next_page_key: null,
+      previous_page_key: null
+    }
   }
 
   return (
@@ -152,6 +160,10 @@ export const ResourcesTab = ({ patientId }: ResourcesTabProps) => {
               error={null}
               isLoading={false}
               setPagination={setPagination}
+              paginationToken={paginationToken}
+              setCurrentPaginationTokenAndPageIndex={
+                setCurrentPaginationTokenAndPageIndex
+              }
             />
           </div>
         </div>
