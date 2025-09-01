@@ -95,7 +95,7 @@ export const AvatarUploadModal = ({
       onClose()
       setSelectedFile(null)
       setError("")
-    } catch (_err) {
+    } catch {
       setError("Failed to upload avatar. Please try again.")
     } finally {
       setIsLoading(false)
