@@ -105,7 +105,7 @@ const ChatsLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex bg-gray-50">
       <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-h-screen">
         <Header />
         <div className="flex flex-1 min-h-0 overflow-hidden">
           <div className="hidden lg:block w-fit shrink-0 border-r border-gray-200 overflow-y-auto">

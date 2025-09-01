@@ -34,14 +34,14 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex bg-gray-100">
       <div className="flex-1 flex flex-col">
         <PatientHeader
           patientId={patientId}
           onViewAllergies={() => setIsAllergiesOpen(true)}
         />
 
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1">
           <div className="p-2">
             <div className="mb-2">
               <div className="flex border-b border-gray-200">
