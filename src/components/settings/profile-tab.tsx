@@ -51,7 +51,7 @@ export const ProfileTab = () => {
         }
     }
 
-    const handleAvatarUpload = async (file: File) => {
+    const handleAvatarUpload = async (_file: File) => {
         try {
             // Simulate API call for avatar upload
             await new Promise((resolve, reject) => {

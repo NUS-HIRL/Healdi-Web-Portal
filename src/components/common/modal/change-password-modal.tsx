@@ -70,7 +70,7 @@ export const ChangePasswordModal = ({
     try {
       await onSave(currentPassword, newPassword)
       onClose()
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to change password. Please try again.")
     } finally {
       setIsLoading(false)

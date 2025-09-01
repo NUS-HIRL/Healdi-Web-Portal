@@ -41,7 +41,7 @@ export const ChangeEmailModal = ({
     try {
       await onSave(newEmail)
       onClose()
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to update email verification. Please try again.")
     } finally {
       setIsLoading(false)

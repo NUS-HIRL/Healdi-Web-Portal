@@ -46,7 +46,7 @@ export const EditModal = ({
       const finalValue = hasPrefix ? `${prefix} ${value}` : value
       await onSave(finalValue)
       onClose()
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to save changes. Please try again.")
     } finally {
       setIsLoading(false)

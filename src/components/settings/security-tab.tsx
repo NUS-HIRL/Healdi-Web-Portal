@@ -22,7 +22,7 @@ export const SecurityTab = () => {
         type: "success"
     })
 
-    const handleSecurityQuestionsSave = async (questions: Array<{ question: string, answer: string }>) => {
+    const handleSecurityQuestionsSave = async (_questions: Array<{ question: string, answer: string }>) => {
         try {
             // Simulate API call
             await new Promise((resolve, reject) => {
@@ -51,7 +51,7 @@ export const SecurityTab = () => {
         }
     }
 
-    const handleChangePasswordSave = async (currentPassword: string, newPassword: string) => {
+    const handleChangePasswordSave = async (_currentPassword: string, _newPassword: string) => {
         try {
             // Simulate API call
             await new Promise((resolve, reject) => {

@@ -67,7 +67,7 @@ export const SecurityQuestionsModal = ({
     try {
       await onSave(questions)
       onClose()
-    } catch (err) {
+    } catch (_err) {
       setError("Failed to save security questions. Please try again.")
     } finally {
       setIsLoading(false)
