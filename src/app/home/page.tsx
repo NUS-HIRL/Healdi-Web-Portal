@@ -92,7 +92,7 @@ const recentPatientsResponse = {
   }
 }
 
-export const HomePage = () => {
+const HomePage = () => {
   const [pagination, setPagination] = useState({
     pageIndex: 1,
     pageSize: 10
