@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { BaseModal } from "./base-modal"
-import { X } from "lucide-react"
+import { ErrorMessage } from "@/components/common/error-message"
 
 interface ChangeEmailModalProps {
   isOpen: boolean
@@ -56,12 +56,7 @@ export const ChangeEmailModal = ({
 
   // Custom error display with X icon
   const customError = error ? (
-    <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md flex items-center space-x-2">
-      <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
-        <X size={12} className="text-white" />
-      </div>
-      <span className="text-red-700 text-sm">{error}</span>
-    </div>
+    <ErrorMessage message={error} />
   ) : null
 
   return (
@@ -72,11 +67,13 @@ export const ChangeEmailModal = ({
       error="" // We'll handle error display manually for custom styling
       onCancel={handleCancel}
       onSave={handleSave}
-      isLoading={isLoading}
-    >
+      isLoading={isLoading}>
       {customError}
-      <p className="text-gray-600 text-sm mb-2">Update your email address for account verification and security notifications.</p>
-      
+      <p className="text-gray-600 text-sm mb-2">
+        Update your email address for account verification and security
+        notifications.
+      </p>
+
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">

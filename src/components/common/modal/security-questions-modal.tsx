@@ -38,10 +38,14 @@ export const SecurityQuestionsModal = ({
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  const updateQuestion = (index: number, field: 'question' | 'answer', value: string) => {
-    setQuestions(prev => prev.map((q, i) => 
-      i === index ? { ...q, [field]: value } : q
-    ))
+  const updateQuestion = (
+    index: number,
+    field: "question" | "answer",
+    value: string
+  ) => {
+    setQuestions((prev) =>
+      prev.map((q, i) => (i === index ? { ...q, [field]: value } : q))
+    )
     setError("")
   }
 
@@ -49,14 +53,14 @@ export const SecurityQuestionsModal = ({
     setError("")
 
     // Validate all questions and answers are filled
-    const emptyFields = questions.some(q => !q.question || !q.answer.trim())
+    const emptyFields = questions.some((q) => !q.question || !q.answer.trim())
     if (emptyFields) {
       setError("Please fill in all security questions and answers")
       return
     }
 
     // Check for duplicate questions
-    const questionTexts = questions.map(q => q.question)
+    const questionTexts = questions.map((q) => q.question)
     const uniqueQuestions = new Set(questionTexts)
     if (uniqueQuestions.size !== questionTexts.length) {
       setError("Please select different security questions")
@@ -93,21 +97,23 @@ export const SecurityQuestionsModal = ({
       onCancel={handleCancel}
       onSave={handleSave}
       isLoading={isLoading}
-      maxWidth="lg"
-    >
-      <p className="text-gray-600 text-sm mb-2">Manage your security questions for enhanced account protection.</p>
-      
+      maxWidth="lg">
+      <p className="text-gray-600 text-sm mb-2">
+        Manage your security questions for enhanced account protection.
+      </p>
+
       <div className="space-y-6">
         {questions.map((question, index) => (
           <div key={index} className="space-y-3">
             <h4 className="font-medium text-gray-900">Question {index + 1}</h4>
-            
+
             <div>
               <select
                 value={question.question}
-                onChange={(e) => updateQuestion(index, 'question', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700"
-              >
+                onChange={(e) =>
+                  updateQuestion(index, "question", e.target.value)
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-700">
                 <option value="">Select Question</option>
                 {SECURITY_QUESTION_OPTIONS.map((option) => (
                   <option key={option} value={option}>
@@ -116,12 +122,14 @@ export const SecurityQuestionsModal = ({
                 ))}
               </select>
             </div>
-            
+
             <div>
               <input
                 type="text"
                 value={question.answer}
-                onChange={(e) => updateQuestion(index, 'answer', e.target.value)}
+                onChange={(e) =>
+                  updateQuestion(index, "answer", e.target.value)
+                }
                 placeholder="Answer"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />

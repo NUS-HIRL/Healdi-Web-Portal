@@ -67,10 +67,9 @@ export const EditModal = ({
       error={error}
       onCancel={handleCancel}
       onSave={handleSave}
-      isLoading={isLoading}
-    >
+      isLoading={isLoading}>
       <p className="text-gray-600 text-sm mb-2">{description}</p>
-      
+
       <div className="space-y-4">
         {hasPrefix && (
           <div>
@@ -80,8 +79,7 @@ export const EditModal = ({
             <select
               value={prefix}
               onChange={(e) => setPrefix(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
               {prefixOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
@@ -90,7 +88,7 @@ export const EditModal = ({
             </select>
           </div>
         )}
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             {title}

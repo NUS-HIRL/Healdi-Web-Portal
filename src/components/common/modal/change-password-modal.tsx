@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { BaseModal } from "./base-modal"
-import { Eye, EyeOff, X } from "lucide-react"
+import { Eye, EyeOff } from "lucide-react"
+import { ErrorMessage } from "@/components/common/error-message"
 
 interface ChangePasswordModalProps {
   isOpen: boolean
@@ -31,7 +32,9 @@ export const ChangePasswordModal = ({
     const hasSymbols = /[!@#$%^&*(),.?":{}|<>]/.test(password)
     const hasMinLength = password.length >= 8
 
-    return hasUppercase && hasLowercase && hasNumbers && hasSymbols && hasMinLength
+    return (
+      hasUppercase && hasLowercase && hasNumbers && hasSymbols && hasMinLength
+    )
   }
 
   const getPasswordRequirementsError = (): string => {
@@ -89,12 +92,7 @@ export const ChangePasswordModal = ({
   }
 
   const customError = error ? (
-    <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md flex items-start space-x-2">
-      <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center mt-0.5">
-        <X size={12} className="text-white" />
-      </div>
-      <span className="text-red-700 text-sm">{error}</span>
-    </div>
+    <ErrorMessage message={error} />
   ) : null
 
   return (
@@ -105,11 +103,12 @@ export const ChangePasswordModal = ({
       error=""
       onCancel={handleCancel}
       onSave={handleSave}
-      isLoading={isLoading}
-    >
+      isLoading={isLoading}>
       {customError}
-      <p className="text-gray-600 text-sm mb-4">Manage your login password to safeguard your account.</p>
-      
+      <p className="text-gray-600 text-sm mb-4">
+        Manage your login password to safeguard your account.
+      </p>
+
       <div className="space-y-4">
         <div className="relative">
           <input
@@ -122,8 +121,7 @@ export const ChangePasswordModal = ({
           <button
             type="button"
             onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-          >
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
             {showCurrentPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
@@ -139,8 +137,7 @@ export const ChangePasswordModal = ({
           <button
             type="button"
             onClick={() => setShowNewPassword(!showNewPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-          >
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
             {showNewPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
@@ -156,8 +153,7 @@ export const ChangePasswordModal = ({
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-          >
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
             {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
