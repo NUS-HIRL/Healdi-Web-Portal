@@ -17,6 +17,7 @@ import { RecentPatientsColumns } from "@/components/columns/recent-patients-colu
 import Image from "next/image"
 import usePagination from "@/hooks/use-pagination"
 import { Patient } from "@/types/patient"
+import { MONTH_NAMES_ARRAY } from "@/constants/month-names"
 
 // Mock data for recent patients
 const recentPatients: Patient[] = [
@@ -113,20 +114,7 @@ const HomePage = () => {
   const years = Array.from({ length: 21 }, (_, i) => currentYear - 10 + i)
 
   // Month names
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-  ]
+  const monthNames = MONTH_NAMES_ARRAY
 
   // Update calendar date when year or month changes
   const handleYearChange = (year: string) => {
@@ -289,7 +277,7 @@ const HomePage = () => {
                       setCurrentYear(date.getFullYear())
                       setCurrentMonth(date.getMonth())
                     }}
-                    className="h-full w-full [&>div>div:first-child]:hidden"
+                    className="h-full w-full [--cell-size:4.4rem]"
                     showOutsideDays={true}
                     required={true}
                     captionLayout="dropdown"
