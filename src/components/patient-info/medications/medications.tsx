@@ -2,12 +2,13 @@
 
 import { useState } from "react"
 
-import { MedicationColumns } from "@/components/columns/medication-columns"
+import { MedicationColumns } from "@/components/columns/medication-plan-columns"
 import CustomDataTable from "@/components/common/table/custom-data-table"
 import { HeaderWithOptions } from "@/components/common/table/header-with-options"
 import usePagination from "@/hooks/use-pagination"
 import { Medication } from "@/types/medication"
 import { MedicationDetailsSidebar } from "./medication-details-sidebar"
+import { PaginatedResponse } from "@/types/response"
 
 const INITIAL_DATA: Medication[] = [
   {
@@ -44,8 +45,14 @@ const INITIAL_DATA: Medication[] = [
 export const Medications = () => {
   const [rows] = useState<Medication[]>(INITIAL_DATA)
 
-  // pagination
-  const { pagination, setPagination } = usePagination()
+  const [pagination, setPagination] = useState({
+    pageIndex: 1,
+    pageSize: 10
+  })
+
+  // TODO: Copy goals-tab way of calling the API once ready
+  const { setCurrentPaginationTokenAndPageIndex, paginationToken } =
+    usePagination(pagination, setPagination)
 
   // modals
   const [selectedMedication, setSelectedMedication] =
@@ -67,11 +74,13 @@ export const Medications = () => {
   const MedicationTable = CustomDataTable<Medication>
 
   // TODO: Change this mock data to API fetched data
-  const results = {
+  const results: PaginatedResponse<Medication> = {
     data: rows,
-    totalCount: rows.length,
-    page: 1,
-    totalPages: Math.ceil(rows.length / pagination.pageSize)
+    count: rows.length,
+    pagination: {
+      next_page_key: null,
+      previous_page_key: null
+    }
   }
 
   return (
@@ -79,7 +88,7 @@ export const Medications = () => {
       {/* Title */}
       <HeaderWithOptions
         title="Medications"
-        to="/patient-info/medications/add"
+        to="/patient-info/medication/add"
       />
 
       {/* Header */}
@@ -97,6 +106,10 @@ export const Medications = () => {
           setPagination={setPagination}
           isLoading={false}
           error={null}
+          paginationToken={paginationToken}
+          setCurrentPaginationTokenAndPageIndex={
+            setCurrentPaginationTokenAndPageIndex
+          }
         />
       </div>
 

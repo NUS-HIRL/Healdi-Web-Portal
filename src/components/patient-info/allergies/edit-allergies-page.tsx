@@ -1,12 +1,5 @@
 "use client"
-import { useMemo, useState } from "react"
-import { Sidebar } from "../../common/sidebar"
-import { Footer } from "../../common/footer"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Plus, Trash2, ArrowLeft } from "lucide-react"
-import { MultiSelect } from "./allergies-multiselect"
+import { MultiSelect } from "@/components/common/multiselect"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,8 +10,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from "@/components/ui/alert-dialog"
-import { AlertTriangle } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { AllergyItem, Reaction } from "@/types/reaction"
+import { AlertTriangle, ArrowLeft, Plus, Trash2 } from "lucide-react"
+import { useMemo, useState } from "react"
 
 export const EditAllergiesPage = () => {
   const [items, setItems] = useState<AllergyItem[]>([
@@ -86,14 +83,13 @@ export const EditAllergiesPage = () => {
       if (window.history.length > 1) {
         window.history.back()
       } else {
-        window.location.href = "/patients" // fallback route
+        window.location.href = "/patients/medication" // fallback route
       }
     }
   }
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
       <div className="flex-1 flex flex-col">
         {/* TODO: Gerald: Update breadcrumb navigation */}
         <main className="flex-1 overflow-auto">
@@ -259,8 +255,6 @@ export const EditAllergiesPage = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-
-        <Footer />
       </div>
     </div>
   )

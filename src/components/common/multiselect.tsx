@@ -1,3 +1,6 @@
+// this is a generic multi select, default to allergic reactions if nothing is passed
+"use client"
+
 import { Badge } from "@/components/ui/badge"
 import {
   Popover,
@@ -6,10 +9,10 @@ import {
 } from "@/components/ui/popover"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
-import { Reaction } from "@/types/reaction"
+import type { Reaction } from "@/types/reaction"
 import { ChevronDown, X } from "lucide-react"
 
-const REACTION_OPTIONS: Reaction[] = [
+const DEFAULT_REACTION_OPTIONS = [
   "Skin Rash",
   "Fever",
   "Dizziness",
@@ -17,23 +20,29 @@ const REACTION_OPTIONS: Reaction[] = [
   "Itching",
   "Nausea",
   "Others"
-]
+] as const satisfies readonly Reaction[]
 
-export const MultiSelect = ({
+export const MultiSelect = <T extends string>({
   value,
   onChange,
-  placeholder = "Select reactions"
+  placeholder = "Select reactions",
+  options
 }: {
-  value: Reaction[]
-  onChange: (next: Reaction[]) => void
+  value: T[]
+  onChange: (next: T[]) => void
   placeholder?: string
+  /** optional; falls back to reaction options for allergy screen */
+  options?: readonly T[]
 }) => {
   const [open, setOpen] = useState(false)
-  const toggle = (opt: Reaction) => {
+  const opts = options ?? (DEFAULT_REACTION_OPTIONS as unknown as readonly T[])
+
+  const toggle = (opt: T) => {
     const has = value.includes(opt)
     onChange(has ? value.filter((v) => v !== opt) : [...value, opt])
   }
-  const clear = (opt: Reaction) => onChange(value.filter((v) => v !== opt))
+
+  const clear = (opt: T) => onChange(value.filter((v) => v !== opt))
 
   const onKeyActivate = (e: React.KeyboardEvent, fn: () => void) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -46,7 +55,7 @@ export const MultiSelect = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        {/* TRIGGER: stays a button */}
+        {/* TRIGGER */}
         <button
           type="button"
           className="w-full min-h-10 rounded-md border border-gray-300 text-left px-2 py-2 relative focus:outline-none focus:ring-2 focus:ring-pink-500">
@@ -56,14 +65,14 @@ export const MultiSelect = ({
             ) : (
               value.map((v) => (
                 <Badge
-                  key={v}
+                  key={String(v)}
                   variant="secondary"
                   className="gap-1 bg-gray-100 text-gray-800 border border-gray-200">
                   {v}
-                  {/* REMOVE CONTROL: span with role=button (not a nested <button>) */}
+                  {/* remove control */}
                   <span
                     role="button"
-                    aria-label={`Remove ${v}`}
+                    aria-label={`Remove ${String(v)}`}
                     tabIndex={0}
                     className="ml-1 -mr-0.5 rounded hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1"
                     onClick={(e) => {
@@ -83,11 +92,11 @@ export const MultiSelect = ({
 
       <PopoverContent align="start" className="w-[320px] p-2">
         <div className="grid gap-1">
-          {REACTION_OPTIONS.map((opt) => {
+          {opts.map((opt) => {
             const checked = value.includes(opt)
             return (
               <div
-                key={opt}
+                key={String(opt)}
                 role="button"
                 tabIndex={0}
                 onClick={() => toggle(opt)}

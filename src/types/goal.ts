@@ -1,29 +1,22 @@
-export interface Goal {
-  id: string
-  category: string
-  completionType: string
-  title: string
-  description: string
-  coins: number
-  bonus: number
-  progress: string
+export enum GoalCompletionTypeEnum {
+  SHORT_TERM = "SHORT_TERM",
+  LONG_TERM = "LONG_TERM",
+  ONE_OFF = "ONE_OFF"
 }
 
-// API response shape for a goal item returned by
-// GET /dev/v1/users/{user_id}/goals
-export interface ApiGoal {
-  id: string
-  goal_category:
-    | "Exercise"
-    | "Diet"
-    | "Stress"
-    | "Emotional Well Being"
-    | "Medical Self Management"
+export enum GoalCategoryEnum {
+  MEDICAL_SELF_MANAGEMENT = "MEDICAL_SELF_MANAGEMENT",
+  SMOKING = "SMOKING",
+  SLEEP = "SLEEP",
+  PHYSICAL_ACTIVITY = "PHYSICAL_ACTIVITY"
+}
+export interface Goal {
+  goal_id: string
+  username: string
+  category: GoalCategoryEnum
   title: string
   description: string
-  completion_type: "short" | "long"
-  target_count: number
-  completed_count: number
-  coin_reward_per_completion: number
-  completion_bonus: number
+  completion_type: GoalCompletionTypeEnum
+  coin_reward: number
+  completion_bonus_reward: number
 }

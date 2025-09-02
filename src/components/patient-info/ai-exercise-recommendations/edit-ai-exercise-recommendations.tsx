@@ -1,10 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Sidebar } from "../../common/sidebar"
+import { Medications } from "../medications/medications"
 import { PatientHeader } from "../patient-header"
 import { ReportTab } from "../report/report-tab"
-import { Medications } from "../medications/medications"
 import { AiExerciseRecommendations } from "./ai-exercise-recommendations-tab"
 
 interface PatientDashboardProps {
@@ -16,8 +15,6 @@ export const EditExerciseForm = ({ patientId }: PatientDashboardProps) => {
 
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
-
       <div className="flex-1 flex flex-col">
         <PatientHeader patientId={patientId} />
 
