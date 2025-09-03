@@ -1,10 +1,12 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
-import { MedicationTableValue } from "@/types/medication"
-import CustomDataTable from "@/components/common/table/custom-data-table"
-import { PatientPagination } from "../patient-pagination"
 import { MedicationColumns } from "@/components/columns/medication-columns"
+import CustomDataTable from "@/components/common/table/custom-data-table"
+import { MedicationTableValue } from "@/types/medication"
+import { PaginatedResponse } from "@/types/response"
+import { useEffect, useMemo, useState } from "react"
+import { PatientPagination } from "../patient-pagination"
+import usePagination from "@/hooks/use-pagination"
 
 // TODO: Remove once data from API comes in
 export const medications: MedicationTableValue[] = [
@@ -122,12 +124,16 @@ export const medications: MedicationTableValue[] = [
   }
 ]
 
+// TODO: Kervyn: Fix the implementation of this and remove FE sorting in next PR
 export const MedicationList = () => {
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10
   })
-  
+
+  const { setCurrentPaginationTokenAndPageIndex, paginationToken } =
+    usePagination(pagination, setPagination)
+
   // TODO: Replace with actual view handler when API integration is done
 
   // TODO: Remove once sorting is implemented on API side
@@ -186,11 +192,13 @@ export const MedicationList = () => {
   const MedicationTable = CustomDataTable<MedicationTableValue>
 
   // TODO: Change this mock data to API fetched data
-  const results = {
+  const results: PaginatedResponse<MedicationTableValue> = {
     data: currentPageData,
-    totalCount: currentPageData.length,
-    page: 1,
-    totalPages: Math.ceil(currentPageData.length / pagination.pageSize)
+    count: currentPageData.length,
+    pagination: {
+      next_page_key: null,
+      previous_page_key: null
+    }
   }
 
   const columns = useMemo(
@@ -210,6 +218,10 @@ export const MedicationList = () => {
         isLoading={false}
         error={null}
         hidePagination={true} // Custom pagination layout
+        paginationToken={paginationToken}
+        setCurrentPaginationTokenAndPageIndex={
+          setCurrentPaginationTokenAndPageIndex
+        }
       />
 
       <PatientPagination

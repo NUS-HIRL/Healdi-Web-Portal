@@ -1,15 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Search, Bell, User, Trash2, ExternalLink, Plus } from "lucide-react"
-import { Resource } from "@/types/resource"
-import { Footer } from "../../common/footer"
-import { Sidebar } from "../../common/sidebar"
-import { SubmitSection } from "../../common/submit-section"
-import Image from "next/image"
 import ImagePlaceholder from "@/../public/common/image-placeholder.png"
+import { Button } from "@/components/ui/button"
+import { Resource } from "@/types/resource"
+import { Bell, ExternalLink, Plus, Search, Trash2, User } from "lucide-react"
+import Image from "next/image"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
+import { SubmitSection } from "../../common/submit-section"
 
 const AVAILABLE_RESOURCES: Resource[] = [
   {
@@ -177,8 +175,6 @@ export const ConfirmResourceSelectionPage = ({
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Sidebar />
-
       <div className="flex-1 flex flex-col">
         <header className="bg-white border-b border-gray-200 px-6 py-4">
           <div className="flex items-center justify-end">
@@ -312,8 +308,6 @@ export const ConfirmResourceSelectionPage = ({
               />
             </div>
           </div>
-
-          <Footer />
         </main>
       </div>
     </div>

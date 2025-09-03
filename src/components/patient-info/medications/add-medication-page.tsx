@@ -1,25 +1,23 @@
 "use client"
 
-import { Footer } from "../../common/footer"
-import { Sidebar } from "@/components/common/sidebar"
 import { MedicationList } from "./medications-list"
 import { MainHeader } from "../../common/main-header"
 import { ArrowLeft } from "lucide-react"
-
-const onBack = () => {
-  if (typeof window !== "undefined") {
-    if (window.history.length > 1) {
-      window.history.back()
-    } else {
-      window.location.href = "/patients/medication" // fallback route
-    }
-  }
-}
+import { useRouter } from "next/navigation"
 
 export const AddMedicationPage = () => {
+  const router = useRouter()
+  const onBack = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back()
+    } else {
+      router.push("/patients/medication")
+    }
+  }
+
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <MainHeader />
@@ -41,7 +39,7 @@ export const AddMedicationPage = () => {
             </h1>
             <MedicationList />
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </div>

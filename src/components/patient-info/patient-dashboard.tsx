@@ -1,15 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { Footer } from "../common/footer"
-import { Sidebar } from "../common/sidebar"
+import { Button } from "../ui/button"
+import { AiExerciseRecommendations } from "./ai-exercise-recommendations/ai-exercise-recommendations-tab"
+import { AllergiesDetailsSidebar } from "./allergies/allergies-details.sidebar"
 import { GoalsTab } from "./goals/goals-tab"
 import { Medications } from "./medications/medications"
 import { PatientHeader } from "./patient-header"
 import { ReportTab } from "./report/report-tab"
-import { Button } from "../ui/button"
-import { AllergiesDetailsSidebar } from "./allergies/allergies-details.sidebar"
-import { AiExerciseRecommendations } from "./ai-exercise-recommendations/ai-exercise-recommendations-tab"
 import { ResourcesTab } from "./resources/resources-tab"
 
 interface PatientDashboardProps {
@@ -36,16 +34,14 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar />
-
+    <div className="flex bg-gray-100">
       <div className="flex-1 flex flex-col">
         <PatientHeader
           patientId={patientId}
           onViewAllergies={() => setIsAllergiesOpen(true)}
         />
 
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1">
           <div className="p-2">
             <div className="mb-2">
               <div className="flex border-b border-gray-200">
@@ -79,9 +75,6 @@ export const PatientDashboard = ({ patientId }: PatientDashboardProps) => {
               <ResourcesTab patientId={patientId} />
             )}
           </div>
-
-          {/* Footer */}
-          <Footer />
         </main>
       </div>
 

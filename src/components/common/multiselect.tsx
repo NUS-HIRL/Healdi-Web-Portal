@@ -22,9 +22,7 @@ const DEFAULT_REACTION_OPTIONS = [
   "Others"
 ] as const satisfies readonly Reaction[]
 
-type StringLike = string
-
-export const MultiSelect = <T extends StringLike = Reaction>({
+export const MultiSelect = <T extends string>({
   value,
   onChange,
   placeholder = "Select reactions",

@@ -2,21 +2,29 @@
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { PaginationState, Table } from "@tanstack/react-table"
+import { PaginationKeys } from "@/types/response"
+import { PaginationState } from "@tanstack/react-table"
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react"
 import { useState } from "react"
 
-type DataTablePaginationProps<T> = {
-  table: Table<T>
+type DataTablePaginationProps = {
   pagination: PaginationState
-  setPagination: React.Dispatch<React.SetStateAction<PaginationState>>
+  setPagination: React.Dispatch<
+    React.SetStateAction<{ pageIndex: number; pageSize: number }>
+  >
+  paginationToken: PaginationKeys
+  setCurrentPaginationTokenAndPageIndex: (
+    isNextPage: boolean,
+    newCurrentPaginationToken: string
+  ) => void
 }
 
-const DataTablePagination = <T,>({
-  table,
+const DataTablePagination = ({
   pagination,
-  setPagination
-}: DataTablePaginationProps<T>) => {
+  setPagination,
+  paginationToken,
+  setCurrentPaginationTokenAndPageIndex
+}: DataTablePaginationProps) => {
   const [isPageSizeSelectionOpen, setIsPageSizeSelectionOpen] = useState(false)
 
   const pageSizes = [5, 10, 20]
@@ -28,13 +36,12 @@ const DataTablePagination = <T,>({
         <Button
           type="button"
           onClick={() => {
-            table.previousPage()
-            setPagination((prev) => ({
-              ...prev,
-              pageIndex: prev.pageIndex - 1
-            }))
+            setCurrentPaginationTokenAndPageIndex(
+              false,
+              paginationToken.previous_page_key!
+            )
           }}
-          disabled={!table.getCanPreviousPage()}
+          disabled={!paginationToken.previous_page_key}
           variant="outline"
           size="icon"
           className="text-gray-500"
@@ -55,13 +62,12 @@ const DataTablePagination = <T,>({
         <Button
           type="button"
           onClick={() => {
-            table.nextPage()
-            setPagination((prev) => ({
-              ...prev,
-              pageIndex: prev.pageIndex + 1
-            }))
+            setCurrentPaginationTokenAndPageIndex(
+              true,
+              paginationToken.next_page_key!
+            )
           }}
-          disabled={!table.getCanNextPage()}
+          disabled={!paginationToken.next_page_key}
           variant="outline"
           size="icon"
           className="text-gray-600"

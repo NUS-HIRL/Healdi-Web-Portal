@@ -5,6 +5,8 @@ import { useEffect, useMemo, useState } from "react"
 import { PatientInfoColumns } from "../columns/patient-info-columns"
 import CustomDataTable from "../common/table/custom-data-table"
 import { PatientPagination } from "./patient-pagination"
+import { PaginatedResponse } from "@/types/response"
+import usePagination from "@/hooks/use-pagination"
 
 // TODO: Remove once data from API comes in
 const patients: Patient[] = [
@@ -132,9 +134,12 @@ const patients: Patient[] = [
 
 export const PatientList = () => {
   const [pagination, setPagination] = useState({
-    pageIndex: 0,
+    pageIndex: 1,
     pageSize: 10
   })
+
+  const { setCurrentPaginationTokenAndPageIndex, paginationToken } =
+    usePagination(pagination, setPagination)
 
   // TODO: Remove once sorting is implemented on API side
   const [sorting] = useState<{
@@ -195,11 +200,13 @@ export const PatientList = () => {
   const PatientTable = CustomDataTable<Patient>
 
   // TODO: Change this mock data to API fetched data
-  const results = {
+  const results: PaginatedResponse<Patient> = {
     data: currentPageData,
-    totalCount: currentPageData.length,
-    page: 1,
-    totalPages: Math.ceil(currentPageData.length / pagination.pageSize)
+    count: currentPageData.length,
+    pagination: {
+      next_page_key: null,
+      previous_page_key: null
+    }
   }
 
   return (
@@ -214,6 +221,10 @@ export const PatientList = () => {
         isLoading={false}
         error={null}
         hidePagination={true} // Custom pagination layout
+        paginationToken={paginationToken}
+        setCurrentPaginationTokenAndPageIndex={
+          setCurrentPaginationTokenAndPageIndex
+        }
       />
 
       <PatientPagination

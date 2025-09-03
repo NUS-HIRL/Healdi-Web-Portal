@@ -1,6 +1,6 @@
 import useDataTable from "@/hooks/use-data-table"
 import { cn } from "@/lib/utils"
-import { PaginatedResponse } from "@/types/response"
+import { PaginatedResponse, PaginationKeys } from "@/types/response"
 import { ColumnDef, flexRender } from "@tanstack/react-table"
 import {
   TableBody,
@@ -22,6 +22,11 @@ export interface CustomDataTableProps<T> {
   setPagination: React.Dispatch<
     React.SetStateAction<{ pageIndex: number; pageSize: number }>
   >
+  setCurrentPaginationTokenAndPageIndex: (
+    isNextPage: boolean,
+    newCurrentPaginationToken: string
+  ) => void
+  paginationToken: PaginationKeys
   isLoading: boolean
   hidePagination?: boolean | undefined // For pages that have customised pagination layouts
 }
@@ -32,9 +37,12 @@ const CustomDataTable = <T,>({
   columns,
   pagination,
   setPagination,
+  setCurrentPaginationTokenAndPageIndex,
+  paginationToken,
   isLoading,
   hidePagination
 }: CustomDataTableProps<T>) => {
+  // TODO: Kervyn: Relook at the use of this table init
   const { table } = useDataTable(
     data,
     columns,
@@ -106,9 +114,12 @@ const CustomDataTable = <T,>({
         <> </>
       ) : (
         <DataTablePagination
-          table={table}
           pagination={pagination}
           setPagination={setPagination}
+          paginationToken={paginationToken}
+          setCurrentPaginationTokenAndPageIndex={
+            setCurrentPaginationTokenAndPageIndex
+          }
         />
       )}
     </div>
