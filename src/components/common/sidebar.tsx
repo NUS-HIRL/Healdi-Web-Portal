@@ -13,7 +13,7 @@ export const Sidebar = () => {
     { id: "home", icon: Home, href: "/home" },
     { id: "users", icon: Users, href: "/patient-info" },
     { id: "chats", icon: MessageCircleMore, href: "/chat" },
-    { id: "settings", icon: Settings, href: "#" }
+    { id: "settings", icon: Settings, href: "/settings" }
   ]
   return (
     <div className="w-20 bg-[#FFD792] border-r border-gray-200 flex flex-col shadow-sm">
