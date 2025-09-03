@@ -34,13 +34,13 @@ const ChatId = ({ params }: { params: Promise<IParams> }) => {
   }, [])
 
   useEffect(() => {
-    const c = conversations.find((ch) => ch.id === chatId) || null
-    setChat(c)
+    const chat = conversations.find((chatItem) => chatItem.id === chatId) || null
+    setChat(chat)
     setMessages(
-      c
-        ? [...c.messages].sort(
-            (a, b) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      chat
+        ? [...chat.messages].sort(
+            (msg1, msg2) =>
+              new Date(msg1.createdAt).getTime() - new Date(msg2.createdAt).getTime()
           )
         : []
     )
