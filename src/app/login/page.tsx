@@ -25,7 +25,7 @@ const SignUpPage = () => {
   const onSubmit = async (data: FormValues) => {
     try {
       await login(data.username, data.password)
-      router.push("/patient-info")
+      router.push("/home")
     } catch (e) {
       console.error(e)
       // TODO: Kervyn: Create a proper alert

@@ -4,7 +4,7 @@ import { Footer } from "@/components/common/footer"
 import { Sidebar } from "@/components/common/sidebar"
 import { Suspense } from "react"
 
-const PatientInfoLayout = ({
+const HomeLayout = ({
   children
 }: Readonly<{
   children: React.ReactNode
@@ -22,4 +22,4 @@ const PatientInfoLayout = ({
   )
 }
 
-export default PatientInfoLayout
+export default HomeLayout
