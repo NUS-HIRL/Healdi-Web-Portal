@@ -4,18 +4,19 @@ import { Message } from "@/types/chat"
 import { Dispatch, SetStateAction, useEffect, useRef } from "react"
 import MessageBox from "@/components/chat/message-box"
 import SystemNotice from "@/components/chat/system-notice"
+import { SearchOccurrence } from "@/lib/chat"
 
 interface BodyProps {
   messages: Message[]
   setMessages: Dispatch<SetStateAction<Message[]>>
-  searchTargetId: string
+  currentOccurrence: SearchOccurrence | null
   highlightQuery: string
   searchBarOpen: boolean
 }
 
 const Body: React.FC<BodyProps> = ({
   messages,
-  searchTargetId,
+  currentOccurrence,
   highlightQuery,
   searchBarOpen
 }) => {
@@ -28,12 +29,12 @@ const Body: React.FC<BodyProps> = ({
   }, [messages.length])
 
   useEffect(() => {
-    if (!searchTargetId) return
-    const target = messageRefs.current[searchTargetId]
+    if (!currentOccurrence) return
+    const target = messageRefs.current[currentOccurrence.messageId]
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "center" })
     }
-  }, [searchTargetId])
+  }, [currentOccurrence])
 
   const getSetMessageRef = (id: string) => (el: HTMLDivElement | null) => {
     messageRefs.current[id] = el
@@ -57,6 +58,7 @@ const Body: React.FC<BodyProps> = ({
               data={message}
               highlightQuery={highlightQuery}
               searchBarOpen={searchBarOpen}
+              currentOccurrence={currentOccurrence?.messageId === message.id ? currentOccurrence : null}
             />
           </div>
         ))}

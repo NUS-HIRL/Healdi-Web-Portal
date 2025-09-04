@@ -4,48 +4,21 @@ import { Message } from "@/types/chat"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import Image from "next/image"
+import { SearchOccurrence } from "@/lib/chat"
+import { HighlightedText } from "@/components/chat/highlighted-text"
 
 interface MessageBoxProps {
   data: Message
   highlightQuery?: string
   searchBarOpen: boolean
-}
-
-const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-
-const renderHighlighted = (text: string, isOwn: boolean, query?: string) => {
-  if (!query?.trim()) return <>{text}</>
-  const tokens = query
-    .split(/\s+/)
-    .map((t) => t.trim())
-    .filter(Boolean)
-  if (!tokens.length) return <>{text}</>
-
-  const pattern = new RegExp(`(${tokens.map(escapeRegex).join("|")})`, "ig")
-  const parts = text.split(pattern)
-  const highlightClass = isOwn ? "bg-black/40" : "bg-sky-500/30"
-
-  return (
-    <>
-      {parts.map((part, i) =>
-        i % 2 === 1 ? (
-          <span
-            key={i}
-            className={`${highlightClass} text-inherit rounded px-0.5`}>
-            {part}
-          </span>
-        ) : (
-          <span key={i}>{part}</span>
-        )
-      )}
-    </>
-  )
+  currentOccurrence?: SearchOccurrence | null
 }
 
 const MessageBox: React.FC<MessageBoxProps> = ({
   data,
   highlightQuery,
-  searchBarOpen
+  searchBarOpen,
+  currentOccurrence = null
 }) => {
   const currentUserEmail = "johndoe@example.com"
   const isOwn =
@@ -55,6 +28,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({
     false
 
   const activeQuery = searchBarOpen ? highlightQuery : ""
+  const isCurrentMessageTarget = currentOccurrence?.messageId === data.id
 
   const container = cn("flex gap-3 p-4", isOwn && "justify-end")
   const body = cn(
@@ -87,9 +61,14 @@ const MessageBox: React.FC<MessageBoxProps> = ({
               src={data.image}
               className="object-cover cursor-pointer hover:scale-110 transition"
             />
-          ) : (
-            <div>{renderHighlighted(data?.body ?? "", isOwn, activeQuery)}</div>
-          )}
+          ) : data.body ? (
+            <HighlightedText
+              text={data.body}
+              query={activeQuery || ""}
+              isOwn={isOwn}
+              currentOccurrence={isCurrentMessageTarget ? currentOccurrence : null}
+            />
+          ) : null}
         </div>
 
         {data?.createdAt && (

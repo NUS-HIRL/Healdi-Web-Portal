@@ -23,14 +23,14 @@ const ChatId = ({ params }: { params: Promise<IParams> }) => {
 
   const {
     highlightQuery,
-    hitIds,
-    hitIndex,
-    searchTargetId,
+    occurrences,
+    occurrenceIndex,
+    currentOccurrence,
     search,
     goToNext,
     goToPrev,
     resetSearch,
-    isSearching
+    isSearching,
   } = useMessageSearch({
     messages,
     debounceDelay: 300
@@ -75,9 +75,9 @@ const ChatId = ({ params }: { params: Promise<IParams> }) => {
             onSearch={search}
             onNext={goToNext}
             onPrev={goToPrev}
-            hitIds={hitIds}
-            hitIndex={hitIndex}
-            hasQuery={!!highlightQuery.trim()}
+            hitIds={occurrences.map((o) => o.messageId)}
+            hitIndex={occurrenceIndex}
+            totalOccurrences={occurrences.length}
             isSearching={isSearching}
           />
         )}
@@ -85,7 +85,7 @@ const ChatId = ({ params }: { params: Promise<IParams> }) => {
         <Body
           messages={messages}
           setMessages={setMessages}
-          searchTargetId={searchTargetId}
+          currentOccurrence={currentOccurrence}
           highlightQuery={highlightQuery}
           searchBarOpen={searchBarOpen}
         />

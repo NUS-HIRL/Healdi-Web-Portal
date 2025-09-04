@@ -10,7 +10,7 @@ interface SearchMessageBoxProps {
   onPrev: () => void
   hitIds: string[]
   hitIndex: number
-  hasQuery: boolean
+  totalOccurrences: number
   isSearching?: boolean
 }
 
@@ -23,7 +23,7 @@ const SearchMessageBox: React.FC<SearchMessageBoxProps> = ({
   onPrev,
   hitIds,
   hitIndex,
-  hasQuery,
+  totalOccurrences,
   isSearching = false
 }) => {
   const { register, setValue } = useForm<FormData>({
@@ -62,9 +62,9 @@ const SearchMessageBox: React.FC<SearchMessageBoxProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          {hasQuery && hitIds.length > 0 && (
+          {totalOccurrences > 0 && (
             <span className="text-black text-sm min-w-12 text-center">
-              {hitIndex + 1} of {hitIds.length}
+              {hitIndex + 1} of {totalOccurrences}
             </span>
           )}
 

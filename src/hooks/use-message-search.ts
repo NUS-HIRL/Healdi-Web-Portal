@@ -1,12 +1,11 @@
 import { useDebounce } from "@/hooks/use-debounce"
-import { computeHitIds } from "@/lib/chat"
+import { computeOccurrences, SearchOccurrence } from "@/lib/chat"
 import { useCallback, useEffect, useMemo, useState } from "react"
-
 import { Message } from "@/types/chat"
 
 interface UseMessageSearchProps {
   messages: Message[]
-  onSearchResultClick?: (messageId: string) => void
+  onSearchResultClick?: (occurrence: SearchOccurrence | null) => void
   debounceDelay?: number
 }
 
@@ -16,15 +15,15 @@ export const useMessageSearch = ({
   debounceDelay = 300
 }: UseMessageSearchProps) => {
   const [rawQuery, setRawQuery] = useState<string>("")
-  const [hitIds, setHitIds] = useState<string[]>([])
-  const [hitIndex, setHitIndex] = useState<number>(-1)
+  const [occurrences, setOccurrences] = useState<SearchOccurrence[]>([])
+  const [occurrenceIndex, setOccurrenceIndex] = useState<number>(-1)
   const [isSearching, setIsSearching] = useState<boolean>(false)
 
   const debouncedQuery = useDebounce(rawQuery, debounceDelay)
 
-  const searchTargetId = useMemo(
-    () => (hitIds.length > 0 && hitIndex >= 0 ? hitIds[hitIndex] : ""),
-    [hitIds, hitIndex]
+  const currentOccurrence = useMemo(
+    () => (occurrences.length > 0 && occurrenceIndex >= 0 ? occurrences[occurrenceIndex] : null),
+    [occurrences, occurrenceIndex]
   )
 
   const highlightQuery = useMemo(() => debouncedQuery.trim(), [debouncedQuery])
@@ -34,11 +33,11 @@ export const useMessageSearch = ({
       const trimmedQuery = query.trim()
 
       if (!trimmedQuery) {
-        setHitIds([])
-        setHitIndex(-1)
+        setOccurrences([])
+        setOccurrenceIndex(-1)
         setIsSearching(false)
         if (onSearchResultClick) {
-          onSearchResultClick("")
+          onSearchResultClick(null)
         }
         return
       }
@@ -46,19 +45,19 @@ export const useMessageSearch = ({
       setIsSearching(true)
 
       requestAnimationFrame(() => {
-        const ids = computeHitIds(messages, trimmedQuery)
+        const foundOccurrences = computeOccurrences(messages, trimmedQuery)
 
-        setHitIds(ids)
+        setOccurrences(foundOccurrences)
 
-        if (ids.length > 0) {
-          setHitIndex(0)
+        if (foundOccurrences.length > 0) {
+          setOccurrenceIndex(0)
           if (onSearchResultClick) {
-            onSearchResultClick(ids[0])
+            onSearchResultClick(foundOccurrences[0])
           }
         } else {
-          setHitIndex(-1)
+          setOccurrenceIndex(-1)
           if (onSearchResultClick) {
-            onSearchResultClick("")
+            onSearchResultClick(null)
           }
         }
 
@@ -77,48 +76,47 @@ export const useMessageSearch = ({
   }, [])
 
   const goToNext = useCallback(() => {
-    if (hitIds.length === 0) return
+    if (occurrences.length === 0) return
 
-    const newIndex = (hitIndex + 1) % hitIds.length
-    setHitIndex(newIndex)
+    const newIndex = (occurrenceIndex + 1) % occurrences.length
+    setOccurrenceIndex(newIndex)
     if (onSearchResultClick) {
-      onSearchResultClick(hitIds[newIndex])
+      onSearchResultClick(occurrences[newIndex])
     }
-  }, [hitIds, hitIndex, onSearchResultClick])
+  }, [occurrences, occurrenceIndex, onSearchResultClick])
 
   const goToPrev = useCallback(() => {
-    if (hitIds.length === 0) return
+    if (occurrences.length === 0) return
 
-    const newIndex = (hitIndex - 1 + hitIds.length) % hitIds.length
-    setHitIndex(newIndex)
+    const newIndex = (occurrenceIndex - 1 + occurrences.length) % occurrences.length
+    setOccurrenceIndex(newIndex)
     if (onSearchResultClick) {
-      onSearchResultClick(hitIds[newIndex])
+      onSearchResultClick(occurrences[newIndex])
     }
-  }, [hitIds, hitIndex, onSearchResultClick])
+  }, [occurrences, occurrenceIndex, onSearchResultClick])
 
   const resetSearch = useCallback(() => {
     setRawQuery("")
-    setHitIds([])
-    setHitIndex(-1)
+    setOccurrences([])
+    setOccurrenceIndex(-1)
     setIsSearching(false)
     if (onSearchResultClick) {
-      onSearchResultClick("")
+      onSearchResultClick(null)
     }
   }, [onSearchResultClick])
 
   return {
     highlightQuery,
-    hitIds,
-    hitIndex,
-    searchTargetId,
-    performSearch,
+    occurrences,
+    occurrenceIndex,
+    currentOccurrence,
     search,
     goToNext,
     goToPrev,
     resetSearch,
     isSearching,
-    hasResults: hitIds.length > 0,
-    totalResults: hitIds.length,
-    currentResult: hitIndex + 1
+    hasResults: occurrences.length > 0,
+    totalResults: occurrences.length,
+    currentResult: occurrenceIndex + 1
   }
 }
