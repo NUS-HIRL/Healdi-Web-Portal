@@ -5,21 +5,59 @@ import { Subtitle } from "@/components/common/sidebar/subtitle"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { apiAxios } from "@/lib/axios"
+import {
+  mapCategoryToDisplay,
+  mapCompletionTypeToDisplay
+} from "@/lib/goal-mappings"
 import { Goal } from "@/types/goal"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { ConfirmationDialog } from "../../common/confirmation-dialog"
 
 interface GoalDetailsSidebarProps {
   goal: Goal | null
   isOpen: boolean
   onClose: () => void
+  onGoalDeleted?: () => void
+  patientId: string
 }
 
 export const GoalDetailsSidebar = ({
   goal,
   isOpen,
-  onClose
+  onClose,
+  onGoalDeleted,
+  patientId
 }: GoalDetailsSidebarProps) => {
   const router = useRouter()
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+
+  const handleDeleteClick = () => {
+    setShowDeleteConfirm(true)
+  }
+
+  const handleDeleteConfirm = async () => {
+    if (!goal) return
+
+    setIsDeleting(true)
+    try {
+      await apiAxios.delete(`/v1/users/${patientId}/goals/${goal.goal_id}`)
+      setShowDeleteConfirm(false)
+      onClose() // Close the sidebar
+      // Trigger data refetch instead of page reload
+      onGoalDeleted?.()
+    } catch (error) {
+      console.error("Error deleting goal:", error)
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  const handleDeleteCancel = () => {
+    setShowDeleteConfirm(false)
+  }
 
   return (
     <DetailsSidebar isOpen={isOpen} onClose={onClose}>
@@ -33,7 +71,7 @@ export const GoalDetailsSidebar = ({
             <Badge
               variant="secondary"
               className="bg-orange-50 text-red-400 border-orange-200">
-              {goal.category}
+              {mapCategoryToDisplay(goal.category)}
             </Badge>
           </div>
 
@@ -42,7 +80,9 @@ export const GoalDetailsSidebar = ({
           {/* Completion Type */}
           <div className="space-y-2">
             <Subtitle title="Completion Type" />
-            <p className="text-sm text-gray-900">{goal.completion_type}</p>
+            <p className="text-sm text-gray-900">
+              {mapCompletionTypeToDisplay(goal.completion_type)}
+            </p>
           </div>
 
           <Separator className="mt-2" />
@@ -92,7 +132,7 @@ export const GoalDetailsSidebar = ({
             <Subtitle title="Type" />{" "}
             {/* Change back to progress after API is done */}
             <p className="text-sm text-gray-900 font-medium">
-              {goal.completion_type}
+              {mapCompletionTypeToDisplay(goal.completion_type)}
             </p>
           </div>
 
@@ -105,18 +145,34 @@ export const GoalDetailsSidebar = ({
               className="flex-1 bg-black text-white border-gray-700 hover:bg-gray-800 hover:border-gray-800"
               onClick={() => {
                 // Navigate to edit page
-                router.push(`/patient-info/goals/${goal.goal_id}/edit`)
+                router.push(
+                  `/patient-info/goals/${goal.goal_id}/edit?patientId=${patientId}`
+                )
               }}>
               Edit
             </Button>
             <Button
               variant="outline"
-              className="flex-1 border-red-500 text-red-500 hover:bg-red-50">
-              Delete
+              className="flex-1 border-red-500 text-red-500 hover:bg-red-50"
+              onClick={handleDeleteClick}
+              disabled={isDeleting}>
+              {isDeleting ? "Deleting..." : "Delete"}
             </Button>
           </div>
         </div>
       )}
+
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog
+        isOpen={showDeleteConfirm}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Goal"
+        message={`Are you sure you want to delete the goal "${goal?.title}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="danger"
+      />
     </DetailsSidebar>
   )
 }

@@ -23,6 +23,7 @@ const usePagination = (
   const searchParams = useSearchParams()
   const router = useRouter()
 
+  const patientId = searchParams.get("patientId")
   const sortBy = searchParams.get("sortBy")
   const sortOrder = searchParams.get("sortOrder")
   const startDate = searchParams.get("startDate")
@@ -59,6 +60,7 @@ const usePagination = (
   }
 
   return {
+    patientId,
     currentPaginationToken,
     setCurrentPaginationToken,
     paginationToken,
@@ -76,3 +78,8 @@ const usePagination = (
 }
 
 export default usePagination
+
+export const usePatientId = () => {
+  const searchParams = useSearchParams()
+  return searchParams.get("patientId")
+}

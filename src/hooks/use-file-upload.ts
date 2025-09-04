@@ -1,4 +1,4 @@
-import { useState, useRef, DragEvent } from "react"
+import { DragEvent, useRef, useState } from "react"
 
 interface FileValidationRules {
   maxSize?: number // in bytes
@@ -19,7 +19,7 @@ export const useFileUpload = (options: UseFileUploadOptions = {}) => {
       maxSize: 5 * 1024 * 1024, // 5MB default
       minWidth: 500,
       minHeight: 500,
-      allowedTypes: ['image/']
+      allowedTypes: ["image/"]
     },
     onFileSelect,
     onError
@@ -36,10 +36,10 @@ export const useFileUpload = (options: UseFileUploadOptions = {}) => {
     // TODO: Add progress tracking for large file validation
     return new Promise((resolve) => {
       // Check file type
-      const isValidType = validation.allowedTypes?.some(type => 
-        file.type.startsWith(type)
-      ) ?? true
-      
+      const isValidType =
+        validation.allowedTypes?.some((type) => file.type.startsWith(type)) ??
+        true
+
       if (!isValidType) {
         const errorMsg = "Please select a valid file type"
         setError(errorMsg)
@@ -68,9 +68,11 @@ export const useFileUpload = (options: UseFileUploadOptions = {}) => {
         // TODO: Add image format conversion capabilities
         const img = new window.Image()
         img.onload = () => {
-          const widthValid = !validation.minWidth || img.width >= validation.minWidth
-          const heightValid = !validation.minHeight || img.height >= validation.minHeight
-          
+          const widthValid =
+            !validation.minWidth || img.width >= validation.minWidth
+          const heightValid =
+            !validation.minHeight || img.height >= validation.minHeight
+
           if (!widthValid || !heightValid) {
             const errorMsg = `Image must be at least ${validation.minWidth} × ${validation.minHeight} pixels.`
             setError(errorMsg)
@@ -79,7 +81,7 @@ export const useFileUpload = (options: UseFileUploadOptions = {}) => {
             resolve(false)
             return
           }
-          
+
           setError("")
           resolve(true)
         }
@@ -114,7 +116,7 @@ export const useFileUpload = (options: UseFileUploadOptions = {}) => {
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setIsDragging(false)
-    
+
     // TODO: Add support for multiple file drops
     // TODO: Add visual feedback for invalid drop zones
     // TODO: Add support for folder uploads
@@ -179,7 +181,7 @@ export const useFileUpload = (options: UseFileUploadOptions = {}) => {
     error,
     isDragging,
     fileInputRef,
-    
+
     // Actions
     handleFileSelect,
     handleDrop,
@@ -190,10 +192,10 @@ export const useFileUpload = (options: UseFileUploadOptions = {}) => {
     clearError,
     triggerFileSelect,
     reset,
-    
+
     // Utils
     validateFile
-    
+
     // TODO: Add support for multiple file selection
     // TODO: Add upload progress tracking
     // TODO: Add file preview generation

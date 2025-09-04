@@ -55,9 +55,7 @@ export const ChangeEmailModal = ({
   }
 
   // Custom error display with X icon
-  const customError = error ? (
-    <ErrorMessage message={error} />
-  ) : null
+  const customError = error ? <ErrorMessage message={error} /> : null
 
   return (
     <BaseModal

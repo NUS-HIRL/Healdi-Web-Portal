@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
@@ -11,10 +10,23 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { Goal, GoalCategoryEnum, GoalCompletionTypeEnum } from "@/types/goal"
+import { apiAxios } from "@/lib/axios"
+import { buildDefaultGoal } from "@/lib/utils"
+import fetcher from "@/lib/fetcher"
+import {
+  mapCategoryToApi,
+  mapCategoryToDisplay,
+  mapCompletionTypeToApi,
+  mapCompletionTypeToDisplay
+} from "@/lib/goal-mappings"
+import { Goal } from "@/types/goal"
 import { Bell, Search, User } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
+import useSWR from "swr"
+import { SubmitSection } from "../../common/submit-section"
+import { usePatientId } from "@/hooks/use-pagination"
 
 interface EditGoalPageProps {
   goalId: string
@@ -27,24 +39,23 @@ type EditGoalForm = {
   description: string
   coins: number
   bonus: number
-}
-
-// Mock goal data - in a real app, this would be fetched from an API
-const mockGoal: Goal = {
-  goal_id: "1",
-  category: GoalCategoryEnum.PHYSICAL_ACTIVITY,
-  completion_type: GoalCompletionTypeEnum.SHORT_TERM,
-  title: "I will jog for 15 minutes three times a week.",
-  description:
-    "Jog for at least 15 minutes three times a week to complete this goal. Whether you're at the park, on a running track, treadmill, or around your neighbourhood, it all counts. Come back to Healdi to mark it as complete. You can only complete this goal once per day.",
-  coin_reward: 50,
-  completion_bonus_reward: 500,
-  username: "RES0001"
-  // Add progress
+  targetCompletionCount: number
 }
 
 export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
-  const [goal, setGoal] = useState<Goal | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isFormInitialized, setIsFormInitialized] = useState(false)
+  const router = useRouter()
+  const patientId = usePatientId()
+
+  // Fetch goal data using SWR
+  const {
+    data: goal,
+    error,
+    isLoading
+  } = useSWR<Goal>(`/v1/users/${patientId}/goals/${goalId}`, fetcher, {
+    fallbackData: buildDefaultGoal()
+  })
 
   const { register, control, handleSubmit, reset } = useForm<EditGoalForm>({
     defaultValues: {
@@ -53,35 +64,63 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
       title: "",
       description: "",
       coins: 0,
-      bonus: 0
+      bonus: 0,
+      targetCompletionCount: 0
     }
   })
 
   useEffect(() => {
-    // TODO: Change this section when API is ready
-    setGoal(mockGoal)
-  }, [goalId])
-
-  useEffect(() => {
-    if (goal) {
-      reset({
-        category: goal.category,
-        completionType: goal.completion_type,
+    if (goal && goal.goal_id) {
+      const formData = {
+        category: mapCategoryToDisplay(goal.category),
+        completionType: mapCompletionTypeToDisplay(goal.completion_type),
         title: goal.title,
         description: goal.description,
         coins: goal.coin_reward,
-        bonus: goal.completion_bonus_reward
-      })
+        bonus: goal.completion_bonus_reward,
+        targetCompletionCount: goal.target_completion_count
+      }
+      reset(formData)
+      setIsFormInitialized(true)
     }
   }, [goal, reset])
 
-  const onSubmit = (data: EditGoalForm) => {
-    // Handle form submission - in a real app, this would update the goal
-    console.log("Updated goal data:", data)
+  const onSubmit = async (data: EditGoalForm) => {
+    setIsSubmitting(true)
+    try {
+      const apiData = {
+        title: data.title,
+        description: data.description,
+        category: mapCategoryToApi(data.category),
+        completion_type: mapCompletionTypeToApi(data.completionType),
+        target_completion_count: data.targetCompletionCount,
+        coin_reward: data.coins,
+        completion_bonus_reward: data.bonus
+      }
+
+      await apiAxios.put(`/v1/users/${patientId}/goals/${goalId}`, apiData)
+      router.push(`/patient-info/${patientId}`)
+    } catch (error) {
+      console.error("Error updating goal:", error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error loading goal: {error.message}</div>
   }
 
   if (!goal) {
-    return <div>Loading...</div>
+    return <div>Goal not found</div>
+  }
+
+  if (!isFormInitialized) {
+    return <div>Initializing form...</div>
   }
 
   return (
@@ -137,7 +176,10 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                 </h2>
               </div>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+              <form
+                key={goal?.goal_id}
+                onSubmit={handleSubmit(onSubmit)}
+                className="space-y-8">
                 {/* Category */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
@@ -154,20 +196,34 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                       name="category"
                       render={({ field }) => (
                         <Select
-                          value={field.value || undefined}
-                          onValueChange={field.onChange}>
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          defaultValue={mapCategoryToDisplay(goal.category)}>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select Category" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Physical Activity">
-                              Physical Activity
-                            </SelectItem>
-                            <SelectItem value="Nutrition">Nutrition</SelectItem>
-                            <SelectItem value="Mental Health">
-                              Mental Health
-                            </SelectItem>
                             <SelectItem value="Sleep">Sleep</SelectItem>
+                            <SelectItem value="Alcohol">Alcohol</SelectItem>
+                            <SelectItem value="Stress">Stress</SelectItem>
+                            <SelectItem value="Mindfulness">
+                              Mindfulness
+                            </SelectItem>
+                            <SelectItem value="Medical Self Management">
+                              Medical Self Management
+                            </SelectItem>
+                            <SelectItem value="Relationships">
+                              Relationships
+                            </SelectItem>
+                            <SelectItem value="Work-Life Balance">
+                              Work-Life Balance
+                            </SelectItem>
+                            <SelectItem value="Emotional Well-Being">
+                              Emotional Well-Being
+                            </SelectItem>
+                            <SelectItem value="Exercise">Exercise</SelectItem>
+                            <SelectItem value="Diet">Diet</SelectItem>
+                            <SelectItem value="Smoking">Smoking</SelectItem>
                           </SelectContent>
                         </Select>
                       )}
@@ -191,8 +247,11 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                       name="completionType"
                       render={({ field }) => (
                         <Select
-                          value={field.value || undefined}
-                          onValueChange={field.onChange}>
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          defaultValue={mapCompletionTypeToDisplay(
+                            goal.completion_type
+                          )}>
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select Completion Type" />
                           </SelectTrigger>
@@ -247,6 +306,29 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                   </div>
                 </div>
 
+                {/* Target Completion Count */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                  <div className="md:col-span-1">
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Target Completion Count
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Set the number of times the user needs to complete the
+                      goal
+                    </p>
+                  </div>
+                  <div className="md:col-span-2">
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      className="w-full"
+                      {...register("targetCompletionCount", {
+                        valueAsNumber: true
+                      })}
+                    />
+                  </div>
+                </div>
+
                 {/* Coin Reward */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
@@ -287,24 +369,12 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
                   </div>
                 </div>
 
-                {/* Ready to Submit Section */}
-                <div className="bg-gray-100 rounded-lg p-6 mt-8">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                    Ready to Submit?
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Review your filled form details and make sure everything is
-                    accurate. Once you are ready, click the Submit button to
-                    update the goal.
-                  </p>
-                  <div className="flex justify-end">
-                    <Button
-                      type="submit"
-                      className="bg-black text-white hover:bg-gray-800">
-                      Submit
-                    </Button>
-                  </div>
-                </div>
+                <SubmitSection
+                  title="Ready to Update?"
+                  description="Review your filled form details and make sure everything is accurate. Once you are ready, click the Submit button to update the goal."
+                  buttonText="Update Goal"
+                  isLoading={isSubmitting}
+                />
               </form>
             </div>
           </div>

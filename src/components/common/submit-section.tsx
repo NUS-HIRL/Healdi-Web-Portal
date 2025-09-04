@@ -7,6 +7,7 @@ interface SubmitSectionProps {
   onSubmit?: () => void
   disabled?: boolean
   isForm?: boolean
+  isLoading?: boolean
 }
 
 export const SubmitSection = ({
@@ -15,7 +16,8 @@ export const SubmitSection = ({
   buttonText = "Submit",
   onSubmit,
   disabled = false,
-  isForm = true
+  isForm = true,
+  isLoading = false
 }: SubmitSectionProps) => {
   return (
     <div className="bg-gray-100 rounded-lg p-6 mt-8">
@@ -27,9 +29,9 @@ export const SubmitSection = ({
         <Button
           type={isForm ? "submit" : "button"}
           onClick={!isForm ? onSubmit : undefined}
-          disabled={disabled}
+          disabled={disabled || isLoading}
           className="bg-gray-800 hover:bg-gray-900">
-          {buttonText}
+          {isLoading ? "Submitting..." : buttonText}
         </Button>
       </div>
     </div>

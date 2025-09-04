@@ -10,7 +10,11 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { apiAxios } from "@/lib/axios"
+import { mapCategoryToApi, mapCompletionTypeToApi } from "@/lib/goal-mappings"
 import { Bell, Search, User } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { SubmitSection } from "../../common/submit-section"
 
@@ -22,7 +26,14 @@ export const AddGoalPage = () => {
     description: string
     coins: number
     bonus: number
+    targetCompletionCount: number
+    patientId: string
   }
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const patientId = searchParams.get("patientId")
 
   const { register, control, handleSubmit } = useForm<AddGoalForm>({
     defaultValues: {
@@ -31,13 +42,31 @@ export const AddGoalPage = () => {
       title: "",
       description: "",
       coins: 0,
-      bonus: 0
+      bonus: 0,
+      targetCompletionCount: 0,
+      patientId: patientId || ""
     }
   })
 
-  // TODO: Ze Kai: Add data: AddGoalForm when integrating form submission through API
-  const onSubmit = () => {
-    // TODO: Handle form submission
+  const onSubmit = async (data: AddGoalForm) => {
+    setIsSubmitting(true)
+    try {
+      const apiData = {
+        title: data.title,
+        description: data.description,
+        category: mapCategoryToApi(data.category),
+        completion_type: mapCompletionTypeToApi(data.completionType),
+        target_completion_count: data.targetCompletionCount,
+        coin_reward: data.coins,
+        completion_bonus_reward: data.bonus
+      }
+      await apiAxios.post(`/v1/users/${patientId}/goals`, apiData)
+      router.push(`/patient-info/${patientId}`)
+    } catch (error) {
+      console.error("Error creating goal:", error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -116,14 +145,27 @@ export const AddGoalPage = () => {
                             <SelectValue placeholder="Select Category" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="Physical Activity">
-                              Physical Activity
-                            </SelectItem>
-                            <SelectItem value="Nutrition">Nutrition</SelectItem>
-                            <SelectItem value="Mental Health">
-                              Mental Health
-                            </SelectItem>
                             <SelectItem value="Sleep">Sleep</SelectItem>
+                            <SelectItem value="Alcohol">Alcohol</SelectItem>
+                            <SelectItem value="Stress">Stress</SelectItem>
+                            <SelectItem value="Mindfulness">
+                              Mindfulness
+                            </SelectItem>
+                            <SelectItem value="Medical Self Management">
+                              Medical Self Management
+                            </SelectItem>
+                            <SelectItem value="Relationships">
+                              Relationships
+                            </SelectItem>
+                            <SelectItem value="Work-Life Balance">
+                              Work-Life Balance
+                            </SelectItem>
+                            <SelectItem value="Emotional Well-Being">
+                              Emotional Well-Being
+                            </SelectItem>
+                            <SelectItem value="Exercise">Exercise</SelectItem>
+                            <SelectItem value="Diet">Diet</SelectItem>
+                            <SelectItem value="Smoking">Smoking</SelectItem>
                           </SelectContent>
                         </Select>
                       )}
@@ -203,6 +245,29 @@ export const AddGoalPage = () => {
                   </div>
                 </div>
 
+                {/* Target Completion Count */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                  <div className="md:col-span-1">
+                    <Label className="text-sm font-semibold text-gray-700">
+                      Target Completion Count
+                    </Label>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Set the number of times the user needs to complete the
+                      goal
+                    </p>
+                  </div>
+                  <div className="md:col-span-2">
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      className="w-full"
+                      {...register("targetCompletionCount", {
+                        valueAsNumber: true
+                      })}
+                    />
+                  </div>
+                </div>
+
                 {/* Coin Reward */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                   <div className="md:col-span-1">
@@ -243,7 +308,10 @@ export const AddGoalPage = () => {
                   </div>
                 </div>
 
-                <SubmitSection description="Review your filled form details and make sure everything is accurate. Once you are ready, click the Submit button to add the new goal." />
+                <SubmitSection
+                  description="Review your filled form details and make sure everything is accurate. Once you are ready, click the Submit button to add the new goal."
+                  isLoading={isSubmitting}
+                />
               </form>
             </div>
           </div>
