@@ -4,6 +4,9 @@ export interface Medication {
   dosage: string
   type: string
   creator: string
+  created_at?: string // Remove ? once other mock data conform to this typing
+  updated_at?: string // Remove ? once other mock data conform to this typing
+  is_all_items?: boolean // Used for DynamoDB to scan through all the entries, temporary field that should default to True
 }
 
 export type MedicationType =
@@ -23,6 +26,9 @@ export type MedicationTableValue = {
   custom?: boolean
   selected?: boolean
   creator?: string
+  created_at?: string // Remove ? once other mock data conform to this typing
+  updated_at?: string // Remove ? once other mock data conform to this typing
+  is_all_items?: boolean // Used for DynamoDB to scan through all the entries, temporary field that should default to True
 }
 
 export type Medications = Medication[]
