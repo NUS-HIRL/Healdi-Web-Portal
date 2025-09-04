@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
+import { Goal, GoalCategoryEnum, GoalCompletionTypeEnum } from "@/types/goal"
 import { PaginatedResponse } from "@/types/response"
 
 export const cn = (...inputs: ClassValue[]) => {
@@ -30,4 +31,19 @@ export const toTitleCase = (str: string) => {
       return word.charAt(0).toUpperCase() + word.slice(1)
     })
     .join(" ")
+}
+
+export const buildDefaultGoal = (): Goal => {
+  return {
+    goal_id: "",
+    username: "",
+    category: GoalCategoryEnum.SLEEP,
+    title: "",
+    description: "",
+    completion_type: GoalCompletionTypeEnum.SHORT_TERM,
+    coin_reward: 0,
+    completion_bonus_reward: 0,
+    current_completion_count: 0,
+    target_completion_count: 0
+  }
 }

@@ -171,7 +171,6 @@ export const GoalDetailsSidebar = ({
         message={`Are you sure you want to delete the goal "${goal?.title}"? This action cannot be undone.`}
         confirmText="Delete"
         cancelText="Cancel"
-        isLoading={isDeleting}
         variant="danger"
       />
     </DetailsSidebar>

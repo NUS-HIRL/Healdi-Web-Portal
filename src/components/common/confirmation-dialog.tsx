@@ -11,7 +11,6 @@ interface ConfirmationDialogProps {
   message: string
   confirmText?: string
   cancelText?: string
-  isLoading?: boolean
   variant?: "danger" | "warning" | "info"
 }
 
@@ -23,7 +22,6 @@ export const ConfirmationDialog = ({
   message,
   confirmText = "Confirm",
   cancelText = "Cancel",
-  isLoading = false,
   variant = "danger"
 }: ConfirmationDialogProps) => {
   if (!isOpen) return null
@@ -65,18 +63,13 @@ export const ConfirmationDialog = ({
           <p className="text-gray-600 mb-6">{message}</p>
 
           <div className="flex justify-end space-x-3">
-            <Button
-              onClick={onClose}
-              disabled={isLoading}
-              variant="outline"
-              className="px-4 py-2">
+            <Button onClick={onClose} variant="outline" className="px-4 py-2">
               {cancelText}
             </Button>
             <Button
               onClick={onConfirm}
-              disabled={isLoading}
               className={`px-4 py-2 ${styles.confirmButton} disabled:opacity-50`}>
-              {isLoading ? "Processing..." : confirmText}
+              {confirmText}
             </Button>
           </div>
         </div>

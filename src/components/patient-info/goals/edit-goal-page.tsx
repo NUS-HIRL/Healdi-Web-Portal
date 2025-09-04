@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { apiAxios } from "@/lib/axios"
+import { buildDefaultGoal } from "@/lib/utils"
+import fetcher from "@/lib/fetcher"
 import {
   mapCategoryToApi,
   mapCategoryToDisplay,
@@ -19,11 +21,12 @@ import {
 } from "@/lib/goal-mappings"
 import { Goal } from "@/types/goal"
 import { Bell, Search, User } from "lucide-react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import useSWR from "swr"
 import { SubmitSection } from "../../common/submit-section"
+import { usePatientId } from "@/hooks/use-pagination"
 
 interface EditGoalPageProps {
   goalId: string
@@ -43,18 +46,16 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isFormInitialized, setIsFormInitialized] = useState(false)
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const patientId = searchParams.get("patientId")
+  const patientId = usePatientId()
 
   // Fetch goal data using SWR
   const {
     data: goal,
     error,
     isLoading
-  } = useSWR<Goal>(
-    goalId && patientId ? `/v1/users/${patientId}/goals/${goalId}` : null,
-    (url: string) => apiAxios.get(url).then((res) => res.data)
-  )
+  } = useSWR<Goal>(`/v1/users/${patientId}/goals/${goalId}`, fetcher, {
+    fallbackData: buildDefaultGoal()
+  })
 
   const { register, control, handleSubmit, reset } = useForm<EditGoalForm>({
     defaultValues: {
