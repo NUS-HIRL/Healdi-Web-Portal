@@ -5,9 +5,11 @@ import EmptyState from "@/components/chat/empty-state"
 import Header from "@/components/chat/chat-header"
 import Body from "@/components/chat/body"
 import Form from "@/components/chat/form"
-import { useEffect, useState } from "react"
+import SearchMessageBox from "@/components/chat/search-message-box"
+import { useEffect, useState, useCallback } from "react"
 import { Message, Chat, UserType } from "@/types/chat"
 import { conversations } from "@/app/chat/layout"
+import { useMessageSearch } from "@/hooks/use-message-search"
 
 interface IParams {
   chatId: string
@@ -17,22 +19,40 @@ const ChatId = ({ params }: { params: Promise<IParams> }) => {
   const { chatId } = use(params)
   const [messages, setMessages] = useState<Message[]>([])
   const [chat, setChat] = useState<(Chat & { users: UserType[] }) | null>(null)
-  const [searchTargetId, setSearchTargetId] = useState<string>("")
+  const [searchBarOpen, setSearchBarOpen] = useState(false)
+
+  const {
+    highlightQuery,
+    occurrences,
+    occurrenceIndex,
+    currentOccurrence,
+    search,
+    goToNext,
+    goToPrev,
+    resetSearch,
+    isSearching,
+  } = useMessageSearch({
+    messages,
+    debounceDelay: 300
+  })
+  const toggleSearch = useCallback(() => {
+    setSearchBarOpen((prev) => !prev)
+    resetSearch()
+  }, [resetSearch])
 
   useEffect(() => {
-    const c = conversations.find((chat) => chat.id === chatId) || null
-    setChat(c)
-
-    if (c) {
-      // Sort messages by createdAt ascending
-      const sorted = [...c.messages].sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      )
-      setMessages(sorted)
-    } else {
-      setMessages([])
-    }
+    const chat =
+      conversations.find((chatItem) => chatItem.id === chatId) || null
+    setChat(chat)
+    setMessages(
+      chat
+        ? [...chat.messages].sort(
+            (msg1, msg2) =>
+              new Date(msg1.createdAt).getTime() -
+              new Date(msg2.createdAt).getTime()
+          )
+        : []
+    )
   }, [chatId])
 
   if (!chat) {
@@ -47,12 +67,27 @@ const ChatId = ({ params }: { params: Promise<IParams> }) => {
   return (
     <div className="h-full">
       <div className="h-full flex flex-col">
-        <Header chat={chat} />
+        <Header chat={chat} onToggleSearch={toggleSearch} />
+
+        {searchBarOpen && (
+          <SearchMessageBox
+            onClose={() => setSearchBarOpen(false)}
+            onSearch={search}
+            onNext={goToNext}
+            onPrev={goToPrev}
+            hitIds={occurrences.map((o) => o.messageId)}
+            hitIndex={occurrenceIndex}
+            totalOccurrences={occurrences.length}
+            isSearching={isSearching}
+          />
+        )}
+
         <Body
           messages={messages}
           setMessages={setMessages}
-          setSearchTargetId={setSearchTargetId}
-          searchTargetId={searchTargetId}
+          currentOccurrence={currentOccurrence}
+          highlightQuery={highlightQuery}
+          searchBarOpen={searchBarOpen}
         />
         <Form />
       </div>
