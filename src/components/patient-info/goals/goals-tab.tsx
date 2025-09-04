@@ -35,9 +35,10 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
   const {
     data: response = buildDefaultPaginatedData(),
     error,
-    isLoading
+    isLoading,
+    mutate
   } = useSWR<PaginatedResponse<Goal>>(
-    `v1/users/${encodeURIComponent(patientId)}/goals?limit=${pagination.pageSize}&token=${currentPaginationToken}`,
+    `v1/users/ethan/goals?limit=${pagination.pageSize}&token=${currentPaginationToken}`,
     fetcher
   )
 
@@ -62,6 +63,11 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
   const handleCloseView = () => {
     setIsViewOpen(false)
     setSelectedGoal(null)
+  }
+
+  // Handle goal deletion - refresh the data
+  const handleGoalDeleted = () => {
+    mutate() // Trigger SWR data refetch
   }
 
   const GoalsTable = CustomDataTable<Goal>
@@ -101,6 +107,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
         goal={selectedGoal}
         isOpen={isViewOpen}
         onClose={handleCloseView}
+        onGoalDeleted={handleGoalDeleted}
       />
     </div>
   )

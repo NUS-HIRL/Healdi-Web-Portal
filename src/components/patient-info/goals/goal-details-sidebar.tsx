@@ -5,21 +5,53 @@ import { Subtitle } from "@/components/common/sidebar/subtitle"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { apiAxios } from "@/lib/axios"
+import {
+  mapCategoryToDisplay,
+  mapCompletionTypeToDisplay
+} from "@/lib/goal-mappings"
 import { Goal } from "@/types/goal"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 interface GoalDetailsSidebarProps {
   goal: Goal | null
   isOpen: boolean
   onClose: () => void
+  onGoalDeleted?: () => void
 }
 
 export const GoalDetailsSidebar = ({
   goal,
   isOpen,
-  onClose
+  onClose,
+  onGoalDeleted
 }: GoalDetailsSidebarProps) => {
   const router = useRouter()
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const handleDelete = async () => {
+    if (!goal) return
+
+    const confirmed = window.confirm(
+      `Are you sure you want to delete the goal "${goal.title}"? This action cannot be undone.`
+    )
+
+    if (!confirmed) return
+
+    setIsDeleting(true)
+    try {
+      await apiAxios.delete(`/v1/users/ethan/goals/${goal.goal_id}`)
+      onClose() // Close the sidebar
+      // Trigger data refetch instead of page reload
+      onGoalDeleted?.()
+    } catch (error) {
+      console.error("Error deleting goal:", error)
+      alert("Failed to delete goal. Please try again.")
+    } finally {
+      setIsDeleting(false)
+    }
+  }
 
   return (
     <DetailsSidebar isOpen={isOpen} onClose={onClose}>
@@ -33,7 +65,7 @@ export const GoalDetailsSidebar = ({
             <Badge
               variant="secondary"
               className="bg-orange-50 text-red-400 border-orange-200">
-              {goal.category}
+              {mapCategoryToDisplay(goal.category)}
             </Badge>
           </div>
 
@@ -42,7 +74,9 @@ export const GoalDetailsSidebar = ({
           {/* Completion Type */}
           <div className="space-y-2">
             <Subtitle title="Completion Type" />
-            <p className="text-sm text-gray-900">{goal.completion_type}</p>
+            <p className="text-sm text-gray-900">
+              {mapCompletionTypeToDisplay(goal.completion_type)}
+            </p>
           </div>
 
           <Separator className="mt-2" />
@@ -92,7 +126,7 @@ export const GoalDetailsSidebar = ({
             <Subtitle title="Type" />{" "}
             {/* Change back to progress after API is done */}
             <p className="text-sm text-gray-900 font-medium">
-              {goal.completion_type}
+              {mapCompletionTypeToDisplay(goal.completion_type)}
             </p>
           </div>
 
@@ -111,8 +145,10 @@ export const GoalDetailsSidebar = ({
             </Button>
             <Button
               variant="outline"
-              className="flex-1 border-red-500 text-red-500 hover:bg-red-50">
-              Delete
+              className="flex-1 border-red-500 text-red-500 hover:bg-red-50"
+              onClick={handleDelete}
+              disabled={isDeleting}>
+              {isDeleting ? "Deleting..." : "Delete"}
             </Button>
           </div>
         </div>
