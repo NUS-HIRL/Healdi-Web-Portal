@@ -50,7 +50,8 @@ export const Toast = ({
   // TODO: Add different background colors and styles based on toast type
   // TODO: Add support for dark mode theming
   const getToastStyles = () => {
-    const baseStyles = "flex items-center space-x-3 px-4 py-2 rounded-lg shadow-lg border bg-white"
+    const baseStyles =
+      "flex items-center space-x-3 px-4 py-2 rounded-lg shadow-lg border bg-white"
     switch (type) {
       case "success":
         return `${baseStyles} border-green-200`
@@ -71,9 +72,7 @@ export const Toast = ({
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
       }`}>
       <div className={getToastStyles()}>
-        <div className="flex-shrink-0">
-          {getToastIcon()}
-        </div>
+        <div className="flex-shrink-0">{getToastIcon()}</div>
         <span className="font-medium text-gray-900">{message}</span>
       </div>
     </div>

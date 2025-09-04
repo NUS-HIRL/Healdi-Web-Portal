@@ -13,44 +13,50 @@ import {
 import { Goal } from "@/types/goal"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { ConfirmationDialog } from "../../common/confirmation-dialog"
 
 interface GoalDetailsSidebarProps {
   goal: Goal | null
   isOpen: boolean
   onClose: () => void
   onGoalDeleted?: () => void
+  patientId: string
 }
 
 export const GoalDetailsSidebar = ({
   goal,
   isOpen,
   onClose,
-  onGoalDeleted
+  onGoalDeleted,
+  patientId
 }: GoalDetailsSidebarProps) => {
   const router = useRouter()
   const [isDeleting, setIsDeleting] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
-  const handleDelete = async () => {
+  const handleDeleteClick = () => {
+    setShowDeleteConfirm(true)
+  }
+
+  const handleDeleteConfirm = async () => {
     if (!goal) return
-
-    const confirmed = window.confirm(
-      `Are you sure you want to delete the goal "${goal.title}"? This action cannot be undone.`
-    )
-
-    if (!confirmed) return
 
     setIsDeleting(true)
     try {
-      await apiAxios.delete(`/v1/users/ethan/goals/${goal.goal_id}`)
+      await apiAxios.delete(`/v1/users/${patientId}/goals/${goal.goal_id}`)
+      setShowDeleteConfirm(false)
       onClose() // Close the sidebar
       // Trigger data refetch instead of page reload
       onGoalDeleted?.()
     } catch (error) {
       console.error("Error deleting goal:", error)
-      alert("Failed to delete goal. Please try again.")
     } finally {
       setIsDeleting(false)
     }
+  }
+
+  const handleDeleteCancel = () => {
+    setShowDeleteConfirm(false)
   }
 
   return (
@@ -139,20 +145,35 @@ export const GoalDetailsSidebar = ({
               className="flex-1 bg-black text-white border-gray-700 hover:bg-gray-800 hover:border-gray-800"
               onClick={() => {
                 // Navigate to edit page
-                router.push(`/patient-info/goals/${goal.goal_id}/edit`)
+                router.push(
+                  `/patient-info/goals/${goal.goal_id}/edit?patientId=${patientId}`
+                )
               }}>
               Edit
             </Button>
             <Button
               variant="outline"
               className="flex-1 border-red-500 text-red-500 hover:bg-red-50"
-              onClick={handleDelete}
+              onClick={handleDeleteClick}
               disabled={isDeleting}>
               {isDeleting ? "Deleting..." : "Delete"}
             </Button>
           </div>
         </div>
       )}
+
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog
+        isOpen={showDeleteConfirm}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Goal"
+        message={`Are you sure you want to delete the goal "${goal?.title}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        isLoading={isDeleting}
+        variant="danger"
+      />
     </DetailsSidebar>
   )
 }

@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { apiAxios } from "@/lib/axios"
 import { mapCategoryToApi, mapCompletionTypeToApi } from "@/lib/goal-mappings"
 import { Bell, Search, User } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { SubmitSection } from "../../common/submit-section"
@@ -27,10 +27,13 @@ export const AddGoalPage = () => {
     coins: number
     bonus: number
     targetCompletionCount: number
+    patientId: string
   }
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const patientId = searchParams.get("patientId")
 
   const { register, control, handleSubmit } = useForm<AddGoalForm>({
     defaultValues: {
@@ -40,7 +43,8 @@ export const AddGoalPage = () => {
       description: "",
       coins: 0,
       bonus: 0,
-      targetCompletionCount: 0
+      targetCompletionCount: 0,
+      patientId: patientId || ""
     }
   })
 
@@ -56,8 +60,8 @@ export const AddGoalPage = () => {
         coin_reward: data.coins,
         completion_bonus_reward: data.bonus
       }
-      await apiAxios.post("/v1/users/ethan/goals", apiData)
-      router.push("/patient-info/RES0001")
+      await apiAxios.post(`/v1/users/${patientId}/goals`, apiData)
+      router.push(`/patient-info/${patientId}`)
     } catch (error) {
       console.error("Error creating goal:", error)
     } finally {

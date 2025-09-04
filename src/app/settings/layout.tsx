@@ -19,7 +19,9 @@ const SettingsLayout = ({
           <div className="flex-1 overflow-auto">
             <div className="min-h-full flex flex-col">
               <div className="flex-1 p-6">
-                <nav className="text-sm text-gray-500 mb-4">Home / Settings</nav>
+                <nav className="text-sm text-gray-500 mb-4">
+                  Home / Settings
+                </nav>
                 <h1 className="text-3xl font-bold text-gray-900 mb-8">
                   Settings
                 </h1>

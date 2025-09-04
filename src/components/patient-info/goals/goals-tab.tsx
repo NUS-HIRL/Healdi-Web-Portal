@@ -21,6 +21,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     pageIndex: 1,
     pageSize: 10
   })
+  console.log("patientId", patientId)
 
   const {
     currentPaginationToken,
@@ -38,7 +39,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
     isLoading,
     mutate
   } = useSWR<PaginatedResponse<Goal>>(
-    `v1/users/ethan/goals?limit=${pagination.pageSize}&token=${currentPaginationToken}`,
+    `v1/users/${patientId}/goals?limit=${pagination.pageSize}&token=${currentPaginationToken}`,
     fetcher
   )
 
@@ -78,7 +79,10 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
       <div className="px-6 pb-6">
         <div className="bg-gray-100">
           {/* Section Header */}
-          <HeaderWithOptions title="Goals" to="/patient-info/goals/add" />
+          <HeaderWithOptions
+            title="Goals"
+            to={`/patient-info/goals/add?patientId=${patientId}`}
+          />
 
           {/* Goals Table */}
           <div className="py-4">
@@ -108,6 +112,7 @@ export const GoalsTab = ({ patientId }: GoalsTabProps) => {
         isOpen={isViewOpen}
         onClose={handleCloseView}
         onGoalDeleted={handleGoalDeleted}
+        patientId={patientId}
       />
     </div>
   )

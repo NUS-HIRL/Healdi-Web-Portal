@@ -18,7 +18,7 @@ export const AvatarUploadModal = ({
   onSave
 }: AvatarUploadModalProps) => {
   const [isLoading, setIsLoading] = useState(false)
-  
+
   const {
     selectedFile,
     error,
@@ -36,7 +36,7 @@ export const AvatarUploadModal = ({
       maxSize: 5 * 1024 * 1024, // 5MB
       minWidth: 500,
       minHeight: 500,
-      allowedTypes: ['image/']
+      allowedTypes: ["image/"]
     }
   })
 
@@ -61,9 +61,7 @@ export const AvatarUploadModal = ({
     onClose()
   }
 
-  const customError = error ? (
-    <ErrorMessage message={error} />
-  ) : null
+  const customError = error ? <ErrorMessage message={error} /> : null
 
   return (
     <BaseModal

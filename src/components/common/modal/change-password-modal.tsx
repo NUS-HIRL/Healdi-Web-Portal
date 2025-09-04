@@ -91,9 +91,7 @@ export const ChangePasswordModal = ({
     onClose()
   }
 
-  const customError = error ? (
-    <ErrorMessage message={error} />
-  ) : null
+  const customError = error ? <ErrorMessage message={error} /> : null
 
   return (
     <BaseModal

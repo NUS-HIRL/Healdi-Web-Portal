@@ -19,7 +19,7 @@ import {
 } from "@/lib/goal-mappings"
 import { Goal } from "@/types/goal"
 import { Bell, Search, User } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import useSWR from "swr"
@@ -43,6 +43,8 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isFormInitialized, setIsFormInitialized] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const patientId = searchParams.get("patientId")
 
   // Fetch goal data using SWR
   const {
@@ -50,7 +52,7 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
     error,
     isLoading
   } = useSWR<Goal>(
-    goalId ? `/v1/users/ethan/goals/${goalId}` : null,
+    goalId && patientId ? `/v1/users/${patientId}/goals/${goalId}` : null,
     (url: string) => apiAxios.get(url).then((res) => res.data)
   )
 
@@ -95,8 +97,8 @@ export const EditGoalPage = ({ goalId }: EditGoalPageProps) => {
         completion_bonus_reward: data.bonus
       }
 
-      await apiAxios.put(`/v1/users/ethan/goals/${goalId}`, apiData)
-      router.push("/patient-info/RES0001")
+      await apiAxios.put(`/v1/users/${patientId}/goals/${goalId}`, apiData)
+      router.push(`/patient-info/${patientId}`)
     } catch (error) {
       console.error("Error updating goal:", error)
     } finally {
