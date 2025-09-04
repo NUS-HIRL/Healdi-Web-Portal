@@ -9,7 +9,7 @@ import SearchMessageBox from "@/components/chat/search-message-box"
 import { useEffect, useState, useCallback } from "react"
 import { Message, Chat, UserType } from "@/types/chat"
 import { conversations } from "@/app/chat/layout"
-import { computeHitIds } from "@/lib/chat"
+import { useMessageSearch } from "@/hooks/use-message-search"
 
 interface IParams {
   chatId: string
@@ -19,48 +19,41 @@ const ChatId = ({ params }: { params: Promise<IParams> }) => {
   const { chatId } = use(params)
   const [messages, setMessages] = useState<Message[]>([])
   const [chat, setChat] = useState<(Chat & { users: UserType[] }) | null>(null)
-  const [searchTargetId, setSearchTargetId] = useState<string>("")
-  const [highlightQuery, setHighlightQuery] = useState<string>("")
   const [searchBarOpen, setSearchBarOpen] = useState(false)
-  const [hitIds, setHitIds] = useState<string[]>([])
-  const [hitIndex, setHitIndex] = useState<number>(-1)
 
+  const {
+    highlightQuery,
+    hitIds,
+    hitIndex,
+    searchTargetId,
+    search,
+    goToNext,
+    goToPrev,
+    resetSearch,
+    isSearching
+  } = useMessageSearch({
+    messages,
+    debounceDelay: 300
+  })
   const toggleSearch = useCallback(() => {
     setSearchBarOpen((prev) => !prev)
-    setHitIds([])
-    setHitIndex(-1)
-    setHighlightQuery("")
-    setSearchTargetId("")
-  }, [])
+    resetSearch()
+  }, [resetSearch])
 
   useEffect(() => {
-    const chat = conversations.find((chatItem) => chatItem.id === chatId) || null
+    const chat =
+      conversations.find((chatItem) => chatItem.id === chatId) || null
     setChat(chat)
     setMessages(
       chat
         ? [...chat.messages].sort(
             (msg1, msg2) =>
-              new Date(msg1.createdAt).getTime() - new Date(msg2.createdAt).getTime()
+              new Date(msg1.createdAt).getTime() -
+              new Date(msg2.createdAt).getTime()
           )
         : []
     )
   }, [chatId])
-
-  useEffect(() => {
-    if (!highlightQuery.trim()) {
-      setHitIds([])
-      setHitIndex(-1)
-      return
-    }
-    const ids = computeHitIds(messages, highlightQuery)
-    setHitIds(ids)
-    if (ids.length) {
-      setHitIndex(0)
-      setSearchTargetId(ids[0])
-    } else {
-      setHitIndex(-1)
-    }
-  }, [messages, highlightQuery])
 
   if (!chat) {
     return (
@@ -78,21 +71,20 @@ const ChatId = ({ params }: { params: Promise<IParams> }) => {
 
         {searchBarOpen && (
           <SearchMessageBox
-            searchBarOpen={searchBarOpen}
             onClose={() => setSearchBarOpen(false)}
-            messages={messages}
-            setSearchTargetId={setSearchTargetId}
-            setHighlightQuery={setHighlightQuery}
+            onSearch={search}
+            onNext={goToNext}
+            onPrev={goToPrev}
             hitIds={hitIds}
             hitIndex={hitIndex}
-            setHitIndex={setHitIndex}
+            hasQuery={!!highlightQuery.trim()}
+            isSearching={isSearching}
           />
         )}
 
         <Body
           messages={messages}
           setMessages={setMessages}
-          setSearchTargetId={setSearchTargetId}
           searchTargetId={searchTargetId}
           highlightQuery={highlightQuery}
           searchBarOpen={searchBarOpen}

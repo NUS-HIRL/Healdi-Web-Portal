@@ -8,7 +8,6 @@ import SystemNotice from "@/components/chat/system-notice"
 interface BodyProps {
   messages: Message[]
   setMessages: Dispatch<SetStateAction<Message[]>>
-  setSearchTargetId: Dispatch<SetStateAction<string>>
   searchTargetId: string
   highlightQuery: string
   searchBarOpen: boolean
@@ -17,7 +16,6 @@ interface BodyProps {
 const Body: React.FC<BodyProps> = ({
   messages,
   searchTargetId,
-  setSearchTargetId,
   highlightQuery,
   searchBarOpen
 }) => {
@@ -34,9 +32,8 @@ const Body: React.FC<BodyProps> = ({
     const target = messageRefs.current[searchTargetId]
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "center" })
-      setSearchTargetId("")
     }
-  }, [searchTargetId, setSearchTargetId])
+  }, [searchTargetId])
 
   const getSetMessageRef = (id: string) => (el: HTMLDivElement | null) => {
     messageRefs.current[id] = el
